@@ -1,0 +1,310 @@
+<HTML>
+<HEAD>
+<TITLE>Jackson County, Kansas: Schools History</TITLE>
+	<link rel="stylesheet" href="Styles.css">
+	
+</HEAD>
+
+<BODY onload="sizeBars();">
+<!-- ---------------------------------------------------------------------------------------------- -->
+<!-- TITLE BAR -->
+<!-- ---------------------------------------------------------------------------------------------- -->
+<div id="TitleBar" class="titleBar">
+Jackson County, Kansas Schools History
+</div>
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+<!-- MAIN MENU -->
+<!-- ---------------------------------------------------------------------------------------------- -->
+<div id="MainMenu" class="navbar" >
+	<!-- Home -->
+	<!-- -------------------- -->
+	<a onclick="menuClick({category:'Home',subCat:''})">Home</a>
+
+	<!-- Overview -->
+	<!-- -------------------- -->
+	<div class="dropdown">
+		<button class="dropbtn">Overview 
+		  <i class="fa fa-caret-down"></i>
+		</button>
+		  <div class="dropdown-content">
+			<a onclick="menuClick({category:'Overview',subCat:'Overview'})">Overview</a>
+			<a onclick="menuClick({category:'Overview',subCat:'CoDistrictSumm'})">Co. Districts Summary</a>
+			<a onclick="menuClick({category:'Overview',subCat:'CoHSSumm'})">Co. High Schools Summary</a>
+			<a onclick="menuClick({category:'Overview',subCat:'TeachersInst'})">Teachers Institute</a>
+			<a onclick="menuClick({category:'Overview',subCat:'DeedsLists'})">Register of Deeds Lists</a>
+			<a onclick="menuClick({category:'Overview',subCat:'TreasurerAndTaxRpts'})">Co. Treasurer & Tax Reports</a>
+			<a onclick="menuClick({category:'Overview',subCat:'GradRpts'})">Common School Graduate Reports</a>
+			<a onclick="menuClick({category:'Overview',subCat:'TeachersRpts'})">Teachers Reports</a>
+			<a onclick="menuClick({category:'Overview',subCat:'OtherRpts'})">OtherReports</a>
+		  </div>
+	</div>
+	
+	<!-- Maps -->
+	<!-- -------------------- -->
+	<div class="dropdown">
+		<button class="dropbtn">Maps 
+		  <i class="fa fa-caret-down"></i>
+		</button>
+		  <div class="dropdown-content">
+			<a onclick="menuClick({category:'Maps',subCat:'1878 Jackson Co.'})">1878 Jackson Co.</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1881 Jackson Co.'})">1881 Jackson Co.</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1883 Jackson Co.'})">1883 Jackson Co.</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1885 Holton'})">1885 Holton</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1887 Jackson Co.'})">1887 Jackson Co.</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1887 Brown Co.'})">1887 Brown Co.</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1887 Nemaha Co.'})">1887 Nemaha Co.</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1889 Holton'})">1889 Holton</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1896 Holton'})">1896 Holton</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1899 Pottawatamie Co.'})">1899 Pottawatamie Co.</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1903 Jackson Co.'})">1903 Jackson Co.</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1905 Holton'})">1905 Holton</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1908 Nemaha Co.'})">1908 Nemaha Co.</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1911 Holton'})">1911 Holton</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1912 Jackson Co. School Dist.'})">1912 Jackson Co. School Districts</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1918 Pottawatamie Reservation'})">1918 Pottawatamie Reservation</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1919 Brown Co.'})">1919 Brown Co.</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1921 Jackson Co.'})">1921 Jackson Co.</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1922 Holton'})">1922 Holton</a>			
+			<a onclick="menuClick({category:'Maps',subCat:'1938 Jackson Co. Schl Dir'})">1938 Jackson Co. School Dir. (partial)</a>
+			<a onclick="menuClick({category:'Maps',subCat:'1963 Jackson Co. Rural Dir'})">1963 Jackson Co. Rural Dir.</a>
+		  </div>
+	</div>
+	
+	
+	<!-- Territorial -->
+	<!-- -------------------- -->
+	<a onclick="menuClick({category:'Pre-Org',subCat:'Territorial'})">Territorial KS</a>
+	
+	<!-- County Districts -->
+	<!-- -------------------- -->
+	<div class="dropdown">
+		<button class="dropbtn">Co. Districts 
+		  <i class="fa fa-caret-down"></i>
+		</button>
+		  <div class="dropdown-content">
+			<a onclick="menuClick({category:'County Districts', subCat:'001', title:`1 Brick`})">001 Brick</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'002', title:`2 Holton`})">002 Holton</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'003', title:`3 Denison`})">003 Denison</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'004', title:`4 Center`})">004 Center</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'005', title:`5 Banner`})">005 Banner</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'006', title:`6 Liberty`})">006 Liberty</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'007', title:`7 Philo`})">007 Philo</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'008', title:`8 Pleasant Valley`})">008 Pleasant Valley</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'009', title:`9 Lawnridge`})">009 Lawnridge</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'010', title:`10 Mulinax`})">010 Mulinax</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'011', title:`11 Cedar Hill`})">011 Cedar Hill</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'012', title:`12 North Star`})">012 North Star</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'013', title:`13 Point Pleasant`})">013 Point Pleasant</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'014', title:`14 Cedar Vale`})">014 Cedar Vale</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'015', title:`15 Oak Hill (Pleasant Grove)`})">015 Oak Hill (Pleasant Grove)</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'016', title:`16 Circleville`})">016 Circleville</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'017', title:`17 Cedar Grove (Tutt)`})">017 Cedar Grove (Tutt)</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'018', title:`18 Eureka`})">018 Eureka</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'019', title:`19 Rose Bud`})">019 Rose Bud</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'020', title:`20 Winding Vale`})">020 Winding Vale</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'021', title:`21 Fairview`})">021 Fairview</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'022', title:`22 Sylvian Grove`})">022 Sylvian Grove</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'023', title:`23 Soldier Valley`})">023 Soldier Valley</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'024', title:`24 Rock`})">024 Rock</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'025', title:`25 Ray`})">025 Ray</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'026', title:`26 Soldier`})">026 Soldier</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'027', title:`27 Woodworth`})">027 Woodworth</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'028', title:`28 Carmel`})">028 Carmel</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'029', title:`29 Lower Banner`})">029 Lower Banner</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'030', title:`30 Dodson Hill`})">030 Dodson Hill</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'031', title:`31 Oak Grove`})">031 Oak Grove</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'032', title:`32 Slattery`})">032 Slattery</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'033', title:`33 Carbon`})">033 Carbon</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'034', title:`34 Netawaka`})">034 Netawaka</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'035', title:`35 South Cedar`})">035 South Cedar</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'036', title:`36 Maple Grove`})">036 Maple Grove</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'037', title:`37 Wobourn`})">037 Wobourn</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'038', title:`38 Parallel`})">038 Parallel</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'039', title:`39 Harrison`})">039 Harrison</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'040', title:`40 Hoyt`})">040 Hoyt</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'041', title:`41 Bucks Grove`})">041 Bucks Grove</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'042', title:`42 Spring Dale`})">042 Spring Dale</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'043', title:`43 Walnut`})">043 Walnut</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'044', title:`44 Banks`})">044 Banks</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'045', title:`45 Little Cross Creek`})">045 Little Cross Creek</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'046', title:`46 Browne`})">046 Browne</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'047', title:`47 Whiting`})">047 Whiting</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'048', title:`48 Brightside`})">048 Brightside</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'049', title:`49 Drake`})">049 Drake</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'050', title:`50 Holligan`})">050 Holligan</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'051', title:`51 Avoca`})">051 Avoca</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'052', title:`52 Beauty Heights`})">052 Beauty Heights</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'053', title:`53 Capital View`})">053 Capital View</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'054', title:`54 Delia`})">054 Delia</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'055', title:`55 Hazel Row`})">055 Hazel Row</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'056', title:`56 Hazel Grove`})">056 Hazel Grove</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'057', title:`57 Ball`})">057 Ball</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'058', title:`58 Cedar Center`})">058 Cedar Center</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'059', title:`59 Stach`})">059 Stach</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'060', title:`60 Sunrise`})">060 Sunrise</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'061', title:`61 Holton View`})">061 Holton View</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'062', title:`62 Olive Hill`})">062 Olive Hill</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'063', title:`63 Pea Ridge`})">063 Pea Ridge</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'064', title:`64 Lawndale`})">064 Lawndale</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'065', title:`65 Adrian`})">065 Adrian</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'066', title:`66 Rising Sun`})">066 Rising Sun</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'067', title:`67 Reddy`})">067 Reddy</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'068', title:`68 Bateman`})">068 Bateman</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'069', title:`69 South Hoyt`})">069 South Hoyt</a>	
+			<a onclick="menuClick({category:'County Districts', subCat:'070', title:`70 Anderson`})">070 Anderson</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'071', title:`71 Gray`})">071 Gray</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'072', title:`72 Aurora`})">072 Aurora</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'073', title:`73 Prairie View`})">073 Prairie View</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'074', title:`74 Wigwam`})">074 Wigwam</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'075', title:`75 Pleasant View`})">075 Pleasant View</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'076', title:`76 South Star`})">076 South Star</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'077', title:`77 Christenson`})">077 Christenson</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'078', title:`78 Clover Hill`})">078 Clover Hill</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'079', title:`79 Mayetta`})">079 Mayetta</a>			
+			<a onclick="menuClick({category:'County Districts', subCat:'080', title:`80 Lone Star`})">080 Lone Star</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'081', title:`81 Stoney Point`})">081 Stoney Point</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'082', title:`82 Renwood`})">082 Renwood</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'083', title:`83 Columbia`})">083 Columbia</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'084', title:`84 High Prairie`})">084 High Prairie</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'085', title:`85 Sunflower`})">085 Sunflower</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'086', title:`86 Glenwood`})">086 Glenwood</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'087', title:`87 Goldenrod`})">087 Goldenrod</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'088', title:`88 Birmingham`})">088 Birmingham</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'089', title:`89 Excelsior`})">089 Excelsior</a>			
+			<a onclick="menuClick({category:'County Districts', subCat:'090', title:`90 Rock Brook`})">090 Rock Brook</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'091', title:`91 Nieve`})">091 Nieve</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'092', title:`92 Miller`})">092 Miller</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'093', title:`93 Sunny Brook`})">093 Sunny Brook</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'094', title:`94 Brewer`})">094 Brewer</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'095', title:`95 Sunny Slope`})">095 Sunny Slope</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'096', title:`96 Blandin`})">096 Blandin</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'097', title:`97 Witchewa`})">097 Witchewa</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'098', title:`98 Kewanka`})">098 Kewanka</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'099', title:`99 Grand Prairie`})">099 Grand Prairie</a>				
+			<a onclick="menuClick({category:'County Districts', subCat:'100', title:`100 New Century`})">100 New Century</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'101', title:`101 Birmingham`})">101 Birmingham</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'102', title:`102 Big Four (Grant Union)`})">102 Big Four (Grant Union)</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'103', title:`103 Carwood`})">103 Carwood</a>
+			<a onclick="menuClick({category:'County Districts', subCat:'104', title:`104 South Holton`})">104 South Holton</a>		
+			<a></a>
+			<a><u>JOINT DISTRICTS</u></A>
+			<a onclick="menuClick({category:'County Districts', subCat:'J&A6', title:`J&A6 Larkinburg`})">J&A6 Larkinburg</a>	
+			<a onclick="menuClick({category:'County Districts', subCat:'J&B1', title:`J&B1 East Powhattan`})">J&B1 East Powhattan</a>	
+			<a onclick="menuClick({category:'County Districts', subCat:'J&N1', title:`J&N1 Wetmore`})">J&N1 Wetmore</a>	
+			<a onclick="menuClick({category:'County Districts', subCat:'J&N2', title:`J&N2 Ontario`})">J&N2 Ontario</a>	
+			<a onclick="menuClick({category:'County Districts', subCat:'J&P3', title:`J&P3 Buckeye Ridge`})">J&P3 Buckeye Ridge</a>	
+			<a onclick="menuClick({category:'County Districts', subCat:'J&P4', title:`J&P4 Long Branch`})">J&P4 Long Branch</a>	
+			<a onclick="menuClick({category:'County Districts', subCat:'J&P7', title:`J&P7 English Ridge`})">J&P7 English Ridge</a>	
+			<a onclick="menuClick({category:'County Districts', subCat:'NJ&P1', title:`NJ&P1 America City`})">NJ&P1 America City</a>	
+			
+		  </div>
+	</div>
+		
+	<!-- Pottawatomie Mission -->
+	<!-- -------------------- -->
+	<a onclick="menuClick({category:'Pottawatomie Mission',subCat:'')}">Pottawatomie Mission</a>
+	
+	<!-- High Schools -->
+	<!-- -------------------- -->
+	<div class="dropdown">
+		<button class="dropbtn">Co. High Schools 
+		  <i class="fa fa-caret-down"></i>
+		</button>	
+		  <div class="dropdown-content">
+			<a onclick="menuClick({category:'High Schools',subCat:'Holton'})">Holton</a>
+			<a onclick="menuClick({category:'High Schools',subCat:'RHS 1'})">RHS 1 Soldier</a>
+			<a onclick="menuClick({category:'High Schools',subCat:'RHS 2'})">RHS 2 Denison</a>
+			<a onclick="menuClick({category:'High Schools',subCat:'RHS 3'})">RHS 3 Whiting</a>
+			<a onclick="menuClick({category:'High Schools',subCat:'RHS 4'})">RHS 4 Hoyt</a>
+			<a onclick="menuClick({category:'High Schools',subCat:'RHS 5'})">RHS 5 Mayetta</a>
+			<a onclick="menuClick({category:'High Schools',subCat:'RHS 6'})">RHS 6 Circleville</a>
+			<a onclick="menuClick({category:'High Schools',subCat:'RHS 7'})">RHS 7 Delia</a>
+			<a onclick="menuClick({category:'High Schools',subCat:'RHS 8'})">RHS 8 Netawaka</a>
+			<a onclick="menuClick({category:'High Schools',subCat:'RHS Jt 2'})">RHS Jt 2 Havensville</a>
+			<a onclick="menuClick({category:'High Schools',subCat:'RHS Jt 3'})">RHS Jt 3 Emmett</a>
+			<a onclick="menuClick({category:'High Schools',subCat:'RHS Jt 4'})">RHS Jt 4 Wetmore</a>
+			<a onclick="menuClick({category:'High Schools',subCat:'RHS Jt 93'})">RHS Jt 93 Meriden</a>
+		  </div>
+	</div>
+	
+	<!-- Unified School Districts -->
+	<!-- -------------------- -->
+	<div class="dropdown">
+		<button class="dropbtn">USDs
+		  <i class="fa fa-caret-down"></i>
+		</button>	
+		  <div class="dropdown-content">
+			<a onclick="menuClick({category:'USD',subCat:'321'})">USD 321 Kaw Valley</a>
+			<a onclick="menuClick({category:'USD',subCat:'335'})">USD 335 Jackson Heights</a>
+			<a onclick="menuClick({category:'USD',subCat:'336'})">USD 336 Holton</a>
+			<a onclick="menuClick({category:'USD',subCat:'336'})">USD 337 Royal Valley</a>
+		  </div>
+	</div>
+	
+	<!-- Colleges -->
+	<!-- -------------------- -->
+	<div class="dropdown">
+		<button class="dropbtn">Colleges 
+		  <i class="fa fa-caret-down"></i>
+		</button>
+		  <div class="dropdown-content">
+			<a onclick="menuClick({category:'Colleges',subCat:'Campbell College'})">Campbell College</a>
+			<a onclick="menuClick({category:'Colleges',subCat:'Circleville Seminary'})">Circleville Seminary</a>
+		  </div>
+	</div>
+	
+	<!-- References -->
+	<!-- -------------------- -->
+	<a onclick="menuClick({category:'References',subCat:''})">References</a>
+		
+	<!-- Contact -->
+	<!-- -------------------- -->
+	<a onclick="menuClick({category:'Contact',subCat:''})">Contact</a>
+	
+	
+</div> <!-- END OF NAVIGATION BAR -->
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+<!-- SUBTITLE -->
+<!-- ---------------------------------------------------------------------------------------------- -->
+<DIV id="SubTitle" class="titleBar2" >
+	<!-- changed programmatically -->
+	Welcome
+</DIV>
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+<!-- SUBMENU -->
+<!-- ---------------------------------------------------------------------------------------------- -->
+<DIV id="SubMenu" class="navBar2" >
+	<!-- changed programmatically -->
+	&nbsp
+</DIV>
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+<!-- CONTENT TITLE BAR -->
+<!-- ---------------------------------------------------------------------------------------------- -->
+<DIV id="ContentTitle" class="titleBar3Empty" >
+	<!-- changed programmatically -->
+	&nbsp
+</DIV>
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+<!-- SPACER (behind titles and menus to force the content down -->
+<!-- ---------------------------------------------------------------------------------------------- -->
+<DIV id="Spacer" class="divSpacer"></DIV>
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+<!-- CONTENT -->
+<!-- ---------------------------------------------------------------------------------------------- -->
+<div id="iFrameHolder" class="iFrameHolder">
+	<iframe id="ContentHolder" src="Welcome/Welcome.html" title="description" class="contentHolder" onload="window.top.scrollTo(0,0);"></iframe>
+</div>
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+<!-- SCRIPTS -->
+<!-- ---------------------------------------------------------------------------------------------- -->
+<SCRIPT src="scripts.js"></SCRIPT>
+
+</BODY>
+</HTML>
