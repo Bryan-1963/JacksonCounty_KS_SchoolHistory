@@ -1146,6 +1146,7 @@
 	
 		// CHANGE THE SOURCE FOR THE iFrame
 		contentHolder.src =contentSource;
+		window.top.scrollTo(0,0);
 		
 		// ADJUST LOCATIONS OF BARS
 		sizeBars()
