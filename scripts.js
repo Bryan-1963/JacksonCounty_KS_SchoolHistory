@@ -162,10 +162,6 @@
 		
 		// SWITCH ON CATEGORY
 		switch(category){
-
-			case 'TESTTEST':
-				console.log(params.pageObject.title);
-			break;
 			
 		  //---------------------------
 		  case 'Home':

@@ -3,6 +3,7 @@
 		  margin: 0;
 		  font-family: Sans-serif;
 		  overflow: auto;
+		  counter-reset: figures;
 		}
 		
 		li {
@@ -285,10 +286,7 @@
 			margin-left: 20px;
 			padding-bottom: 12px;
 		}
-		
-		.figureNotes{
-			margin-left: 20px;
-		}
+
 		
 		.yearText{
 			font-weight: bold;
@@ -297,7 +295,7 @@
 		}
 		
 		/* --------------------------------------------- */
-		/* IMAGES */
+		/* IMAGES and FIGURES */
 		/* --------------------------------------------- */
 		.imageHolder{
 			width: auto;
@@ -308,4 +306,35 @@
 		.imageHolder img {
 		  max-height: 500px; 
 		  height: auto;    
+		}
+		
+		.myFigure {
+			width: auto;
+			display: inline-block; 
+			margin-left: 20px;
+		}
+		
+		.myFigure figcaption {
+			counter-increment: figures;
+			font-weight: bold;
+			font-style: italic;
+			font-size: 14px;
+			margin-left: 20px;
+			padding-bottom: 12px;
+		}
+		
+		.myFigure figcaption:before {
+			content: 'Figure ' counter(figures) ' - ';
+		}
+		
+		.myFigure img {
+			max-height: 500px; 
+			height: auto;   
+			border: 2px solid black;
+		}
+
+				
+		.figureNotes{
+			margin-left: 20px;
+			font-size: 14px;
 		}
