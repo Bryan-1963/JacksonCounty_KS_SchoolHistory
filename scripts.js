@@ -1409,7 +1409,7 @@
 		thisDist = new PageObject()
 		thisDist.number = "098"
 		thisDist.title = "98 Kewanka"
-		thisDist.title = "CountyDistricts\098\098_Overview.html"
+		thisDist.path = "CountyDistricts\098\098_Overview.html"
 		thisDist.category = "JacksonCounty"
 		countySchoolDistricts.push(thisDist);
 		
@@ -1422,7 +1422,7 @@
 		
 		thisDist = new PageObject()
 		thisDist.number = "100"
-		thisDist.title = "100 newCentury"
+		thisDist.title = "100 New Century"
 		thisDist.path = "CountyDistricts\100\100_Overview.html"
 		thisDist.category = "JacksonCounty"
 		countySchoolDistricts.push(thisDist);
