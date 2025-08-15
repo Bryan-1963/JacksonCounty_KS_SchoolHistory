@@ -365,8 +365,18 @@
 		  case 'Pottawatomie Mission':
 		  //---------------------------		
 			subTitle.innerHTML = "Pottawatomie Mission";
-			contentTitleBar.className = "titleBar3Empty";
-			contentSource="PottawatomieMission/PottawatomieMission.html";
+			// LOAD SUBMENU html
+			subMenuHTML = ``;
+
+			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('PottawatomieMission','Overview','')">Overview</a>`;
+			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('PottawatomieMission','Location(s)','')">Location(s) and Bldgs</a>`;
+			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('PottawatomieMission','People','')">People</a>`;
+			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('PottawatomieMission','Events','')">Events</a>`;
+			subMenu.innerHTML=subMenuHTML;		
+			
+			contentTitleBar.className = "titleBar3";
+			contentTitleBar.innerHTML="Overview";
+			contentSource="PottawatomieMission/PottawatomieMission_Overview.html";
 			break;
 
 		  //---------------------------				
@@ -512,6 +522,34 @@
 			  
 			  }
 		break; //end of case CountyDistricts
+		
+		case 'PottawatomieMission':
+			  //---------------------------
+			  // SWITCH ON CATEGORY
+			  //---------------------------
+			switch(category){
+			  case 'Overview':
+				source="PottawatomieMission/PottawatomieMission_Overview.html";
+				contentTitleBar.innerHTML="Overview";
+			  break;
+			  
+			  case 'Location(s)':
+				source="PottawatomieMission/PottawatomieMission_Locations.html";
+				contentTitleBar.innerHTML="Location(s) and Buildings";
+			  break;
+			  
+			  case 'People':
+				source="PottawatomieMission/PottawatomieMission_People.html";
+				contentTitleBar.innerHTML="People";
+			  break;
+			  
+			  case 'Events':
+				source="PottawatomieMission/PottawatomieMission_Events.html";
+				contentTitleBar.innerHTML="Events";
+			  break;
+			  
+			  }
+		break; //end of case PottawatomieMission
 		
 		case 'CountyHighSchools':
 			  //---------------------------
@@ -1576,63 +1614,63 @@
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
-		thisDist.number = "RHS 1";
+		thisDist.number = "RHS1";
 		thisDist.title = "RHS 1 Soldier";
 		thisDist.path = "CountyHighSchools\RHS1\RHS1_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
-		thisDist.number = "RHS 2";
+		thisDist.number = "RHS2";
 		thisDist.title = "RHS 2 Denison";
 		thisDist.path = "CountyHighSchools\RHS2\RHS2_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
-		thisDist.number = "RHS 3";
+		thisDist.number = "RHS3";
 		thisDist.title = "RHS 3 Whiting";
 		thisDist.path = "CountyHighSchools\RHS3\RHS3_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
-		thisDist.number = "RHS 4";
+		thisDist.number = "RHS4";
 		thisDist.title = "RHS 4 Hoyt";
 		thisDist.path = "CountyHighSchools\RHS4\RHS4_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
-		thisDist.number = "RHS 5";
+		thisDist.number = "RHS5";
 		thisDist.title = "RHS 5 Mayetta";
 		thisDist.path = "CountyHighSchools\RHS5\RHS5_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
-		thisDist.number = "RHS 6";
+		thisDist.number = "RHS6";
 		thisDist.title = "RHS 6 Circleville";
 		thisDist.path = "CountyHighSchools\RHS6\RHS6_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
-		thisDist.number = "RHS 7";
+		thisDist.number = "RHS7";
 		thisDist.title = "RHS 7 Delia";
 		thisDist.path = "CountyHighSchools\RHS7\RHS7_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
-		thisDist.number = "RHS 8";
+		thisDist.number = "RHS8";
 		thisDist.title = "RHS 8 Netawaka";
 		thisDist.path = "CountyHighSchools\RHS8\RHS8_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
-		thisDist.number = "RHS Jt2";
+		thisDist.number = "RHSJt2";
 		thisDist.title = "RHS Jt2 Havensville";
 		thisDist.path = "CountyHighSchools\RHSJt2\RHSJt2_Overview.html";
 		thisDist.category = "Joint"
@@ -1646,7 +1684,7 @@
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
-		thisDist.number = "RHS Jt4";
+		thisDist.number = "RHSJt4";
 		thisDist.title = "RHS Jt4 Wetmore";
 		thisDist.path = "CountyHighSchools\RHSJt4\RHSJt4_Overview.html";
 		thisDist.category = "Joint"
