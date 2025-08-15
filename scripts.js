@@ -58,12 +58,18 @@
 		var dropDown = document.getElementById("CountyDistrictsDropdown");
 		var dropDownContents = dropDown.innerHTML;
 		var foundJoints = false;
+		var foundAdjacents = false;
 
 		for (var i = 0; i<=countySchoolDistricts.length-1;i++){
 
 			if (countySchoolDistricts[i].category === "Joint" && !foundJoints) {
 				dropDownContents = dropDownContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><u>JOINT DISTRICTS</u></a>";
 				foundJoints = true;
+			}
+			
+			if (countySchoolDistricts[i].category === "Adjacent" && !foundAdjacents) {
+				dropDownContents = dropDownContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><u>ADJACENT DISTRICTS</u></a>";
+				foundAdjacents = true;
 			}
 			// Example:
 			//<a onclick="menuClick({category:'County Districts', subCat:'090', title:'90 Rock Brook'})">090 Rock Brook</a>
@@ -76,13 +82,19 @@
 		// County High Schools
 		dropDown = document.getElementById("CountyHighSchoolsDropdown");
 		dropDownContents = dropDown.innerHTML;
-		var foundJoints = false;
+		foundJoints = false;
+		foundAdjacents = false;
 
 		for (var i = 0; i<=countyHighSchools.length-1;i++){
 
 			if (countyHighSchools[i].category === "Joint" && !foundJoints) {
 				dropDownContents = dropDownContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><u>JOINT DISTRICTS</u></a>";
 				foundJoints = true;
+			}
+
+			if (countyHighSchools[i].category === "Adjacent" && !foundAdjacents) {
+				dropDownContents = dropDownContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><u>ADJACENT DISTRICTS</u></a>";
+				foundAdjacents = true;
 			}
 			// Example:
 			//<a onclick="menuClick({category:'High Schools',subCat:'RHS5', title:'RHS 5 Mayetta'})">RHS 5 Mayetta</a>
@@ -1470,6 +1482,27 @@
 		countySchoolDistricts.push(thisDist);
 		
 		thisDist = new PageObject()
+		thisDist.number = "J&B2"
+		thisDist.title = "J&B1 ????"
+		thisDist.path = "CountyDistricts\J&B2\J&B2_Overview.html"
+		thisDist.category = "Joint"
+		countySchoolDistricts.push(thisDist);
+		
+		thisDist = new PageObject()
+		thisDist.number = "J&B3"
+		thisDist.title = "J&B3 ????"
+		thisDist.path = "CountyDistricts\J&B3\J&B3_Overview.html"
+		thisDist.category = "Joint"
+		countySchoolDistricts.push(thisDist);
+		
+		thisDist = new PageObject()
+		thisDist.number = "J&B4"
+		thisDist.title = "J&B4 ????"
+		thisDist.path = "CountyDistricts\J&B4\J&B4_Overview.html"
+		thisDist.category = "Joint"
+		countySchoolDistricts.push(thisDist);
+		
+		thisDist = new PageObject()
 		thisDist.number = "J&N1"
 		thisDist.title = "J&N1 Wetmore"
 		thisDist.path = "CountyDistricts\J&N1\J&N1_Overview.html"
@@ -1480,6 +1513,13 @@
 		thisDist.number = "J&N2"
 		thisDist.title = "J&N2 Ontario"
 		thisDist.path = "CountyDistricts\J&N2\J&N2_Overview.html"
+		thisDist.category = "Joint"
+		countySchoolDistricts.push(thisDist);
+		
+		thisDist = new PageObject()
+		thisDist.number = "J&N4"
+		thisDist.title = "J&N4 ????"
+		thisDist.path = "CountyDistricts\J&N4\J&N4_Overview.html"
 		thisDist.category = "Joint"
 		countySchoolDistricts.push(thisDist);
 		
@@ -1510,6 +1550,20 @@
 		thisDist.path = "CountyDistricts\NJ&P1\NJ&P1_Overview.html"
 		thisDist.category = "Joint"
 		countySchoolDistricts.push(thisDist);
+		
+		thisDist = new PageObject()
+		thisDist.number = "B&N5"
+		thisDist.title = "B&N5 West Powhattan"
+		thisDist.path = "CountyDistricts\B&N5\B&N5_Overview.html"
+		thisDist.category = "Adjacent"
+		countySchoolDistricts.push(thisDist);
+		
+		thisDist = new PageObject()
+		thisDist.number = "Nx"
+		thisDist.title = "Nx Bancroft"
+		thisDist.path = "CountyDistricts\Nx\Nx_Overview.html"
+		thisDist.category = "Adjacent"
+		countySchoolDistricts.push(thisDist);
 
 		//-----------------------------
 		// load countyHighSchools array
@@ -1523,7 +1577,7 @@
 
 		var thisDist = new PageObject();
 		thisDist.number = "RHS 1";
-		thisDist.title = "RHS 1Soldier";
+		thisDist.title = "RHS 1 Soldier";
 		thisDist.path = "CountyHighSchools\RHS1\RHS1_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
