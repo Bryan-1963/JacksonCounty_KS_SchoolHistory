@@ -579,7 +579,36 @@
 			  
 			  }
 		break; //end of case CountyHighSchools		
-
+		
+		case 'UnifiedSchoolDistricts':
+			  //---------------------------
+			  // SWITCH ON CATEGORY
+			  //---------------------------
+			  
+			switch(category){
+			  case 'Overview':
+				source="UnifiedSchoolDistricts/" + subCat + "/" + subCat + "_Overview.html";
+				contentTitleBar.innerHTML="Overview";
+			  break;
+			  
+			  case 'Location(s)':
+				source="UnifiedSchoolDistricts/" + subCat + "/" + subCat + "_Locations.html";
+				contentTitleBar.innerHTML="Location(s) and Buildings";
+			  break;
+			  
+			  case 'People':
+				source="UnifiedSchoolDistricts/" + subCat + "/" + subCat + "_People.html";
+				contentTitleBar.innerHTML="People";
+			  break;
+			  
+			  case 'Events':
+				source="UnifiedSchoolDistricts/" + subCat + "/" + subCat + "_Events.html";
+				contentTitleBar.innerHTML="Events";
+			  break;
+			  
+			  }
+		break; //end of case CountyHighSchools	
+		
 		case 'Colleges':
 			  //---------------------------
 			  // SWITCH ON CATEGORY
