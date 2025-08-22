@@ -1550,7 +1550,7 @@
 		
 		thisDist = new PageObject()
 		thisDist.number = "J&B2"
-		thisDist.title = "J&B1 ????"
+		thisDist.title = "J&B2 ????"
 		thisDist.path = "CountyDistricts\J&B2\J&B2_Overview.html"
 		thisDist.category = "Joint"
 		countySchoolDistricts.push(thisDist);
