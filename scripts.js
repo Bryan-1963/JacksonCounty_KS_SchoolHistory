@@ -13,7 +13,7 @@
 	var countyHighSchools = []; //array of PageObjects for high schools
 	var docPages = []; //array of AnnotatedPhotoObject, loaded by loadDocPages
 	var docPgNum = 0;
-	var webRootLocation = "https://bryan-1963.github.io/Sandbox/";
+	var webRootLocation = "https://bryan-1963.github.io/JacksonCounty_KS_SchoolHistory/";
 	var subMenuName = '';
 	var subMenuCat = '';
 	
