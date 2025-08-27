@@ -120,11 +120,11 @@
 		let thisAnnotation = docPages[pgNum]['description'] ;  
 		//thisAnnotation is an array of paragraph texts
 		let totalAnnotation = "";
-		for (let i=0,i<thisAnnotation.length-1,i++){
-			console.log("     thisAnnotation[" + i + "]=|" + thisAnnotation[i] + "|");
-			thisAnnotation[i] = thisAnnotation[i].toString().replace(/[\r\n]/g,"<br>");
-			console.log("     thisAnnotation[" + i + "]=|" + thisAnnotation[i] + "|");
-			totalAnnotation = totalAnnotation + thisAnnotation[i] + "<br>";
+		for (let paraNum=0,paraNum<thisAnnotation.length-1,paraNum++){
+			console.log("     thisAnnotation[" + paraNum + "]=|" + thisAnnotation[paraNum] + "|");
+			thisAnnotation[paraNum] = thisAnnotation[paraNum].toString().replace(/[\r\n]/g,"<br>");
+			console.log("     thisAnnotation[" + paraNum + "]=|" + thisAnnotation[paraNum] + "|");
+			totalAnnotation = totalAnnotation + thisAnnotation[paraNum] + "<br>";
 		}
 		console.log("     totalAnnotation=|" + totalAnnotation + "|");
 		//thisAnnotation=thisAnnotation.replace(/[\r\n]/g,"<br>");
