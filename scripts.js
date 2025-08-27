@@ -50,9 +50,18 @@
 	docPageNumInput.addEventListener("keydown", function (e) {
 		if (e.code === "Enter" || e.code === "NumpadEnter") //checks whether the pressed key is "Enter"
 		{  
+			console.log("e.target.value=" + e.target.value + "|");
 			docPgNum = Math.floor(Number(e.target.value))-1; //eliminate any decimal and change user 1-based input to 0-based input
+			console.log("docPgNum=" + docPgNum + "|");
 			if (docPgNum>docPages.length-1) {docPgNum=docPages.length-1}
 			if (docPgNum<0){docPgNum=0};
+			console.log("docPgNum=" + docPgNum + "|");
+			
+			//update the page number input box to account for limiting
+			let pgNumInput = document.getElementById("docPageNumInput");
+			pgNumInput.setAttribute("value",Number(docPgNum)+1);
+
+			//load the requested page
 			loadDocPageNum(docPgNum);
 		}
 	});
