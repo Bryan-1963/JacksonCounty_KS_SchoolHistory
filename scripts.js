@@ -1824,7 +1824,6 @@
 	// AnnotatedPhotoObject
 	//---------------------------	
 	class AnnotatedPhotoObject{
-		sortNum;
 		photoFilePath;
 		caption;
 		annotation;
