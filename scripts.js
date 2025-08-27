@@ -106,6 +106,8 @@
 		docPages = JSON.parse(myText);
 		let totDocPgs = document.getElementById("totalDocPages");
 		totalDocPages.innerHTML = " of " + docPages.length;
+		
+		//load the first page
 		loadDocPageNum(0);
 	}
 	
@@ -167,6 +169,12 @@
 				docPgNum=docPgNum+1;
 			}		
 		}
+				
+		//update the page number input box to account for limiting
+		let pgNumInput = document.getElementById("docPageNumInput");
+		pgNumInput.setAttribute("value",Number(docPgNum)+1);
+		
+		//load the requested page	
 		console.log("calling loadDocPage, sending docPgNum=" + docPgNum);
 		loadDocPageNum(docPgNum);
 	}
