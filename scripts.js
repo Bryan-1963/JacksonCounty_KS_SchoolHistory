@@ -50,7 +50,7 @@
 	docPageNumInput.addEventListener("keydown", function (e) {
 		if (e.code === "Enter" || e.code === "NumpadEnter") //checks whether the pressed key is "Enter"
 		{  
-			docPgNum = Math.floor(e.target.value)-1; //eliminate any decimal and change user 1-based input to 0-based input
+			docPgNum = Math.floor(Number(e.target.value))-1; //eliminate any decimal and change user 1-based input to 0-based input
 			if (docPgNum>docPages.length-1) {docPgNum=docPages.length-1}
 			if (docPgNum<0){docPgNum=0};
 			loadDocPageNum(docPgNum);
@@ -97,7 +97,6 @@
 		docPages = JSON.parse(myText);
 		let totDocPgs = document.getElementById("totalDocPages");
 		totalDocPages.innerHTML = " of " + docPages.length;
-		//console.log("docPages.length=" + docPages.length);
 		loadDocPageNum(0);
 	}
 	
@@ -117,27 +116,19 @@
 		document.getElementById("docPage").innerHTML=myHTML;
 		
 		//update the annotation page HTML
-		let thisAnnotation = docPages[pgNum]['description'] ;  
-		//thisAnnotation is an array of paragraph texts
+		let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
 		let totalAnnotation = "";
-		console.log("thisAnnotation.length=" + thisAnnotation.length);
 		for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
-			//console.log("     thisAnnotation[" + paraNum + "]=|" + thisAnnotation[paraNum] + "|");
 			thisAnnotation[paraNum] = thisAnnotation[paraNum].toString().replace(/[\r\n]/g,"<br>");
-			console.log("     thisAnnotation[" + paraNum + "]=|" + thisAnnotation[paraNum] + "|");
 			totalAnnotation = totalAnnotation + thisAnnotation[paraNum] + "<br><br>";
 		}
-		console.log("     totalAnnotation=|" + totalAnnotation + "|");
-
 		myHTML="<p class='docPageAnnotation'>" + totalAnnotation + "</p><br>";
 		document.getElementById("docAnnotationHolder").innerHTML=myHTML;
 		
 		//update the page number input box
-		console.log("pgNum="+pgNum);
 		let pgNumInput = document.getElementById("docPageNumInput");
-		console.log("pgNumInput.value=" + pgNumInput.value);
-		pgNumInput.setAttribute("value",pgNum+1); //NOTE: pgNum is zero based, people like 1 based
-		console.log("NOW pgNumInput.value=" + pgNumInput.value);
+		pgNumInput.setAttribute("value",Number(pgNum)+1); //NOTE: pgNum is zero based, people like 1 based
+
 	}
 	
 	//==========================================================================================
