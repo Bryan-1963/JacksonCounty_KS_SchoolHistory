@@ -182,7 +182,36 @@
 		.dropdown:hover .dropdown-content {
 		  display: block;
 		}
-
+		
+		.navButton {
+			margin-top: 4px;
+			margin-bottom: 4px;
+		}
+		
+		.pageNumInput{
+			width: 30px;
+			margin-top: 4px;
+			margin-bottom: 4px;
+		}
+		
+		.searchInput{
+			width: 75px;
+			margin-top: 4px;
+			margin-bottom: 4px;
+		}
+		
+		/* --------------------------------------------- */		
+		/* get rid of up/down arrows on number input box */
+		/* --------------------------------------------- */		
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+		  -webkit-appearance: none;
+		  margin: 0;
+		}
+		input[type=number] {
+		  -moz-appearance: textfield;
+		}
+		
 		/* --------------------------------------------- */
 		/* SPACER BLOCK */
 		/* --------------------------------------------- */		
@@ -203,7 +232,7 @@
 		  z-index: 600;
 
 		}
-		
+
 		/* --------------------------------------------- */
 		/* CONTENT HOLDERS */
 		/* --------------------------------------------- */		
@@ -256,7 +285,36 @@
 			font-size: 14px;
 			font-family: Sans-serif;
 		}
-
+		
+		.docPage{
+			display: flex;
+			flex-direction: row;
+			align-items: top;
+			justify-content: left;
+		}
+		
+		/* Change flex direction for narrow screens */
+		@media (max-width: 800px) {
+		  .docPage {
+			flex-direction: column;
+		  }
+		}
+		
+		.docPageImage{
+			flex: 50%
+			min-height:600px;
+		}
+		
+		.docPageAnnotationHolder{
+			flex: 50%
+			min-height:600px;
+			text-align: left;
+		}
+		
+		.docPageAnnotation{
+			padding: 6px;
+		}
+		
 		/* --------------------------------------------- */
 		/* TABLES */
 		/* --------------------------------------------- */	
@@ -292,6 +350,16 @@
 			font-weight: bold;
 			font-size: 16px;
 			text-decoration: underline;
+		}
+		
+		.link-like {
+			color: blue;
+			text-decoration: underline;
+			cursor: pointer;
+		}
+
+		.link-like:hover {
+			color: red;
 		}
 		
 		/* --------------------------------------------- */

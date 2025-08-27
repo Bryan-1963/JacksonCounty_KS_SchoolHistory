@@ -1,3 +1,4 @@
+
 	
 	//==========================================================================================
 	// GLOBAL VARIABLES
@@ -10,6 +11,11 @@
 	var maps = []; //array of PageObjects for maps
 	var countySchoolDistricts = []; //array of PageObjects for elementary schools
 	var countyHighSchools = []; //array of PageObjects for high schools
+	var docPages = []; //array of AnnotatedPhotoObject, loaded by loadDocPages
+	var docPgNum = 0;
+	var webRootLocation = "https://bryan-1963.github.io/Sandbox/";
+	var subMenuName = '';
+	var subMenuCat = '';
 	
 	//==========================================================================================
 	// EVENT LISTENERS
@@ -21,7 +27,9 @@
 	document.getElementById("SubTitle").addEventListener("load", sizeBars());
 	document.getElementById("ContentTitle").addEventListener("load", sizeBars());
 	
+	//---------------------------
 	// ELEMENT RESIZE OBSERVER
+	//---------------------------
 	var ro = new ResizeObserver( entries => {
 	  for (let entry of entries) {
 		if (entry.contentBoxSize) {
@@ -30,24 +38,144 @@
 		}
 	  }
 	});
-	
 	ro.observe(document.getElementById("MainMenu"));
 	ro.observe(document.getElementById("SubMenu"));
 	ro.observe(document.getElementById("SubTitle"));
 	ro.observe(document.getElementById("ContentTitle"));
+	
+	//-----------------------------------------
+	// Document pagenumber input listener 
+	//-----------------------------------------
+	var docPageNumInput = document.getElementById("docPageNumInput");
+	docPageNumInput.addEventListener("keydown", function (e) {
+		if (e.code === "Enter" || e.code === "NumpadEnter") //checks whether the pressed key is "Enter"
+		{  
+			docPgNum = Math.floor(e.target.value)-1; //eliminate any decimal and change user 1-based input to 0-based input
+			if (docPgNum>docPages.length-1) {docPgNum=docPages.length-1}
+			if (docPgNum<0){docPgNum=0};
+			loadDocPageNum(docPgNum);
+		}
+	});
 
+	
+	//==========================================================================================
+	// loadDocPages
+	//==========================================================================================
+	async function loadDocPages(filePath, docTitle){
+		console.log("in loadDocPages, rcd filePath=|" + filePath + "|");
+		
+		subMenuName = '';
+		subMenuCat = '';
+		
+		//set the subTitle
+		let subTitle = document.getElementById("SubTitle");
+		subTitle.innerHTML = docTitle;
+		
+		//set up submenu with document navigation controls
+		let subMenu = document.getElementById("SubMenu");
+		subMenu.style.display = "block";
+		docNavBar.style.display = "block";
+		schoolNavBar.style.display = "none"
+		
+		//hide the iFrame content
+		let contentTitleBar = document.getElementById("ContentTitle");
+		contentTitleBar.className = "titleBar3Empty";
+		let iFrameHldr = document.getElementById("iFrameHolder");
+		iFrameHldr.style.display = "none";
+		
+		//show the document content
+		let documentContentHolder = document.getElementById("documentContentHolder");
+		documentContentHolder.style.display = "block";
+		let docPage = document.getElementById("docPage");
+		docPage.innerHTML = "";
+		
+		//fetch the data about the document
+		docPages.length = 0;	
+		console.log("webRootLocation+filePath=|" + webRootLocation+filePath + "|");
+		let myObject = await fetch(webRootLocation+filePath);
+		let myText = await myObject.text();
+		docPages = JSON.parse(myText);
+		let totDocPgs = document.getElementById("totalDocPages");
+		totalDocPages.innerHTML = " of " + docPages.length;
+		//console.log("docPages.length=" + docPages.length);
+		loadDocPageNum(0);
+	}
+	
+	//==========================================================================================
+	// loadDocPageNum
+	//==========================================================================================	
+	function loadDocPageNum(pgNum){
+		console.log("in loadDocPageNum, rcd pgNum=" + pgNum);
+		// build & update HTML for this page
+		let myHTML = "";
+		myHTML=myHTML + "<figure class='myFigure'>";
+		myHTML=myHTML + "<img src='" + webRootLocation + docPages[pgNum]['photoFilePath'].toString() + "' style='max-height: 600px;'>";
+		if (docPages[pgNum]['caption'].length>0) {
+			myHTML=myHTML + "<figcaption>" + docPages[pgNum]['caption'] + "</figcaption>";
+		}
+		myHTML=myHTML + "</figure>";
+		document.getElementById("docPage").innerHTML=myHTML;
+		
+		//update the annotation page HTML
+		let thisAnnotation = docPages[pgNum]['description'] ;
+		//console.log("this annotation=|" + thisAnnotation + "|");
+		thisAnnotation=thisAnnotation.replace(/[\r\n]/g,"<br>");
+		thisAnnotation=thisAnnotation.replace(/<br><br>/g,"<br>");
+		//console.log("now this annotation=|" + thisAnnotation + "|");
+		myHTML="<p class='docPageAnnotation'>" + thisAnnotation + "</p><br>";
+		document.getElementById("docAnnotationHolder").innerHTML=myHTML;
+		
+		//update the page number input box
+		console.log("pgNum="+pgNum);
+		let pgNumInput = document.getElementById("docPageNumInput");
+		console.log("pgNumInput.value=" + pgNumInput.value);
+		pgNumInput.setAttribute("value",pgNum+1); //NOTE: pgNum is zero based, people like 1 based
+		console.log("NOW pgNumInput.value=" + pgNumInput.value);
+	}
+	
+	//==========================================================================================
+	// navDocPage
+	//==========================================================================================	
+	function navDocPage(movement){
+		console.log("in navDocPage, rcd movement=" + movement);
+		if (movement === 'first'){
+			docPgNum=0;
+		}
+		else if (movement === 'last'){
+			docPgNum=docPages.length-1;
+		}
+		else if (movement==="prev"){
+			if (docPgNum===0){ //circle back to end
+				docPgNum=docPages.length-1; 
+			}
+			else {
+				docPgNum=docPgNum-1;
+			}
+		}
+		else if (movement==="next"){
+			if (docPgNum===docPages.length-1){ //circle back to start
+				docPgNum=0; 
+			}
+			else {
+				docPgNum=docPgNum+1;
+			}		
+		}
+		console.log("calling loadDocPage, sending docPgNum=" + docPgNum);
+		loadDocPageNum(docPgNum);
+	}
+	
 	
 	//==========================================================================================
 	// startup
 	//==========================================================================================
 	function startup(){
-		console.log("in startup");
+		//console.log("in startup");
 		countySchoolDistricts.length =0;
 		countyHighSchools.length = 0;
 		initVars(); //load global variables
 		buildMenus(); //build dropdowns based on contents of countySchoolDistricts and countyHighSchools
 		sizeBars(); //size and place the menu bars
-		console.log("countySchoolDistricts.length=" + countySchoolDistricts.length);
+		//console.log("countySchoolDistricts.length=" + countySchoolDistricts.length);
 	}
 
 	//==========================================================================================
@@ -98,7 +226,7 @@
 			}
 			// Example:
 			//<a onclick="menuClick({category:'High Schools',subCat:'RHS5', title:'RHS 5 Mayetta'})">RHS 5 Mayetta</a>
-			dropDownContents = dropDownContents + String.fromCharCode(13) + "<a onclick=\"menuClick({category:'High Schools', subCat:'" + countyHighSchools[i].number 
+			dropDownContents = dropDownContents + String.fromCharCode(13) + "<a onclick=\"menuClick({category:'County High Schools', subCat:'" + countyHighSchools[i].number 
 			dropDownContents = dropDownContents + "', title:'" + countyHighSchools[i].title + "'})\">"+ countyHighSchools[i].title + "</a>";
 				
 		}
@@ -169,27 +297,74 @@
 		var subTitle = document.getElementById("SubTitle");
 		var subMenu = document.getElementById("SubMenu");
 		var contentHolder = document.getElementById("ContentHolder");
-		var subMenuHTML = ``;
 		var contentTitleBar = document.getElementById("ContentTitle");
+		let iFrameHldr = document.getElementById("iFrameHolder");
+		let documentContentHolder = document.getElementById("documentContentHolder");
+		let docPage = document.getElementById("docPage");
+		let docNavBar = document.getElementById("docNavBar");
+		let schoolNavBar = document.getElementById("schoolNavBar");
+			
+		subMenuName = '';
+		subMenuCat = '';
 		
 		// SWITCH ON CATEGORY
 		switch(category){
 			
 		  //---------------------------
+		  case 'Test':
+		  //---------------------------	
+			subMenuName = '';
+			subMenuCat = '';
+			
+			//set the subTitle
+			subTitle.innerHTML = "Test";
+			
+			//set up submenu with document navigation controls
+			subMenu.style.display = "block";
+			docNavBar.style.display = "block";
+			schoolNavBar.style.display = "none"
+			
+			//hide the iFrame content
+			contentTitleBar.className = "titleBar3Empty";
+			iFrameHldr.style.display = "none";
+			
+			//show the document content
+			documentContentHolder.style.display = "block";
+			docPage.innerHTML = "";
+			
+			//load the document pages
+			loadDocPages("Test/Test_Files/AnnotatedPhotos_LloydCopeland.json");
+			break;
+			
+		  //---------------------------
 		  case 'Home':
 		  //---------------------------		  
+			subMenuName = '';
+			subMenuCat = '';
 			contentSource="Welcome/Welcome.html"
 			subTitle.innerHTML = "Welcome";
-			subMenu.innerHTML="&nbsp";
+			iFrameHldr.style.display = "block";
+			documentContentHolder.display = "none";
+			subMenu.style.display = "block";
+			docNavBar.style.display = "none";
+			schoolNavBar.style.display = "none"
+			docPage.innerHTML = "";
 			contentTitleBar.className = "titleBar3Empty";
 			break;
 
 		  //---------------------------
 		  case 'Overview':
-		  //---------------------------		  
-			subMenu.innerHTML="&nbsp";
+		  //---------------------------		
+			subMenuName = '';
+			subMenuCat = '';		  
 			subTitle.innerHTML = "Overview";
+			documentContentHolder.display = "none";
+			subMenu.style.display = "block";
+			docNavBar.style.display = "none";
+			schoolNavBar.style.display = "none"
+			docPage.innerHTML = "";
 			contentTitleBar.className = "titleBar3";
+			iFrameHldr.style.display = "block";
 			
 			if (subCat==='Overview'){
 				contentSource="Overview/CountyOverview.html";
@@ -232,9 +407,16 @@
 		  //---------------------------
 		  case 'Maps':
 		  //---------------------------
-			subMenu.innerHTML="&nbsp";
+			subMenuName = '';
+			subMenuCat = '';
 			subTitle.innerHTML = "Maps";
 			contentTitleBar.className = "titleBar3";
+			subMenu.style.display = "block";
+			docNavBar.style.display = "none";
+			schoolNavBar.style.display = "none"
+			iFrameHldr.style.display = "block";
+			documentContentHolder.display = "none";
+			docPage.innerHTML = "";
 			
 			if (subCat==='1878 Jackson Co.'){
 				contentSource="Maps/1878_JacksonCo.html";
@@ -327,10 +509,17 @@
 
 		  //---------------------------		  
 		  case 'Pre-Org':
-		  //---------------------------		  
-			subMenu.innerHTML="&nbsp";
+		  //---------------------------	
+			subMenuName = '';
+			subMenuCat = '';		  
 			subTitle.innerHTML = "Territorial Kansas";
 			contentTitleBar.className = "titleBar3Empty";
+			iFrameHldr.style.display = "block";
+			documentContentHolder.display = "none";
+			subMenu.style.display = "block";
+			docNavBar.style.display = "none";
+			schoolNavBar.style.display = "none"
+			docPage.innerHTML = "";
 			
 			if (subCat==='Frontier'){
 				contentSource="Pre-Org/Frontier.html";
@@ -340,40 +529,48 @@
 			}
 			break;
 
-		  //---------------------------		  
-		  case 'County Districts':
-		  //---------------------------	
-			// LOAD SUB TITLE
-			var subTitleHTML = `County District ` + title;
-			subTitle.innerHTML = subTitleHTML;
-			
-			// LOAD SUBMENU html
-			subMenuHTML = ``;
+			//---------------------------	
+			// SCHOOLS		  
+			case 'County Districts':
+			case 'County High Schools':
+			case 'Colleges':
+			case 'Unified School Districts':
+			//---------------------------	
+				// LOAD SUB TITLE
+				let catFolderName = category.replace(/\s/g,"");
+				var subTitleHTML = catFolderName + title;
+				subTitle.innerHTML = subTitleHTML;
+				iFrameHldr.style.display = "block";
+				documentContentHolder.display = "none";
+				subMenu.style.display = "block";
+				docNavBar.style.display = "none";
+				schoolNavBar.style.display = "block"
+				docPage.innerHTML = "";
 
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('CountyDistricts','Overview','` + subCat + `')">Overview</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('CountyDistricts','Location(s)','` + subCat + `')">Location(s) and Bldgs</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('CountyDistricts','People','` + subCat + `')">People</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('CountyDistricts','Events','` + subCat + `')">Events</a>`;
+				// LOAD SUBMENU click parameters
+				subMenuName = "CountyDistricts";
+				subMenuCat = subCat;
 
-			subMenu.innerHTML=subMenuHTML;
-			contentSource="CountyDistricts/" + subCat + "/" + subCat + "_Overview.html";
-			contentTitleBar.className = "titleBar3";
-			contentTitleBar.innerHTML="Overview";
+				contentSource= category + "/" + subCat + "/" + subCat + "_Overview.html";
+				contentTitleBar.className = "titleBar3";
+				contentTitleBar.innerHTML="Overview";
 			break;
 			
 		  //---------------------------		
 		  case 'Pottawatomie Mission':
 		  //---------------------------		
 			subTitle.innerHTML = "Pottawatomie Mission";
-			// LOAD SUBMENU html
-			subMenuHTML = ``;
-
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('PottawatomieMission','Overview','')">Overview</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('PottawatomieMission','Location(s)','')">Location(s) and Bldgs</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('PottawatomieMission','People','')">People</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('PottawatomieMission','Events','')">Events</a>`;
-			subMenu.innerHTML=subMenuHTML;		
+			iFrameHldr.style.display = "block";
+			documentContentHolder.display = "none";
+			subMenu.style.display = "block";
+			docNavBar.style.display = "none";
+			schoolNavBar.style.display = "block"
+			docPage.innerHTML = "";
 			
+			// LOAD SUBMENU click parameters
+			subMenuName = "PottawatomieMission";
+			subMenuCat = "";
+	
 			contentTitleBar.className = "titleBar3";
 			contentTitleBar.innerHTML="Overview";
 			contentSource="PottawatomieMission/PottawatomieMission_Overview.html";
@@ -385,16 +582,19 @@
 			// LOAD SUB TITLE
 			var subTitleHTML = "County High Schools - " + title;
 			subTitle.innerHTML = subTitleHTML;
+			iFrameHldr.style.display = "block";
+			documentContentHolder.display = "none";
+			subMenu.style.display = "block";
+			docNavBar.style.display = "none";
+			schoolNavBar.style.display = "block"
+			docPage.innerHTML = "";
+						
+						
+			// LOAD SUBMENU click parameters
+			subMenuName = "CountyHighSchools";
+			subMenuCat = subCat;
 			
-			// LOAD SUBMENU html
-			subMenuHTML = ``;
-
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('CountyHighSchools','Overview','` + subCat + `')">Overview</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('CountyHighSchools','Location(s)','` + subCat + `')">Location(s) and Bldgs</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('CountyHighSchools','People','` + subCat + `')">People</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('CountyHighSchools','Events','` + subCat + `')">Events</a>`;
-
-			subMenu.innerHTML=subMenuHTML;
+	
 			contentSource="CountyHighSchools/" + subCat + "/" + subCat + "_Overview.html";
 			contentTitleBar.className = "titleBar3";
 			contentTitleBar.innerHTML="Overview";			
@@ -407,16 +607,17 @@
 			// LOAD SUB TITLE
 			var subTitleHTML = title;
 			subTitle.innerHTML = subTitleHTML;
-			
-			// LOAD SUBMENU html
-			subMenuHTML = ``;
+			iFrameHldr.style.display = "block";
+			documentContentHolder.display = "none";
+			subMenu.style.display = "block";
+			docNavBar.style.display = "none";
+			schoolNavBar.style.display = "block"
+			docPage.innerHTML = "";
+									
+			// LOAD SUBMENU click parameters
+			subMenuName = "UnifiedSchoolDistricts";
+			subMenuCat = subCat;
 
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('UnifiedSchoolDistricts','Overview','` + subCat + `')">Overview</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('UnifiedSchoolDistricts','Location(s)','` + subCat + `')">Location(s) and Bldgs</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('UnifiedSchoolDistricts','People','` + subCat + `')">People</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('UnifiedSchoolDistricts','Events','` + subCat + `')">Events</a>`;
-
-			subMenu.innerHTML=subMenuHTML;
 			contentSource="UnifiedSchoolDistricts/" + subCat + "/" + subCat + "_Overview.html";
 			contentTitleBar.className = "titleBar3";
 			contentTitleBar.innerHTML="Overview";	
@@ -428,15 +629,18 @@
 			// LOAD SUB TITLE
 			var subTitleHTML = title;	
 			subTitle.innerHTML = subTitleHTML;
+			iFrameHldr.style.display = "block";
+			documentContentHolder.display = "none";
+			subMenu.style.display = "block";
+			docNavBar.style.display = "none";
+			schoolNavBar.style.display = "block"
+			docPage.innerHTML = "";
 
-			// LOAD SUBMENU html
-			subMenuHTML = ``;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('Colleges','Overview','` + subCat + `')">Overview</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('Colleges','Location(s)','` + subCat + `')">Location(s) and Bldgs</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('Colleges','People','` + subCat + `')">People</a>`;
-			subMenuHTML=subMenuHTML + `<a onclick="subMenuClick('Colleges','Events','` + subCat + `')">Events</a>`;
+						
+			// LOAD SUBMENU click parameters
+			subMenuName = "Colleges";
+			subMenuCat = subCat;
 
-			subMenu.innerHTML=subMenuHTML;
 			contentSource="Colleges/" + subCat + "/" + subCat + "_Overview.html";
 			contentTitleBar.className = "titleBar3";
 			contentTitleBar.innerHTML="Overview";
@@ -444,31 +648,50 @@
 
 		  //---------------------------	
 		  case 'References':
-		  //---------------------------			  
-			subMenu.innerHTML="&nbsp";
+		  //---------------------------		
+			subMenuName = "";
+			subMenuCat = "";		  
 			subTitle.innerHTML = "References";	
 			contentTitleBar.className = "titleBar3Empty";
+			iFrameHldr.style.display = "block";
+			documentContentHolder.display = "none";
+			subMenu.style.display = "block";
+			docNavBar.style.display = "none";
+			schoolNavBar.style.display = "none"
+			docPage.innerHTML = "";
 			contentSource="References/References.html";
-
 			break;
 			
 		  //---------------------------	
 		  case 'SourceMatl':
 		  //---------------------------			  
-			subMenu.innerHTML="&nbsp";
+			subMenuName = "";
+			subMenuCat = "";
 			subTitle.innerHTML = "Source Materials";	
 			contentTitleBar.className = "titleBar3Empty";
-			contentSource="SourceMatls/xxxxx.html";
-
+			iFrameHldr.style.display = "block";
+			documentContentHolder.display = "none";
+			subMenu.style.display = "block";
+			docNavBar.style.display = "none";
+			schoolNavBar.style.display = "none"
+			docPage.innerHTML = "";
+			contentSource="SourceMatls/SourceMatls.html";
 			break;
 
 		  //---------------------------	
 		  case 'Contact':
-		  //---------------------------			  
-			subMenu.innerHTML="&nbsp";
+		  //---------------------------	
+			subMenuName = "";
+			subMenuCat = "";		  
 			subTitle.innerHTML = "Contact";	
 			contentTitleBar.className = "titleBar3Empty";
+			subMenu.style.display = "block";
+			docNavBar.style.display = "none";
+			schoolNavBar.style.display = "none"
+			iFrameHldr.style.display = "block";
 			contentSource="Contact/Contact.html";
+			documentContentHolder.display = "none";
+			docPage.innerHTML = "";
 			break;
 
 		} 
@@ -483,167 +706,20 @@
 	}
 	
 	//==========================================================================================
-	// subMenuClick
+	// schoolSubMenuClick
 	//==========================================================================================
-	function subMenuClick(subMenuName, category, subCat) {
-	  console.log("subMenuClick: subMenuName=" + subMenuName + ", category=" + category + ", subCat=" + subCat);
-	  var source = '';
-	  var contentTitleBar = document.getElementById("ContentTitle");
-	  var contentHolder = document.getElementById("ContentHolder");
-	  
-	  //---------------------------
-	  // SWITCH ON SUBMENU NAME
-	  //---------------------------
-	  switch(subMenuName){
-		case 'CountyDistricts':
-			  //---------------------------
-			  // SWITCH ON CATEGORY
-			  //---------------------------
-			switch(category){
-			  case 'Overview':
-				source="CountyDistricts/" + subCat + "/" + subCat + "_Overview.html";
-				contentTitleBar.innerHTML="Overview";
-			  break;
-			  
-			  case 'Location(s)':
-				source="CountyDistricts/" + subCat + "/" + subCat + "_Locations.html";
-				contentTitleBar.innerHTML="Location(s) and Buildings";
-			  break;
-			  
-			  case 'People':
-				source="CountyDistricts/" + subCat + "/" + subCat + "_People.html";
-				contentTitleBar.innerHTML="People";
-			  break;
-			  
-			  case 'Events':
-				source="CountyDistricts/" + subCat + "/" + subCat + "_Events.html";
-				contentTitleBar.innerHTML="Events";
-			  break;
-			  
-			  }
-		break; //end of case CountyDistricts
-		
-		case 'PottawatomieMission':
-			  //---------------------------
-			  // SWITCH ON CATEGORY
-			  //---------------------------
-			switch(category){
-			  case 'Overview':
-				source="PottawatomieMission/PottawatomieMission_Overview.html";
-				contentTitleBar.innerHTML="Overview";
-			  break;
-			  
-			  case 'Location(s)':
-				source="PottawatomieMission/PottawatomieMission_Locations.html";
-				contentTitleBar.innerHTML="Location(s) and Buildings";
-			  break;
-			  
-			  case 'People':
-				source="PottawatomieMission/PottawatomieMission_People.html";
-				contentTitleBar.innerHTML="People";
-			  break;
-			  
-			  case 'Events':
-				source="PottawatomieMission/PottawatomieMission_Events.html";
-				contentTitleBar.innerHTML="Events";
-			  break;
-			  
-			  }
-		break; //end of case PottawatomieMission
-		
-		case 'CountyHighSchools':
-			  //---------------------------
-			  // SWITCH ON CATEGORY
-			  //---------------------------
-			  
-			switch(category){
-			  case 'Overview':
-				source="CountyHighSchools/" + subCat + "/" + subCat + "_Overview.html";
-				contentTitleBar.innerHTML="Overview";
-			  break;
-			  
-			  case 'Location(s)':
-				source="CountyHighSchools/" + subCat + "/" + subCat + "_Locations.html";
-				contentTitleBar.innerHTML="Location(s) and Buildings";
-			  break;
-			  
-			  case 'People':
-				source="CountyHighSchools/" + subCat + "/" + subCat + "_People.html";
-				contentTitleBar.innerHTML="People";
-			  break;
-			  
-			  case 'Events':
-				source="CountyHighSchools/" + subCat + "/" + subCat + "_Events.html";
-				contentTitleBar.innerHTML="Events";
-			  break;
-			  
-			  }
-		break; //end of case CountyHighSchools		
-		
-		case 'UnifiedSchoolDistricts':
-			  //---------------------------
-			  // SWITCH ON CATEGORY
-			  //---------------------------
-			  
-			switch(category){
-			  case 'Overview':
-				source="UnifiedSchoolDistricts/" + subCat + "/" + subCat + "_Overview.html";
-				contentTitleBar.innerHTML="Overview";
-			  break;
-			  
-			  case 'Location(s)':
-				source="UnifiedSchoolDistricts/" + subCat + "/" + subCat + "_Locations.html";
-				contentTitleBar.innerHTML="Location(s) and Buildings";
-			  break;
-			  
-			  case 'People':
-				source="UnifiedSchoolDistricts/" + subCat + "/" + subCat + "_People.html";
-				contentTitleBar.innerHTML="People";
-			  break;
-			  
-			  case 'Events':
-				source="UnifiedSchoolDistricts/" + subCat + "/" + subCat + "_Events.html";
-				contentTitleBar.innerHTML="Events";
-			  break;
-			  
-			  }
-		break; //end of case CountyHighSchools	
-		
-		case 'Colleges':
-			  //---------------------------
-			  // SWITCH ON CATEGORY
-			  //---------------------------
-			  
-			switch(category){
-			  case 'Overview':
-				source="Colleges/" + subCat + "/" + subCat + "_Overview.html";
-				contentTitleBar.innerHTML="Overview";
-			  break;
-			  
-			  case 'Location(s)':
-				source="Colleges/" + subCat + "/" + subCat + "_Locations.html";
-				contentTitleBar.innerHTML="Location(s) and Buildings";
-			  break;
-			  
-			  case 'People':
-				source="Colleges/" + subCat + "/" + subCat + "_People.html";
-				contentTitleBar.innerHTML="People";
-			  break;
-			  
-			  case 'Events':
-				source="Colleges/" + subCat + "/" + subCat + "_Events.html";
-				contentTitleBar.innerHTML="Events";
-			  break;
-			  
-			  }
-		break; //end of case Colleges	
-		
-	    }  //end switch on SubMenuName
+	function schoolSubMenuClick(category) {
+		console.log("schoolSubMenuClick: subMenuName=" + subMenuName + ", category=" + category + ", subCat=" + subMenuCat);
+		var contentTitleBar = document.getElementById("ContentTitle");
+		var contentHolder = document.getElementById("ContentHolder");
 
-		// CHANGE THE SOURCE FOR THE iFrame
-		contentHolder.src =source;
+		// change the content title bar
+		contentTitleBar.innerHTML=category;
+
+		// change the source for the  iFrame
+		contentHolder.src =subMenuName + "/" + subMenuCat + "/" + subMenuCat + "_" + category + ".html";;
 		
-		// ADJUST LOCATIONS OF BARS
+		// adjust locations of bars
 		sizeBars()
 		
 	} // end of function subMenuClick 
@@ -1727,10 +1803,13 @@
 		countyHighSchools.push(thisDist);
 
 	}	
+
+
 	
-//======================================================================================================================================================================================
-// CLASSES
-//======================================================================================================================================================================================
+	
+	//======================================================================================================================================================================================
+	// CLASSES
+	//======================================================================================================================================================================================
 	//---------------------------
 	// PageObject
 	//---------------------------	
@@ -1740,4 +1819,15 @@
 		path;
 		category;
 	}
+	
+	//---------------------------
+	// AnnotatedPhotoObject
+	//---------------------------	
+	class AnnotatedPhotoObject{
+		sortNum;
+		photoFilePath;
+		caption;
+		annotation;
+	}
+	
 	

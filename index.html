@@ -2,7 +2,7 @@
 <HEAD>
 <TITLE>Jackson County, Kansas: Schools History</TITLE>
 	<link rel="stylesheet" href="Styles.css">
-	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </HEAD>
 
 <BODY onload="startup();">
@@ -88,10 +88,10 @@ Jackson County, Kansas Schools History
 		  <i class="fa fa-caret-down"></i>
 		</button>	
 		  <div class="dropdown-content">
-			<a onclick="menuClick({category:'USD',subCat:'USD321', title:'USD 321 Kaw Valley'})">USD 321 Kaw Valley</a>
-			<a onclick="menuClick({category:'USD',subCat:'USD335', title:'USD 335 Jackson Heights'})">USD 335 Jackson Heights</a>
-			<a onclick="menuClick({category:'USD',subCat:'USD336', title:'USD 336 Holton'})">USD 336 Holton</a>
-			<a onclick="menuClick({category:'USD',subCat:'USD337', title:'USD 337 Royal Valley'})">USD 337 Royal Valley</a>
+			<a onclick="menuClick({category:'Unified School District',subCat:'USD321', title:'USD 321 Kaw Valley'})">USD 321 Kaw Valley</a>
+			<a onclick="menuClick({category:'Unified School District',subCat:'USD335', title:'USD 335 Jackson Heights'})">USD 335 Jackson Heights</a>
+			<a onclick="menuClick({category:'Unified School District',subCat:'USD336', title:'USD 336 Holton'})">USD 336 Holton</a>
+			<a onclick="menuClick({category:'Unified School District',subCat:'USD337', title:'USD 337 Royal Valley'})">USD 337 Royal Valley</a>
 		  </div>
 	</div>
 	
@@ -111,8 +111,10 @@ Jackson County, Kansas Schools History
 	<!-- -------------------- -->
 	<a onclick="menuClick({category:'References',subCat:''})">References</a>
 	
-	<!-- Research Materials -->
+	<!-- Source Materials -->
 	<!-- -------------------- -->
+	<a onclick="menuClick({category:'SourceMatl',subCat:''})">Source Matl</a>
+	<!--
 	<div class="dropdown">
 		<button class="dropbtn">Source Matl		
 		  <i class="fa fa-caret-down"></i>
@@ -126,11 +128,15 @@ Jackson County, Kansas Schools History
 			<a onclick="menuClick({category:'SourceMatl',subCat:'OtherRpts', title:'Other Reports'})">Other Reports</a>
 		  </div>
 	</div>
+	-->
 	
 	<!-- Contact -->
 	<!-- -------------------- -->
 	<a onclick="menuClick({category:'Contact',subCat:''})">Contact</a>
-	
+		
+	<!-- TEST ONLY -->
+	<!-- -------------------- -->
+	<a onclick="menuClick({category:'Test',subCat:''})">TEST ONLY</a>
 	
 </div> <!-- END OF NAVIGATION BAR -->
 
@@ -146,15 +152,36 @@ Jackson County, Kansas Schools History
 <!-- SUBMENU -->
 <!-- ---------------------------------------------------------------------------------------------- -->
 <DIV id="SubMenu" class="navBar2" >
-	<!-- changed programmatically -->
-	&nbsp
+	<!-- displays switched programmatically -->
+	
+	<!-- school subMenu -->
+	<span id='schoolNavBar' style='display: none;'>
+		<a onclick="schoolSubMenuClick('Overview')">Overview</a>
+		<a onclick="schoolSubMenuClick('Locations')">Location(s) and Bldgs</a>
+		<a onclick="schoolSubMenuClick('People')">People</a>
+		<a onclick="schoolSubMenuClick('Events')">Events</a>
+	</span>
+	
+	<!-- document subMenu -->
+	<span id='docNavBar' style='display: none;'>
+		<!-- Navigate through images -->
+		<button style='font-size:12px' onclick="navDocPage('first')"><i class='fa fa-fast-backward'></i></button>
+		<button style='font-size:12px' onclick="navDocPage('prev')"><i class='fa fa-step-backward'></i></button>
+		<input type="number" id="docPageNumInput" name="docPageNumInput" class='pageNumInput'> <!-- there's a listener on this -->
+		<span id="totalDocPages"> of </span>
+		<button style='font-size:12px' onclick="navDocPage('next')"><i class='fa fa-step-forward'></i></button>
+		<button style='font-size:12px' onclick="navDocPage('last')"><i class='fa fa-fast-forward'></i></button>
+		<!-- Search document -->
+		<input type='text' id='docPageSearchInput' name='docPageSearchInput' class='searchInput'>
+		<button style='font-size:10px'><i class='fa fa-search'></i></button>
+	</span>
 </DIV>
 
 <!-- ---------------------------------------------------------------------------------------------- -->
 <!-- CONTENT TITLE BAR -->
 <!-- ---------------------------------------------------------------------------------------------- -->
 <DIV id="ContentTitle" class="titleBar3Empty" >
-	<!-- changed programmatically -->
+	<!-- changed programmatically, hidden for document displaying -->
 	&nbsp
 </DIV>
 
@@ -164,10 +191,26 @@ Jackson County, Kansas Schools History
 <DIV id="Spacer" class="divSpacer"></DIV>
 
 <!-- ---------------------------------------------------------------------------------------------- -->
-<!-- CONTENT -->
+<!-- PAGE CONTENT -->
 <!-- ---------------------------------------------------------------------------------------------- -->
 <div id="iFrameHolder" class="iFrameHolder">
 	<iframe id="ContentHolder" src="Welcome/Welcome.html" title="description" class="contentHolder" ></iframe>
+</div>
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+<!-- DOCUMENT CONTENT  -->
+<!-- ---------------------------------------------------------------------------------------------- -->
+<div id="documentContentHolder" class='iFrameHolder'>
+	<!-- document navbar -->
+	
+	<div class='docPage'>
+		<div id="docPage" class='docPageImage'>
+			<!-- content filled by javascript in loadDocPgNum() -->
+		</div>
+		<div id="docAnnotationHolder" class='docPageAnnotationHolder'>
+			<!-- content filled by javascript in loadDocPgNum() -->
+		<div>
+	</div>
 </div>
 
 <!-- ---------------------------------------------------------------------------------------------- -->
