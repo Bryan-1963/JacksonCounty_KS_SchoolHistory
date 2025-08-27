@@ -139,7 +139,10 @@
 		//update the page number input box
 		let pgNumInput = document.getElementById("docPageNumInput");
 		pgNumInput.setAttribute("value",Number(pgNum)+1); //NOTE: pgNum is zero based, people like 1 based
-
+		pgNumInput.dispatchEvent(new Event('input'));
+		pgNumInput.value = Number(pgNum)+1Number(pgNum)+1;
+		pgNumInput.focus();
+		pgNumInput.dispatchEvent(new Event('input'));
 	}
 	
 	//==========================================================================================
@@ -172,7 +175,11 @@
 				
 		//update the page number input box to account for limiting
 		let pgNumInput = document.getElementById("docPageNumInput");
-		pgNumInput.setAttribute("value",Number(docPgNum)+1);
+		pgNumInput.setAttribute("value",Number(pgNum)+1); //NOTE: pgNum is zero based, people like 1 based
+		pgNumInput.dispatchEvent(new Event('input'));
+		pgNumInput.value = Number(pgNum)+1Number(pgNum)+1;
+		pgNumInput.focus();
+		pgNumInput.dispatchEvent(new Event('input'));
 		
 		//load the requested page	
 		console.log("calling loadDocPage, sending docPgNum=" + docPgNum);
