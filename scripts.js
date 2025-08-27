@@ -117,12 +117,19 @@
 		document.getElementById("docPage").innerHTML=myHTML;
 		
 		//update the annotation page HTML
-		let thisAnnotation = docPages[pgNum]['description'] ;
-		//console.log("this annotation=|" + thisAnnotation + "|");
-		thisAnnotation=thisAnnotation.replace(/[\r\n]/g,"<br>");
-		thisAnnotation=thisAnnotation.replace(/<br><br>/g,"<br>");
+		let thisAnnotation = docPages[pgNum]['description'] ;  
+		//thisAnnotation is an array of paragraph texts
+		let totalAnnotation = "";
+		for (let i=0,i<thisAnnotation.length-1,i++){
+			thisAnnotation[i] = thisAnnotation[i].replace(/[\r\n]/g,"<br>");
+			console.log("     thisAnnotation[" + i + "]=|" + thisAnnotation[i] + "|");
+			totalAnnotation = totalAnnotation + thisAnnotation[i] + "<br>";
+		}
+		console.log("     totalAnnotation=|" + totalAnnotation + "|");
+		//thisAnnotation=thisAnnotation.replace(/[\r\n]/g,"<br>");
+		//thisAnnotation=thisAnnotation.replace(/<br><br>/g,"<br>");
 		//console.log("now this annotation=|" + thisAnnotation + "|");
-		myHTML="<p class='docPageAnnotation'>" + thisAnnotation + "</p><br>";
+		myHTML="<p class='docPageAnnotation'>" + totalAnnotation + "</p><br>";
 		document.getElementById("docAnnotationHolder").innerHTML=myHTML;
 		
 		//update the page number input box
