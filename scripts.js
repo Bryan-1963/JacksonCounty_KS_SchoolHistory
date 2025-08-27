@@ -121,7 +121,8 @@
 		//thisAnnotation is an array of paragraph texts
 		let totalAnnotation = "";
 		for (let i=0,i<thisAnnotation.length-1,i++){
-			thisAnnotation[i] = thisAnnotation[i].replace(/[\r\n]/g,"<br>");
+			console.log("     thisAnnotation[" + i + "]=|" + thisAnnotation[i] + "|");
+			thisAnnotation[i] = thisAnnotation[i].toString().replace(/[\r\n]/g,"<br>");
 			console.log("     thisAnnotation[" + i + "]=|" + thisAnnotation[i] + "|");
 			totalAnnotation = totalAnnotation + thisAnnotation[i] + "<br>";
 		}
