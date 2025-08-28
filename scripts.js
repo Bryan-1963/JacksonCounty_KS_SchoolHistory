@@ -175,9 +175,9 @@
 				
 		//update the page number input box to account for limiting
 		let pgNumInput = document.getElementById("docPageNumInput");
-		pgNumInput.setAttribute("value",Number(pgNum)+1); //NOTE: pgNum is zero based, people like 1 based
+		pgNumInput.setAttribute("value",Number(docPgNum)+1); //NOTE: pgNum is zero based, people like 1 based
 		pgNumInput.dispatchEvent(new Event('input'));
-		pgNumInput.value = Number(pgNum)+1;
+		pgNumInput.value = Number(docPgNum)+1;
 		pgNumInput.focus();
 		pgNumInput.dispatchEvent(new Event('input'));
 		
