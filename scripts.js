@@ -573,7 +573,7 @@
 				subMenuName = "CountyDistricts";
 				subMenuCat = subCat;
 
-				contentSource= category + "/" + subCat + "/" + subCat + "_Overview.html";
+				contentSource= catFolderName + "/" + subCat + "/" + subCat + "_Overview.html";
 				contentTitleBar.className = "titleBar3";
 				contentTitleBar.innerHTML="Overview";
 			break;
