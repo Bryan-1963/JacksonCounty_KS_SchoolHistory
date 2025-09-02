@@ -98,6 +98,10 @@
 		let docPage = document.getElementById("docPage");
 		docPage.innerHTML = "";
 		
+		//clean out old info
+		document.getElementById("docPage").innerHTML="";
+		document.getElementById("docAnnotationHolder").innerHTML="";
+		
 		//fetch the data about the document
 		docPages.length = 0;	
 		console.log("webRootLocation+filePath=|" + webRootLocation+filePath + "|");
