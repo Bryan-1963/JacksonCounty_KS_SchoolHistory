@@ -173,7 +173,7 @@ Jackson County, Kansas Schools History
 			</button>
 			
 			<!-- unfilter button -->
-			<button onclick="clearDocumentFilter() style='font-size:10px'>
+			<button onclick="clearDocumentFilter()" style='font-size:10px'>
 				<i class="fa fa-filter" id="unFilterContainer">
 					<i class="fa fa-ban" id="nestedBan"></i>
 				</i>
@@ -208,9 +208,9 @@ Jackson County, Kansas Schools History
 <div id="documentContentHolder" class='iFrameHolder'>
 	<div class='docPage'>
 		<div id="docPage" class='docPageImage'>
-			<figure class='myFigure' id='docPageFigure'>
+			<figure class='docFigure' id='docPageFigure'>
 				<img id='docPageImg' src='' style='max-height: 600px;'> <!-- source filled by javascript in loadDocPgNum() -->
-				<figcaption id='figCaption'>
+				<figcaption id='figCaption' class='unNumberedFig'>
 					<!-- content filled by javascript in loadDocPgNum() -->
 				</figcaption>
 			</figure>

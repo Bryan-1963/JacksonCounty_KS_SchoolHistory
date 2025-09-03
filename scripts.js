@@ -118,7 +118,7 @@
 	//==========================================================================================	
 	function filterDocument(){
 		//get value to search for 
-		docSearchTerm = docPageSearchInput.value.toString().trim();
+		docSearchTerm = docPageSearchInput.value.toString().trim().toLowerCase();
 		let foundSomeMatches = false;
 		let matchingPages = [];
 		
@@ -132,7 +132,7 @@
 				let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
 				for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
 					let thisTxt = thisAnnotation[paraNum].toString();
-					if(thisTxt.includes(docSearchTerm)){
+					if(thisTxt.toLowerCase().includes(docSearchTerm)){
 						thisPageHasIt=true;
 						foundSomeMatches=true;
 					}
@@ -140,7 +140,7 @@
 				
 				//check the caption
 				thisTxt = docPages[pgNum]['caption'].toString();
-				if(thisTxt.includes(docSearchTerm)){
+				if(thisTxt.toLowerCase().includes(docSearchTerm)){
 					thisPageHasIt=true;
 					foundSomeMatches=true;
 				}

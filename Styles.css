@@ -451,7 +451,26 @@
 			border: 2px solid black;
 		}
 
-				
+		.docFigure {
+			width: auto;
+			display: inline-block; 
+			margin-left: 20px;
+		}	
+		
+		.docFigure figcaption {
+			font-weight: bold;
+			font-style: italic;
+			font-size: 14px;
+			margin-left: 20px;
+			padding-bottom: 12px;
+		}
+		
+		.docFigure img {
+			max-height: 800px; 
+			height: auto;   
+			border: 2px solid black;
+		}
+		
 		.figureNotes{
 			margin-left: 20px;
 			font-size: 14px;
