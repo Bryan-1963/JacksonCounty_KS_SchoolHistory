@@ -221,11 +221,11 @@
 	function loadDocPageNum(pgNum){
 		//console.log("in loadDocPageNum, rcd pgNum=" + pgNum);
 
-		let docImg = document.getElementByID('dogPageImage');
+		let docImg = document.getElementById('dogPageImage');
 		docImg.src = webRootLocation + docPages[pgNum]['photoFilePath'].toString()
 		
 		//update image caption
-		let figCapt = document.getElementByID('figCaption');
+		let figCapt = document.getElementById('figCaption');
 		if (docPages[pgNum]['caption'].length>0) {
 			figCapt.innerHTML = docPages[pgNum]['caption'];
 		}
@@ -240,7 +240,7 @@
 			thisAnnotation[paraNum] = thisAnnotation[paraNum].toString().replace(/[\r\n]/g,"<br>");
 			totalAnnotation = totalAnnotation + thisAnnotation[paraNum] + "<br><br>";
 		}
-		let docAnnot = document.getElementByID("docAnnotation");
+		let docAnnot = document.getElementById("docAnnotation");
 		docAnnot.innerHTML=totalAnnotation;
 		
 		//update the page number input box
