@@ -162,7 +162,9 @@ Jackson County, Kansas Schools History
 			
 			<div class='input-wrapper'>
 				<input type='text' id='docPageSearchInput' name='docPageSearchInput' class='searchInput'>
-				<button onclick="clearSearchInput('docPageSearchInput')" style='font-size:10px'><i class='fa fa-close' id='clearInputBtn'></i></button>
+				<button onclick="clearSearchInput('docPageSearchInput')" style='font-size:10px'>
+					<i class='fa fa-close' id='clearInputBtn'></i>
+				</button>
 			</div>
 			
 			<!-- filter button -->
@@ -208,10 +210,17 @@ Jackson County, Kansas Schools History
 	
 	<div class='docPage'>
 		<div id="docPage" class='docPageImage'>
-			<!-- content filled by javascript in loadDocPgNum() -->
+			<figure class='myFigure' id='docPageFigure'>
+				<img id='dogPageImage' src='' style='max-height: 600px;'> <!-- source filled by javascript in loadDocPgNum() -->
+				<figcaption id='figCaption'>
+					<!-- content filled by javascript in loadDocPgNum() -->
+				</figcaption>
+			</figure>
 		</div>
 		<div id="docAnnotationHolder" class='docPageAnnotationHolder'>
-			<!-- content filled by javascript in loadDocPgNum() -->
+			<p id='docAnnotation' class='docPageAnnotation'>
+				<!-- content filled by javascript in loadDocPgNum() -->
+			</p>
 		<div>
 	</div>
 </div>

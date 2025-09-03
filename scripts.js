@@ -220,20 +220,18 @@
 	//==========================================================================================	
 	function loadDocPageNum(pgNum){
 		//console.log("in loadDocPageNum, rcd pgNum=" + pgNum);
-		//update HTML for image side
-		let myHTML = "";
-		myHTML=myHTML + "<figure class='myFigure'>";
-		myHTML=myHTML + "<img src='" + webRootLocation + docPages[pgNum]['photoFilePath'].toString() + "' style='max-height: 600px;'>";
+
+		let docImg = document.getElementByID('dogPageImage');
+		docImg.src = webRootLocation + docPages[pgNum]['photoFilePath'].toString()
 		
 		//update image caption
+		let figCapt = document.getElementByID('figCaption');
 		if (docPages[pgNum]['caption'].length>0) {
-			myHTML=myHTML + "<figcaption id='figCaption'>" + docPages[pgNum]['caption'] + "</figcaption>";
+			figCapt.innerHTML = docPages[pgNum]['caption'];
 		}
 		else {
-			myHTML=myHTML + "<figcaption id='figCaption'></figcaption>";
+			figCapt.innerHTML = "";
 		}
-		myHTML=myHTML + "</figure>";
-		document.getElementById("docPage").innerHTML=myHTML;
 		
 		//update the annotation page HTML
 		let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
@@ -242,8 +240,8 @@
 			thisAnnotation[paraNum] = thisAnnotation[paraNum].toString().replace(/[\r\n]/g,"<br>");
 			totalAnnotation = totalAnnotation + thisAnnotation[paraNum] + "<br><br>";
 		}
-		myHTML="<p class='docPageAnnotation'>" + totalAnnotation + "</p><br>";
-		document.getElementById("docAnnotationHolder").innerHTML=myHTML;
+		let docAnnot = document.getElementByID("docAnnotation");
+		docAnnot.innerHTML=totalAnnotation;
 		
 		//update the page number input box
 		let pgNumInput = document.getElementById("docPageNumInput");
@@ -258,14 +256,14 @@
 			let re = new RegExp(docSearchTerm,"g");
 			
 			//highlight instances in caption
-			//let text = document.getElementByID("figCaption").innerHTML;
-			//let newText = text.replace(re, `<mark>${docSearchTerm}</mark>`);
-			//document.getElementByID("figCaption").innerHTML = newText;
+			let text = figCapt.innerHTML;
+			let newText = text.replace(re, `<mark>${docSearchTerm}</mark>`);
+			figCapt.innerHTML = newText;
 			
 			//highlight instances in annotation
-			text = document.getElementByID("docAnnotationHolder").innerHTML;
+			text = docAnnot.innerHTML;
 			newText = text.replace(re, `<mark>${docSearchTerm}</mark>`);
-			document.getElementByID("docAnnotationHolder").innerHTML = newText;
+			docAnnot.innerHTML = newText;
 			
 		}
 	};
