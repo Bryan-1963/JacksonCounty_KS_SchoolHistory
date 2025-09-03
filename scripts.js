@@ -129,7 +129,7 @@
 				let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
 				for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
 					let thisTxt = thisAnnotation[paraNum].toString();
-					if(thisTxt.includes(searchTerm){
+					if(thisTxt.includes(searchTerm)){
 						thisPageHasIt=true;
 						foundSomeMatches=true;
 					}
@@ -137,7 +137,7 @@
 				
 				//check the caption
 				thisTxt = docPages[pgNum]['caption'].toString();
-				if(thisTxt.includes(searchTerm){
+				if(thisTxt.includes(searchTerm)){
 					thisPageHasIt=true;
 					foundSomeMatches=true;
 				}
