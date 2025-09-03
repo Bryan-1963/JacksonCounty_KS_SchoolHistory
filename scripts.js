@@ -258,9 +258,9 @@
 			let re = new RegExp(docSearchTerm,"g");
 			
 			//highlight instances in caption
-			let text = document.getElementByID("figCaption").innerHTML;
-			let newText = text.replace(re, `<mark>${docSearchTerm}</mark>`);
-			document.getElementByID("figCaption").innerHTML = newText;
+			//let text = document.getElementByID("figCaption").innerHTML;
+			//let newText = text.replace(re, `<mark>${docSearchTerm}</mark>`);
+			//document.getElementByID("figCaption").innerHTML = newText;
 			
 			//highlight instances in annotation
 			text = document.getElementByID("docAnnotationHolder").innerHTML;
