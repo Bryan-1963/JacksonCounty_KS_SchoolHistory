@@ -101,14 +101,15 @@
 	// clearDocumentFilter
 	//==========================================================================================	
 	function clearDocumentFilter(){
-		//clear docSearchTerm
-		docSearchTerm="";
+		
 		//restore the original list of document pages and reset flag
 		docPages = JSON.parse(JSON.stringify(docPagesUnFiltered));
 		docPagesAreFiltered=false;
+		
 		//reset page count to total
 		let totDocPgs = document.getElementById("totalDocPages");
 		totalDocPages.innerHTML = " of " + docPages.length;
+		
 		//load the first document
 		loadDocPageNum(0);
 	};
@@ -155,7 +156,11 @@
 			
 			// if matches were found then load docPages with reduced (filtered) set of pages
 			if (foundSomeMatches) {
+				console.log("JSON.stringify(matchingPages)=" + JSON.stringify(matchingPages));
+				console.log("docPages.length before filter = " + docPages.length);
 				docPages = JSON.parse(JSON.stringify(matchingPages));
+				console.log("docPages.length after filter = " + docPages.length);
+				
 				let totDocPgs = document.getElementById("totalDocPages");
 				totalDocPages.innerHTML = " of " + docPages.length;
 				loadDocPageNum(0);
@@ -254,7 +259,7 @@
 		
 		// if docPagesAreFiltered then search and highlight all the instances
 		if (docPagesAreFiltered){
-			let re = new RegExp(docSearchTerm,"g");
+			let re = new RegExp(docSearchTerm,"gi");
 			
 			//highlight instances in caption
 			let text = figCapt.innerHTML;
