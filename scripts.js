@@ -95,7 +95,7 @@
 		thisSearchBox.value = "";
 		thisSearchBox.focus();
 		thisSearchBox.dispatchEvent(new Event('input'));
-	}
+	};
 	
 	//==========================================================================================
 	// clearDocumentFilter
@@ -111,7 +111,7 @@
 		totalDocPages.innerHTML = " of " + docPages.length;
 		//load the first document
 		loadDocPageNum(0);
-	}
+	};
 	
 	//==========================================================================================
 	// filterDocument
@@ -161,7 +161,7 @@
 			//do nothing, no term to search for
 		} 
 		
-	} //end of function filterDocument
+	}; //end of function filterDocument
 	
 	//==========================================================================================
 	// loadDocPages
@@ -210,7 +210,7 @@
 		
 		//load the first page
 		loadDocPageNum(0);
-	}
+	};
 	
 	//==========================================================================================
 	// loadDocPageNum
@@ -260,7 +260,7 @@
 			document.getElementByID("docAnnotationHolder").innerHTML = newText;
 			
 		}
-	}
+	};
 	
 	//==========================================================================================
 	// navDocPage
@@ -301,7 +301,7 @@
 		//load the requested page	
 		//console.log("calling loadDocPage, sending docPgNum=" + docPgNum);
 		loadDocPageNum(docPgNum);
-	}
+	};
 	
 	
 	//==========================================================================================
@@ -315,7 +315,7 @@
 		buildMenus(); //build dropdowns based on contents of countySchoolDistricts and countyHighSchools
 		sizeBars(); //size and place the menu bars
 		//console.log("countySchoolDistricts.length=" + countySchoolDistricts.length);
-	}
+	};
 
 	//==========================================================================================
 	// buildMenus
@@ -384,7 +384,7 @@
 				
 		}
 		dropDown.innerHTML = dropDownContents;	
-	}
+	};
 	
 	//==========================================================================================
 	// sizeBars
@@ -419,7 +419,7 @@
 	  spacer.style.height = (topTitleHeight + topMenuHeight + subTitleHeight + subMenuHeight + contentTitleHeight) + 'px';
 	  
 	  //console.log("topTitleHeight="+topTitleHeight+", topMenuHeight="+topMenuHeight+", subTitleHeight="+subTitleHeight+", subMenuHeight=" + subMenuHeight+", contentTitleHeight=" + contentTitleHeight);
-	}
+	};
 	
 	//==========================================================================================
 	// menuClick
@@ -842,7 +842,7 @@
 		// ADJUST LOCATIONS OF BARS
 		sizeBars()
 		
-	}
+	};
 	
 	//==========================================================================================
 	// schoolSubMenuClick
@@ -861,7 +861,7 @@
 		// adjust locations of bars
 		sizeBars()
 		
-	} // end of function subMenuClick 
+	}; // end of function subMenuClick 
 		
 	//==========================================================================================
 	// initVars
@@ -1941,7 +1941,7 @@
 		thisDist.category = "Joint"
 		countyHighSchools.push(thisDist);
 
-	}	
+	};	
 
 
 	
@@ -1957,7 +1957,7 @@
 		title;
 		path;
 		category;
-	}
+	};
 	
 	//---------------------------
 	// AnnotatedPhotoObject
@@ -1966,6 +1966,6 @@
 		photoFilePath;
 		caption;
 		annotation;
-	}
+	};
 	
 	
