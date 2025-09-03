@@ -74,7 +74,7 @@
 		{  
 			let searchTerm = docPageSearchInput.value;
 			if (searchTerm != null && searchTerm!=""){
-				searchDocument();
+				filterDocument();
 			}
 		}
 	});	
@@ -220,12 +220,17 @@
 	//==========================================================================================	
 	function loadDocPageNum(pgNum){
 		//console.log("in loadDocPageNum, rcd pgNum=" + pgNum);
-		// build & update HTML for this page
+		//update HTML for image side
 		let myHTML = "";
 		myHTML=myHTML + "<figure class='myFigure'>";
 		myHTML=myHTML + "<img src='" + webRootLocation + docPages[pgNum]['photoFilePath'].toString() + "' style='max-height: 600px;'>";
+		
+		//update image caption
 		if (docPages[pgNum]['caption'].length>0) {
 			myHTML=myHTML + "<figcaption id='figCaption'>" + docPages[pgNum]['caption'] + "</figcaption>";
+		}
+		else {
+			myHTML=myHTML + "<figcaption id='figCaption'></figcaption>";
 		}
 		myHTML=myHTML + "</figure>";
 		document.getElementById("docPage").innerHTML=myHTML;
