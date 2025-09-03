@@ -194,7 +194,7 @@
 		let documentContentHolder = document.getElementById("documentContentHolder");
 		documentContentHolder.style.display = "block";
 		let docPage = document.getElementById("docPage");
-		docPage.innerHTML = "";
+		docAnnot.innerHTML="";
 		
 		//clean out old info
 		document.getElementById("docPage").innerHTML="";
@@ -447,9 +447,11 @@
 		var contentTitleBar = document.getElementById("ContentTitle");
 		let iFrameHldr = document.getElementById("iFrameHolder");
 		let documentContentHolder = document.getElementById("documentContentHolder");
-		let docPage = document.getElementById("docPage");
+		let docAnnot = document.getElementById("docAnnotation");
+		let docFigCapt = document.getElementById("figCaption");
 		let docNavBar = document.getElementById("docNavBar");
 		let schoolNavBar = document.getElementById("schoolNavBar");
+		let docPgImg = document.getElementById("docPageImg");
 			
 		subMenuName = '';
 		subMenuCat = '';
@@ -475,9 +477,11 @@
 			contentTitleBar.className = "titleBar3Empty";
 			iFrameHldr.style.display = "none";
 			
-			//show the document content
+			//hide the document content
 			documentContentHolder.style.display = "block";
-			docPage.innerHTML = "";
+			docAnnot.innerHTML="";
+			docFigCapt.innerHTML="";
+			docPgImg.src='';
 			
 			//load the document pages
 			loadDocPages("Test/Test_Files/AnnotatedPhotos_LloydCopeland.json");
@@ -495,7 +499,9 @@
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "none"
-			docPage.innerHTML = "";
+			docAnnot.innerHTML="";
+			docFigCapt.innerHTML="";
+			docPgImg.src='';
 			contentTitleBar.className = "titleBar3Empty";
 			break;
 
@@ -509,7 +515,9 @@
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "none"
-			docPage.innerHTML = "";
+			docAnnot.innerHTML="";
+			docFigCapt.innerHTML="";
+			docPgImg.src='';
 			contentTitleBar.className = "titleBar3";
 			iFrameHldr.style.display = "block";
 			
@@ -563,7 +571,9 @@
 			schoolNavBar.style.display = "none"
 			iFrameHldr.style.display = "block";
 			documentContentHolder.display = "none";
-			docPage.innerHTML = "";
+			docAnnot.innerHTML="";
+			docFigCapt.innerHTML="";
+			docPgImg.src='';
 			
 			if (subCat==='1878 Jackson Co.'){
 				contentSource="Maps/1878_JacksonCo.html";
@@ -666,7 +676,9 @@
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "none"
-			docPage.innerHTML = "";
+			docAnnot.innerHTML="";
+			docFigCapt.innerHTML="";
+			docPgImg.src='';
 			
 			if (subCat==='Frontier'){
 				contentSource="Pre-Org/Frontier.html";
@@ -692,7 +704,9 @@
 				subMenu.style.display = "block";
 				docNavBar.style.display = "none";
 				schoolNavBar.style.display = "block"
-				docPage.innerHTML = "";
+				docAnnot.innerHTML="";
+				docFigCapt.innerHTML="";
+				docPgImg.src='';
 
 				// LOAD SUBMENU click parameters
 				subMenuName = "CountyDistricts";
@@ -712,7 +726,9 @@
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "block"
-			docPage.innerHTML = "";
+			docAnnot.innerHTML="";
+			docFigCapt.innerHTML="";
+			docPgImg.src='';
 			
 			// LOAD SUBMENU click parameters
 			subMenuName = "PottawatomieMission";
@@ -734,7 +750,9 @@
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "block"
-			docPage.innerHTML = "";
+			docAnnot.innerHTML="";
+			docFigCapt.innerHTML="";
+			docPgImg.src='';
 						
 						
 			// LOAD SUBMENU click parameters
@@ -759,7 +777,9 @@
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "block"
-			docPage.innerHTML = "";
+			docAnnot.innerHTML="";
+			docFigCapt.innerHTML="";
+			docPgImg.src='';
 									
 			// LOAD SUBMENU click parameters
 			subMenuName = "UnifiedSchoolDistricts";
@@ -781,9 +801,10 @@
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "block"
-			docPage.innerHTML = "";
+			docAnnot.innerHTML="";
+			docFigCapt.innerHTML="";
+			docPgImg.src='';
 
-						
 			// LOAD SUBMENU click parameters
 			subMenuName = "Colleges";
 			subMenuCat = subCat;
@@ -805,7 +826,9 @@
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "none"
-			docPage.innerHTML = "";
+			docAnnot.innerHTML="";
+			docFigCapt.innerHTML="";
+			docPgImg.src='';
 			contentSource="References/References.html";
 			break;
 			
@@ -821,7 +844,9 @@
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "none"
-			docPage.innerHTML = "";
+			docAnnot.innerHTML="";
+			docFigCapt.innerHTML="";
+			docPgImg.src='';
 			contentSource="SourceMatls/SourceMatls.html";
 			break;
 
@@ -838,7 +863,9 @@
 			iFrameHldr.style.display = "block";
 			contentSource="Contact/Contact.html";
 			documentContentHolder.display = "none";
-			docPage.innerHTML = "";
+			docAnnot.innerHTML="";
+			docFigCapt.innerHTML="";
+			docPgImg.src='';
 			break;
 
 		} 
