@@ -90,7 +90,7 @@
 		//get the input box
 		let thisSearchBox = document.getElementById(inputBoxName);
 		//clear the input box
-		thisSearchBox.setAttribute(""); //NOTE: pgNum is zero based, people like 1 based
+		thisSearchBox.setAttribute("value",""); 
 		thisSearchBox.dispatchEvent(new Event('input'));
 		thisSearchBox.value = "";
 		thisSearchBox.focus();
@@ -122,14 +122,14 @@
 		let foundSomeMatches = false;
 		let matchingPages = [];
 		//loop through annotations and captions of each page
-		if (searchTerm != null && searchTerm!=""){
+		if (docSearchTerm != null && docSearchTerm!=""){
 			for (let pgNum=0;pgNum<=docPages.length-1;pgNum++){
 				let thisPageHasIt = false;
 				//loop thru all the annotation paragraphs
 				let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
 				for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
 					let thisTxt = thisAnnotation[paraNum].toString();
-					if(thisTxt.includes(searchTerm)){
+					if(thisTxt.includes(docSearchTerm)){
 						thisPageHasIt=true;
 						foundSomeMatches=true;
 					}
@@ -137,7 +137,7 @@
 				
 				//check the caption
 				thisTxt = docPages[pgNum]['caption'].toString();
-				if(thisTxt.includes(searchTerm)){
+				if(thisTxt.includes(docSearchTerm)){
 					thisPageHasIt=true;
 					foundSomeMatches=true;
 				}

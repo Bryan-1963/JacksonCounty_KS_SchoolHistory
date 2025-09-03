@@ -203,6 +203,7 @@
 		.searchHolder {
 			border: 1px solid black;
 			border-radius: 6px;
+			display: inline-block;
 		}
 
 		.input-wrapper {
