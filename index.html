@@ -150,15 +150,27 @@ Jackson County, Kansas Schools History
 	<!-- document subMenu -->
 	<span id='docNavBar' style='display: none;'>
 		<!-- Navigate through images -->
-		<button style='font-size:12px' onclick="navDocPage('first')"><i class='fa fa-fast-backward'></i></button>
-		<button style='font-size:12px' onclick="navDocPage('prev')"><i class='fa fa-step-backward'></i></button>
+		<button style='font-size:12px' onclick="navDocPage('first')"><i class='fa fa-angle-double-left'></i></button>
+		<button style='font-size:12px' onclick="navDocPage('prev')"><i class='fa fa-angle-left'></i></button>
 		<input type="number" id="docPageNumInput" name="docPageNumInput" class='pageNumInput'> <!-- there's a listener on this -->
 		<span id="totalDocPages"> of </span>
-		<button style='font-size:12px' onclick="navDocPage('next')"><i class='fa fa-step-forward'></i></button>
-		<button style='font-size:12px' onclick="navDocPage('last')"><i class='fa fa-fast-forward'></i></button>
+		<button style='font-size:12px' onclick="navDocPage('next')"><i class='fa fa-angle-right'></i></button>
+		<button style='font-size:12px' onclick="navDocPage('last')"><i class='fa fa-angle-double-right'></i></button>
 		<!-- Search document -->
-		<input type='text' id='docPageSearchInput' name='docPageSearchInput' class='searchInput'>
-		<button style='font-size:10px'><i class='fa fa-search'></i></button>
+		<div class='searchHolder'>
+			Search this document:
+			<div class='input-wrapper'>
+				<input type='text' id='docPageSearchInput' name='docPageSearchInput' class='searchInput'>
+				<button onclick="clearSearchInput('docPageSearchInput')" style='font-size:8px'><i class='fa fa-close'></i></button>
+			</div>
+			<!-- filter button -->
+			<button onclick="filterDocument()" style='font-size:10px'><i class='fa fa-search'></i></button>
+			<!-- unfilter button -->
+			<button onclick="clearDocumentFilter()>
+				<span class="fas fa-slash" data-fa-mask="fas fa-filter" data-fa-transform="down-1.5"></span>
+				<span class="fas fa-slash"></span>
+			</button>
+		</div>
 	</span>
 </DIV>
 

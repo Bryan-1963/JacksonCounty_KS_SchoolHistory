@@ -194,6 +194,35 @@
 			margin-bottom: 4px;
 		}
 		
+		
+		/* --------------------------------------------- */		
+		/* search input 								 */
+		/* --------------------------------------------- */		
+
+		
+		.searchHolder {
+			border: 1px solid black;
+			border-radius: 6px;
+		}
+
+		.input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .input-wrapper input {
+            padding-right: 40px;
+        }
+
+        .input-wrapper button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
+		
 		.searchInput{
 			width: 75px;
 			margin-top: 4px;

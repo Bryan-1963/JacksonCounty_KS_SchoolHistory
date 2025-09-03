@@ -12,14 +12,19 @@
 	var countySchoolDistricts = []; //array of PageObjects for elementary schools
 	var countyHighSchools = []; //array of PageObjects for high schools
 	var docPages = []; //array of AnnotatedPhotoObject, loaded by loadDocPages
+	var docPagesUnFiltered = []; //array of AnnotatedPhotoObject, used to return to unfiltered
+	var docPagesAreFiltered = false;
+	var docSearchTerm = "";
 	var docPgNum = 0;
 	var webRootLocation = "https://bryan-1963.github.io/JacksonCounty_KS_SchoolHistory/";
 	var subMenuName = '';
 	var subMenuCat = '';
-	
-	//==========================================================================================
+	var docPageNumInput = document.getElementById("docPageNumInput");
+	var docPageSearchInput = document.getElementById("docPageSearchInput");
+		
+	//=======================================================================================================================================================
 	// EVENT LISTENERS
-	//==========================================================================================	
+	//=======================================================================================================================================================	
 	window.addEventListener("resize", sizeBars());
 	document.getElementById("MainMenu").addEventListener("load", sizeBars());
 	document.getElementById("SubMenu").addEventListener("load", sizeBars());
@@ -46,33 +51,123 @@
 	//-----------------------------------------
 	// Document pagenumber input listener 
 	//-----------------------------------------
-	var docPageNumInput = document.getElementById("docPageNumInput");
 	docPageNumInput.addEventListener("keydown", function (e) {
 		if (e.code === "Enter" || e.code === "NumpadEnter") //checks whether the pressed key is "Enter"
 		{  
-			console.log("e.target.value=" + e.target.value + "|");
 			docPgNum = Math.floor(Number(e.target.value))-1; //eliminate any decimal and change user 1-based input to 0-based input
-			console.log("docPgNum=" + docPgNum + "|");
 			if (docPgNum>docPages.length-1) {docPgNum=docPages.length-1}
 			if (docPgNum<0){docPgNum=0};
-			console.log("docPgNum=" + docPgNum + "|");
 			
 			//update the page number input box to account for limiting
-			let pgNumInput = document.getElementById("docPageNumInput");
-			pgNumInput.setAttribute("value",Number(docPgNum)+1);
+			docPageNumInput.setAttribute("value",Number(docPgNum)+1);
 
 			//load the requested page
 			loadDocPageNum(docPgNum);
 		}
 	});
-
+	
+	//-----------------------------------------
+	// Document search input listener 
+	//-----------------------------------------
+	docPageSearchInput.addEventListener("keydown", function (e) {
+		if (e.code === "Enter" || e.code === "NumpadEnter") //checks whether the pressed key is "Enter"
+		{  
+			let searchTerm = docPageSearchInput.value;
+			if (searchTerm != null && searchTerm!=""){
+				searchDocument();
+			}
+		}
+	});	
+	
+	//=======================================================================================================================================================
+	// FUNCTIONS
+	//=======================================================================================================================================================
+		
+	//==========================================================================================
+	// clearSearchInput
+	//==========================================================================================
+	function clearSearchInput(inputBoxName){
+		//get the input box
+		let thisSearchBox = document.getElementById(inputBoxName);
+		//clear the input box
+		thisSearchBox.setAttribute(""); //NOTE: pgNum is zero based, people like 1 based
+		thisSearchBox.dispatchEvent(new Event('input'));
+		thisSearchBox.value = "";
+		thisSearchBox.focus();
+		thisSearchBox.dispatchEvent(new Event('input'));
+	}
+	
+	//==========================================================================================
+	// clearDocumentFilter
+	//==========================================================================================	
+	clearDocumentFilter(){
+		//clear docSearchTerm
+		docSearchTerm="";
+		//restore the original list of document pages and reset flag
+		docPages = JSON.parse(JSON.stringify(docPagesUnFiltered));
+		docPagesAreFiltered=false;
+		//reset page count to total
+		let totDocPgs = document.getElementById("totalDocPages");
+		totalDocPages.innerHTML = " of " + docPages.length;
+		//load the first document
+		loadDocPageNum(0);
+	}
+	
+	//==========================================================================================
+	// filterDocument
+	//==========================================================================================	
+	filterDocument(){
+		//get value to search for 
+		docSearchTerm = docPageSearchInput.value.toString().trim();
+		let foundSomeMatches = false;
+		let matchingPages = [];
+		//loop through annotations and captions of each page
+		if (searchTerm != null && searchTerm!=""){
+			for (let pgNum=0;pgNum<=docPages.length-1;pgNum++){
+				let thisPageHasIt = false;
+				//loop thru all the annotation paragraphs
+				let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
+				for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
+					if(thisAnnotation[paraNum].toString().includes(searchTerm){
+						thisPageHasIt=true;
+						foundSomeMatches=true;
+					}
+				} //end of paraNum loop
+				
+				//check the caption
+				if(docPages[pgNum]['caption'].toString().includes(searchTerm){
+					thisPageHasIt=true;
+					foundSomeMatches=true;
+				}
+				
+				//if page contained the search term, then add it to the array of filtered pages
+				if (thisPageHasIt){
+					docPagesAreFiltered=true;
+					matchingPages.push(JSON.parse(JSON.stringify())
+				}
+			} //end of pgNum loop
+			
+			// if matches were found then load docPages with reduced (filtered) set of pages
+			if (foundSomeMatches) {
+				docPages = JSON.parse(JSON.stringify(matchingPages));
+				let totDocPgs = document.getElementById("totalDocPages");
+				totalDocPages.innerHTML = " of " + docPages.length;
+				loadDocPageNum(0);
+			}
+			
+		}  //end of if (searchTerm != null && searchTerm!="")
+			
+		else {
+			//do nothing, no term to search for
+		} 
+		
+	} //end of function filterDocument
 	
 	//==========================================================================================
 	// loadDocPages
 	//==========================================================================================
 	async function loadDocPages(filePath, docTitle){
-		console.log("in loadDocPages, rcd filePath=|" + filePath + "|");
-		
+		//console.log("in loadDocPages, rcd filePath=|" + filePath + "|");
 		subMenuName = '';
 		subMenuCat = '';
 		
@@ -104,12 +199,14 @@
 		
 		//fetch the data about the document
 		docPages.length = 0;	
-		console.log("webRootLocation+filePath=|" + webRootLocation+filePath + "|");
 		let myObject = await fetch(webRootLocation+filePath);
 		let myText = await myObject.text();
 		docPages = JSON.parse(myText);
 		let totDocPgs = document.getElementById("totalDocPages");
 		totalDocPages.innerHTML = " of " + docPages.length;
+		
+		//store copy of docPages so can return to it when unfiltering
+		docPagesUnFiltered = JSON.parse(JSON.stringify(docPages));
 		
 		//load the first page
 		loadDocPageNum(0);
@@ -119,13 +216,13 @@
 	// loadDocPageNum
 	//==========================================================================================	
 	function loadDocPageNum(pgNum){
-		console.log("in loadDocPageNum, rcd pgNum=" + pgNum);
+		//console.log("in loadDocPageNum, rcd pgNum=" + pgNum);
 		// build & update HTML for this page
 		let myHTML = "";
 		myHTML=myHTML + "<figure class='myFigure'>";
 		myHTML=myHTML + "<img src='" + webRootLocation + docPages[pgNum]['photoFilePath'].toString() + "' style='max-height: 600px;'>";
 		if (docPages[pgNum]['caption'].length>0) {
-			myHTML=myHTML + "<figcaption>" + docPages[pgNum]['caption'] + "</figcaption>";
+			myHTML=myHTML + "<figcaption id='figCaption'>" + docPages[pgNum]['caption'] + "</figcaption>";
 		}
 		myHTML=myHTML + "</figure>";
 		document.getElementById("docPage").innerHTML=myHTML;
@@ -147,13 +244,29 @@
 		pgNumInput.value = Number(pgNum)+1;
 		pgNumInput.focus();
 		pgNumInput.dispatchEvent(new Event('input'));
+		
+		// if docPagesAreFiltered then search and highlight all the instances
+		if (docPagesAreFiltered){
+			let re = new RegExp(docSearchTerm,"g");
+			
+			//highlight instances in caption
+			let text = document.getElementByID("figCaption").innerHTML;
+			let newText = text.replace(re, `<mark>${docSearchTerm}</mark>`);
+			document.getElementByID("figCaption").innerHTML = newText;
+			
+			//highlight instances in annotation
+			text = document.getElementByID("docAnnotationHolder").innerHTML;
+			newText = text.replace(re, `<mark>${docSearchTerm}</mark>`);
+			document.getElementByID("docAnnotationHolder").innerHTML = newText;
+			
+		}
 	}
 	
 	//==========================================================================================
 	// navDocPage
 	//==========================================================================================	
 	function navDocPage(movement){
-		console.log("in navDocPage, rcd movement=" + movement);
+		//console.log("in navDocPage, rcd movement=" + movement);
 		if (movement === 'first'){
 			docPgNum=0;
 		}
@@ -186,7 +299,7 @@
 		pgNumInput.dispatchEvent(new Event('input'));
 		
 		//load the requested page	
-		console.log("calling loadDocPage, sending docPgNum=" + docPgNum);
+		//console.log("calling loadDocPage, sending docPgNum=" + docPgNum);
 		loadDocPageNum(docPgNum);
 	}
 	
@@ -318,7 +431,7 @@
 		if (params.title) {
 			title = params.title;
 		}
-		console.log("menuClick: category=" + category + ", subCat=" + subCat);
+		//console.log("menuClick: category=" + category + ", subCat=" + subCat);
 		var contentSource = '';
 		var subTitle = document.getElementById("SubTitle");
 		var subMenu = document.getElementById("SubMenu");
