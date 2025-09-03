@@ -121,6 +121,9 @@
 		docSearchTerm = docPageSearchInput.value.toString().trim();
 		let foundSomeMatches = false;
 		let matchingPages = [];
+		
+		console.log("in filterDocument, rcd docSearchTerm=|" + docSearchTerm + "|");
+		
 		//loop through annotations and captions of each page
 		if (docSearchTerm != null && docSearchTerm!=""){
 			for (let pgNum=0;pgNum<=docPages.length-1;pgNum++){
