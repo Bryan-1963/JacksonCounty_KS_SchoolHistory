@@ -100,7 +100,7 @@
 	//==========================================================================================
 	// clearDocumentFilter
 	//==========================================================================================	
-	clearDocumentFilter(){
+	function clearDocumentFilter(){
 		//clear docSearchTerm
 		docSearchTerm="";
 		//restore the original list of document pages and reset flag
@@ -116,7 +116,7 @@
 	//==========================================================================================
 	// filterDocument
 	//==========================================================================================	
-	filterDocument(){
+	function filterDocument(){
 		//get value to search for 
 		docSearchTerm = docPageSearchInput.value.toString().trim();
 		let foundSomeMatches = false;
