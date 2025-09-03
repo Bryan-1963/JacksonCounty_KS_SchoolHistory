@@ -193,13 +193,12 @@
 		//show the document content
 		let documentContentHolder = document.getElementById("documentContentHolder");
 		documentContentHolder.style.display = "block";
-		let docPage = document.getElementById("docPage");
-		docAnnot.innerHTML="";
-		
+
 		//clean out old info
-		document.getElementById("docPage").innerHTML="";
-		document.getElementById("docAnnotationHolder").innerHTML="";
-		
+		document.getElementById("docAnnotation").innerHTML="";
+		document.getElementById("figCaption").innerHTML="";
+		document.getElementById("docPageImg").src="";
+				
 		//fetch the data about the document
 		docPages.length = 0;	
 		let myObject = await fetch(webRootLocation+filePath);
