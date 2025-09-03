@@ -145,7 +145,7 @@
 				//if page contained the search term, then add it to the array of filtered pages
 				if (thisPageHasIt){
 					docPagesAreFiltered=true;
-					matchingPages.push(JSON.parse(JSON.stringify())
+					matchingPages.push(JSON.parse(JSON.stringify()))
 				}
 			} //end of pgNum loop
 			
