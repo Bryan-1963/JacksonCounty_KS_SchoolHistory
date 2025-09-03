@@ -128,14 +128,16 @@
 				//loop thru all the annotation paragraphs
 				let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
 				for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
-					if(thisAnnotation[paraNum].toString().includes(searchTerm){
+					let thisTxt = thisAnnotation[paraNum].toString();
+					if(thisTxt.includes(searchTerm){
 						thisPageHasIt=true;
 						foundSomeMatches=true;
 					}
 				} //end of paraNum loop
 				
 				//check the caption
-				if(docPages[pgNum]['caption'].toString().includes(searchTerm){
+				thisTxt = docPages[pgNum]['caption'].toString();
+				if(thisTxt.includes(searchTerm){
 					thisPageHasIt=true;
 					foundSomeMatches=true;
 				}
@@ -157,9 +159,6 @@
 			
 		}  //end of if (searchTerm != null && searchTerm!="")
 			
-		else {
-			//do nothing, no term to search for
-		} 
 		
 	}; //end of function filterDocument
 	
