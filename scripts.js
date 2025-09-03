@@ -219,10 +219,10 @@
 	// loadDocPageNum
 	//==========================================================================================	
 	function loadDocPageNum(pgNum){
-		//console.log("in loadDocPageNum, rcd pgNum=" + pgNum);
+		console.log("in loadDocPageNum, rcd pgNum=" + pgNum + ". photoFilePath=" + docPages[pgNum]['photoFilePath'].toString());
 
 		let docImg = document.getElementById('dogPageImage');
-		docImg.src = webRootLocation + docPages[pgNum]['photoFilePath'].toString()
+		docImg.src = webRootLocation + docPages[pgNum]['photoFilePath'].toString();
 		
 		//update image caption
 		let figCapt = document.getElementById('figCaption');
