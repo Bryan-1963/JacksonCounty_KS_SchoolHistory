@@ -147,8 +147,9 @@
 				
 				//if page contained the search term, then add it to the array of filtered pages
 				if (thisPageHasIt){
+					console.log("adding found match page on pgNum=" + pgNum);
 					docPagesAreFiltered=true;
-					matchingPages.push(JSON.parse(JSON.stringify()))
+					matchingPages.push(JSON.parse(JSON.stringify(docPages[pgNum])));
 				}
 			} //end of pgNum loop
 			

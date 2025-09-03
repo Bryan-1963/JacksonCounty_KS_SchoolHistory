@@ -199,7 +199,7 @@
 		/* search input 								 */
 		/* --------------------------------------------- */		
 		.searchHolder {
-			border: 1px solid black;
+			border: 1px solid gray;
 			border-radius: 6px;
 			display: inline-block;
 			margin-top: 4px;
@@ -234,8 +234,8 @@
 		
 		#clearInputBtn{
 			position: absolute;
-			top: -4px;
-			left: -4px;		
+			top: 4px;
+			left: -2px;		
 		}
 		
 		#filterContainer {
