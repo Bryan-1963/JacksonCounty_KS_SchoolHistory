@@ -152,16 +152,16 @@
 			for (let i=0;i<=docSearchTermInput.length-1;i++){
 				let char = docSearchTermInput[i];
 				
-				if ((char==="'" || char="\"") && !startQuote) {
+				if ((char === "'" || char === "\"" ) && !startQuote) {
 					startQuote=true;
 				}
-				else if ((char==="'" || char="\"") && !startQuote) {
+				else if ((char === "'" || char === "\"") && !startQuote) {
 					//found end of words in quotes
 					startQuote=false;
 					docSearchPatterns.push(word);
 					word = "";
 				}
-				else if (char===" " && !startQuote) {
+				else if (char === " " && !startQuote) {
 					//found end of word
 					docSearchPatterns.push(word);
 					word = "";
