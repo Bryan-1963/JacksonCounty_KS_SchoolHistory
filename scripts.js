@@ -154,27 +154,34 @@
 			let word = "";
 			for (let i=0;i<=docSearchTermInput.length-1;i++){
 				let char = docSearchTermInput[i];
-				
+				console.log(i + ") char=|"+char+"|");
 				if ((char === "'" || char === "\"" ) && !startQuote) {
 					startQuote=true;
+					console.log("    startQuote=true, word=|" + word + "|");
 				}
 				else if ((char === "'" || char === "\"") && !startQuote) {
 					//found end of words in quotes
 					startQuote=false;
 					docSearchPatterns.push(word);
+					console.log("    startQuote=false, pushing word=|" + word + "|");
 					word = "";
+					
 				}
 				else if (char === " " && !startQuote) {
 					//found end of word
+					console.log("    found blank, pushing word=|" + word + "|");
 					docSearchPatterns.push(word);
 					word = "";
 				}
 				else if (i===docSearchTermInput.length-1){
 					//reached end of input String
+					word = word + char;
+					console.log("    end of string, pushing word=|" + word + "|");
 					docSearchPatterns.push(word);
 				}
 				else {
 					word = word + char;
+					console.log("    add to word, now word=|" + word + "|");
 				}
 			}
 			console.log("search patterns = " + JSON.stringify(docSearchPatterns));
