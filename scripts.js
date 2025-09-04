@@ -76,7 +76,7 @@
 		{  
 			let searchTerm = docPageSearchInput.value;
 			if (searchTerm != null && searchTerm!=""){
-				searchDocument();
+				searchDocument('exact');
 			}
 		}
 	});	
@@ -146,7 +146,7 @@
 		//get value(s) to search for 
 		docSearchTermInput = docPageSearchInput.value.toString().trim().toLowerCase();
 		
-		if (docSearchTerm != null && docSearchTerm!=""){
+		if (docSearchTermInput != null && docSearchTermInput!=""){
 			//keep anything between quotes as an individual item, otherwise split them up
 			let startQuote = false;
 			let word = "";
@@ -181,7 +181,7 @@
 				for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
 					let thisTxt = thisAnnotation[paraNum].toString();
 					for (let term=0;term<=docSearchPatterns-1;term++){
-						if(thisTxt.toLowerCase().includes(docSearchTerm)){
+						if(thisTxt.toLowerCase().includes(docSearchPatterns[term])){
 							thisPageHasIt=true;
 							foundSomeMatches=true;
 						}
@@ -191,7 +191,7 @@
 				//check the caption
 				thisTxt = docPages[pgNum]['caption'].toString();
 				for (let term=0;term<=docSearchPatterns-1;term++){
-					if(thisTxt.toLowerCase().includes(docSearchTerm)){
+					if(thisTxt.toLowerCase().includes(docSearchPatterns[term])){
 						thisPageHasIt=true;
 						foundSomeMatches=true;
 					}
