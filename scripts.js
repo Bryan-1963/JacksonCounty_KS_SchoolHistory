@@ -182,7 +182,9 @@
 					docSearchPatterns.push(word);
 				}
 				else {
-					word = word + char;
+					if (!charIsQuote){
+						word = word + char;
+					}
 					console.log("    add to word, now word=|" + word + "|");
 				}
 			}
@@ -199,6 +201,7 @@
 						if(thisTxt.toLowerCase().includes(docSearchPatterns[term])){
 							thisPageHasIt=true;
 							foundSomeMatches=true;
+							console.log("FOUND Match for |" + docSearchPatterns[term] +"| in pgNum="+pgNum+", paraNum="+paraNum);
 						}
 					}
 				} //end of paraNum loop
