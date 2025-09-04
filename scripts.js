@@ -134,7 +134,8 @@
 	//	3) fuzzy search
 	//==========================================================================================
 	function searchDocument(type){  //type can be 'exact' or 'fuzzy'
-	
+		console.log("in searchDocument, rcd type=" + type);
+		
 		//initialize variables
 		let foundSomeMatches = false;
 		let matchingPages = [];
@@ -225,26 +226,27 @@
 	// navDocSearchResults
 	//==========================================================================================	
 	function navDocSearchResults(movement){
-		
-		if (movement === 'next'){
-			docSearchResultCurrPg=docSearchResultCurrPg+1;
+		if (docPagesAreSearched) {
+			if (movement === 'next'){
+				docSearchResultCurrPg=docSearchResultCurrPg+1;
+			}
+			else if (movement === 'prev'){
+				docSearchResultCurrPg=docSearchResultCurrPg-1;
+			};
+			
+			if (docSearchResultCurrPg>docSearchResultPages.length-1){
+				docSearchResultCurrPg=0;
+			};
+			
+			if (docSearchResultCurrPg<0){
+				docSearchResultCurrPg=docSearchResultPages.length-1;
+			};
+			
+			//update results quantity curr page number and load the page
+			document.getElementById("docSearchResultsQty").innerHTML= (docSearchResultCurrPg +1) + '/' + docSearchResultPages.length;
+			docPgNum = docSearchResultPages[docSearchResultCurrPg];
+			loadDocPageNum(docPgNum);
 		}
-		else if (movement === 'prev'){
-			docSearchResultCurrPg=docSearchResultCurrPg-1;
-		};
-		
-		if (docSearchResultCurrPg>docSearchResultPages.length-1){
-			docSearchResultCurrPg=0;
-		};
-		
-		if (docSearchResultCurrPg<0){
-			docSearchResultCurrPg=docSearchResultPages.length-1;
-		};
-		
-		//update results quantity curr page number and load the page
-		document.getElementById("docSearchResultsQty").innerHTML= (docSearchResultCurrPg +1) + '/' + docSearchResultPages.length;
-		docPgNum = docSearchResultPages[docSearchResultCurrPg];
-		loadDocPageNum(docPgNum);
 	}
 	
 	//==========================================================================================
