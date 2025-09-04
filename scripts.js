@@ -101,7 +101,9 @@
 	// clearDocumentFilter
 	//==========================================================================================	
 	function clearDocumentFilter(){
-		
+		//hide the unfilter Button
+		document.getElementById("unfilterButton").style.display='none';
+				
 		//restore the original list of document pages and reset flag
 		docPages = JSON.parse(JSON.stringify(docPagesUnFiltered));
 		docPagesAreFiltered=false;
@@ -157,10 +159,16 @@
 			
 			// if matches were found then load docPages with reduced (filtered) set of pages
 			if (foundSomeMatches) {
+				//show the unfilter Button
+				document.getElementById("unfilterButton").style.display='block';
 				docPages = JSON.parse(JSON.stringify(matchingPages));		
 				let totDocPgs = document.getElementById("totalDocPages");
 				totalDocPages.innerHTML = " of " + docPages.length;
 				loadDocPageNum(0);
+			}
+			else {
+				//hide the unfilter Button
+				document.getElementById("unfilterButton").style.display='none';
 			}
 			
 		}  //end of if (searchTerm != null && searchTerm!="")
@@ -256,6 +264,8 @@
 		
 		// if docPagesAreFiltered then search and highlight all the instances
 		if (docPagesAreFiltered){
+			
+			//build regex to search for
 			let re = new RegExp(docSearchTerm,"gi");
 			
 			//highlight instances in caption
