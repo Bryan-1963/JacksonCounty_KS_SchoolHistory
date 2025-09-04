@@ -158,10 +158,9 @@ Jackson County, Kansas Schools History
 		<button style='font-size:14px' onclick="navDocPage('last')"><i class='fa fa-angle-double-right'></i></button>
 		<!-- Search document -->
 		<div class='searchHolder'>
-			Search this document:
 			
 			<div class='input-wrapper'>
-				<input type='text' id='docPageSearchInput' name='docPageSearchInput' class='searchInput'>
+				<input type='text' id='docPageSearchInput' name='docPageSearchInput' class='searchInput' placeholder='Search this document'>
 				<button onclick="clearSearchInput('docPageSearchInput')" style='font-size:10px'>
 					<i class='fa fa-close' id='clearInputBtn'></i>
 				</button>
@@ -173,7 +172,7 @@ Jackson County, Kansas Schools History
 			</button>
 			
 			<!-- unfilter button -->
-			<button id="unfilterButton" onclick="clearSearchInput('docPageSearchInput');clearDocumentFilter()" style='font-size:10px; display:none'>
+			<button id="unfilterButton" onclick="clearSearchInput('docPageSearchInput');clearDocumentFilter()" style='font-size:10px; visibility:hidden'>
 				<i class="fa fa-filter" id="unFilterIcon">
 					<i class="fa fa-ban" id="nestedBan"></i>
 				</i>

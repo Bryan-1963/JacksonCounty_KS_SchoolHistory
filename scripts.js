@@ -102,7 +102,7 @@
 	//==========================================================================================	
 	function clearDocumentFilter(){
 		//hide the unfilter Button
-		document.getElementById("unfilterButton").style.display='none';
+		document.getElementById("unfilterButton").style.visibility='hidden';
 				
 		//restore the original list of document pages and reset flag
 		docPages = JSON.parse(JSON.stringify(docPagesUnFiltered));
@@ -160,7 +160,7 @@
 			// if matches were found then load docPages with reduced (filtered) set of pages
 			if (foundSomeMatches) {
 				//show the unfilter Button
-				document.getElementById("unfilterButton").style.display='block';
+				document.getElementById("unfilterButton").style.visibility='visible';
 				docPages = JSON.parse(JSON.stringify(matchingPages));		
 				let totDocPgs = document.getElementById("totalDocPages");
 				totalDocPages.innerHTML = " of " + docPages.length;
@@ -168,7 +168,7 @@
 			}
 			else {
 				//hide the unfilter Button
-				document.getElementById("unfilterButton").style.display='none';
+				document.getElementById("unfilterButton").style.visibility='hidden';
 			}
 			
 		}  //end of if (searchTerm != null && searchTerm!="")
