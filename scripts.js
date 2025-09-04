@@ -144,7 +144,7 @@
 
 		//get value(s) to search for 
 		docSearchTermInput = docPageSearchInput.value.toString().trim().toLowerCase();
-		console.log("in searchDocument, rcd type=" + type ", and docSearchTermInput=" + docSearchTermInput);
+		console.log("in searchDocument, rcd type=" + type + ", and docSearchTermInput=" + docSearchTermInput);
 		
 		
 		if (docSearchTermInput != null && docSearchTermInput!=""){
