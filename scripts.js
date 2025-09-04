@@ -197,7 +197,10 @@
 			docSearchResultCurrPg=docSearchResultPages.length-1;
 		};
 		
-		loadDocPageNum(docSearchResultPages[docSearchResultCurrPg]);
+		//update results quantity curr page number and load the page
+		document.getElementById("docSearchResultsQty").innerHTML= (docSearchResultCurrPg +1) + '/' + docSearchResultPages.length;
+		docPgNum = docSearchResultPages[docSearchResultCurrPg];
+		loadDocPageNum(docPgNum);
 	}
 	
 	//==========================================================================================
@@ -306,7 +309,7 @@
 	// navDocPage
 	//==========================================================================================	
 	function navDocPage(movement){
-		//console.log("in navDocPage, rcd movement=" + movement);
+		console.log("in navDocPage, rcd movement=" + movement );
 		if (movement === 'first'){
 			docPgNum=0;
 		}
