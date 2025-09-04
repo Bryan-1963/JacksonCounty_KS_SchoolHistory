@@ -149,6 +149,7 @@ Jackson County, Kansas Schools History
 	
 	<!-- document subMenu -->
 	<span id='docNavBar' style='display: none;'>
+	
 		<!-- Navigate through images -->
 		<div class='searchHolder'>
 			<button style='font-size:14px' onclick="navDocPage('first')"><i class='fa fa-angle-double-left'></i></button>
@@ -158,6 +159,7 @@ Jackson County, Kansas Schools History
 			<button style='font-size:14px' onclick="navDocPage('next')"><i class='fa fa-angle-right'></i></button>
 			<button style='font-size:14px' onclick="navDocPage('last')"><i class='fa fa-angle-double-right'></i></button>
 		</div>
+		
 		<!-- Search document -->
 		<div class='searchHolder'>
 			
@@ -168,17 +170,17 @@ Jackson County, Kansas Schools History
 				</button>
 			</div>
 			
-			<!-- filter button -->
-			<button onclick="filterDocument()" style='font-size:10px'>
-				<i class='fa fa-filter'></i>
+			<!-- search button -->
+			<button onclick="searchDocument()" style='font-size:10px'>
+				<i class='fa fa-search'></i>
 			</button>
 			
-			<!-- unfilter button -->
-			<button id="unfilterButton" onclick="clearSearchInput('docPageSearchInput');clearDocumentFilter()" style='font-size:10px; visibility:hidden'>
-				<i class="fa fa-filter" id="unFilterIcon">
-					<i class="fa fa-ban" id="nestedBan"></i>
-				</i>
-			</button>
+			<!-- results nav -->
+			<div class='input-wrapper' id='docSearchResultsNav'>
+				<span id='docSearchResultsQty'>0/0</span>
+				<button style='font-size:12px' onclick="navDocSearchResults('prev')"><i class='fa fa-angle-left'></i></button>
+				<button style='font-size:12px' onclick="navDocSearchResults('next')"><i class='fa fa-angle-right'></i></button>
+			</div>
 		</div>
 	</span>
 </DIV>

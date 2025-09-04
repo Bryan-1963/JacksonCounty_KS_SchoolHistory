@@ -12,8 +12,9 @@
 	var countySchoolDistricts = []; //array of PageObjects for elementary schools
 	var countyHighSchools = []; //array of PageObjects for high schools
 	var docPages = []; //array of AnnotatedPhotoObject, loaded by loadDocPages
-	var docPagesUnFiltered = []; //array of AnnotatedPhotoObject, used to return to unfiltered
-	var docPagesAreFiltered = false;
+	var docPagesAreSearched = false;
+	var docSearchResultPages = []; //array of page numbers containing the searched for text
+	var docSearchResultCurrPg = 0;
 	var docSearchTerm = "";
 	var docPgNum = 0;
 	var webRootLocation = "https://bryan-1963.github.io/JacksonCounty_KS_SchoolHistory/";
@@ -87,46 +88,51 @@
 	// clearSearchInput
 	//==========================================================================================
 	function clearSearchInput(inputBoxName){
+		
 		//get the input box
 		let thisSearchBox = document.getElementById(inputBoxName);
+		
 		//clear the input box
 		thisSearchBox.setAttribute("value",""); 
 		thisSearchBox.dispatchEvent(new Event('input'));
 		thisSearchBox.value = "";
 		thisSearchBox.focus();
 		thisSearchBox.dispatchEvent(new Event('input'));
+		
 	};
 	
 	//==========================================================================================
-	// clearDocumentFilter
+	// clearDocumentSearch
 	//==========================================================================================	
-	function clearDocumentFilter(){
+	function clearDocumentSearch(){
+		
 		//hide the unfilter Button
 		document.getElementById("unfilterButton").style.visibility='hidden';
 				
-		//restore the original list of document pages and reset flag
-		docPages = JSON.parse(JSON.stringify(docPagesUnFiltered));
-		docPagesAreFiltered=false;
+		//reset flag
+		docPagesAreSearched=false;
 		
-		//reset page count to total
-		let totDocPgs = document.getElementById("totalDocPages");
-		totalDocPages.innerHTML = " of " + docPages.length;
-		
-		//load the first document
-		loadDocPageNum(0);
+		//reset the results array
+		docSearchResultPages.length=0;
+
 	};
 	
 	//==========================================================================================
-	// filterDocument
-	//==========================================================================================	
-	function filterDocument(){
+	// searchDocument
+	//==========================================================================================
+	// TO-DO:	
+	//	1) quotes around words
+	//	2) search for all the non-quoted words individually
+	//	3) fuzzy search
+	//==========================================================================================
+	function searchDocument(){
 		//get value to search for 
 		docSearchTerm = docPageSearchInput.value.toString().trim().toLowerCase();
 		let foundSomeMatches = false;
 		let matchingPages = [];
 		
 		//clear out any existing filter 
-		clearDocumentFilter();
+		clearDocumentSearch();
 		
 		//loop through annotations and captions of each page
 		if (docSearchTerm != null && docSearchTerm!=""){
@@ -149,32 +155,49 @@
 					foundSomeMatches=true;
 				}
 				
-				//if page contained the search term, then add it to the array of filtered pages
+				//if page contained the search term, then add it to the results array
 				if (thisPageHasIt){
-					//console.log("adding found match page on pgNum=" + pgNum);
-					docPagesAreFiltered=true;
-					matchingPages.push(JSON.parse(JSON.stringify(docPages[pgNum])));
+					docPagesAreSearched=true;
+					docSearchResultPages.push(pgNum);
 				}
+				
 			} //end of pgNum loop
 			
-			// if matches were found then load docPages with reduced (filtered) set of pages
+			// if matches were found then show qty & go to first page
 			if (foundSomeMatches) {
-				//show the unfilter Button
-				document.getElementById("unfilterButton").style.visibility='visible';
-				docPages = JSON.parse(JSON.stringify(matchingPages));		
-				let totDocPgs = document.getElementById("totalDocPages");
-				totalDocPages.innerHTML = " of " + docPages.length;
-				loadDocPageNum(0);
+				document.getElementById("docSearchResultsQty").innerHTML='1/' + docSearchResultPages.length;
+				docSearchResultCurrPg=0;
+				loadDocPageNum(docSearchResultPages[0]);
 			}
+			// else reset to 0/0 and do not change pages
 			else {
-				//hide the unfilter Button
-				document.getElementById("unfilterButton").style.visibility='hidden';
+				document.getElementById("docSearchResultsQty").innerHTML='0/0';
+				docSearchResultCurrPg=0;
 			}
 			
 		}  //end of if (searchTerm != null && searchTerm!="")
 			
 		
 	}; //end of function filterDocument
+	
+	//==========================================================================================
+	// navDocSearchResults
+	//==========================================================================================	
+	function navDocSearchResults(){
+		if (movement === 'next'){
+			docSearchResultCurrPg=docSearchResultCurrPg+1;
+		}
+		else if (movement === 'prev'){
+			docSearchResultCurrPg=docSearchResultCurrPg-1;
+		};
+		if (docSearchResultCurrPg>docSearchResultPages.length-1){
+			docSearchResultCurrPg=0;
+		};
+		if (docSearchResultCurrPg<0){
+			docSearchResultCurrPg=docSearchResultPages.length-1;
+		};
+		loadDocPageNum(docSearchResultPages[docSearchResultCurrPg]);
+	}
 	
 	//==========================================================================================
 	// loadDocPages
@@ -216,9 +239,6 @@
 		docPages = JSON.parse(myText);
 		let totDocPgs = document.getElementById("totalDocPages");
 		totalDocPages.innerHTML = " of " + docPages.length;
-		
-		//store copy of docPages so can return to it when unfiltering
-		docPagesUnFiltered = JSON.parse(JSON.stringify(docPages));
 		
 		//load the first page
 		loadDocPageNum(0);
@@ -262,8 +282,8 @@
 		pgNumInput.focus();
 		pgNumInput.dispatchEvent(new Event('input'));
 		
-		// if docPagesAreFiltered then search and highlight all the instances
-		if (docPagesAreFiltered){
+		// if docPagesAreSearched then search and highlight all the instances
+		if (docPagesAreSearched){
 			
 			//build regex to search for
 			let re = new RegExp(docSearchTerm,"gi");
