@@ -123,7 +123,8 @@
 		let foundSomeMatches = false;
 		let matchingPages = [];
 		
-		console.log("in filterDocument, rcd docSearchTerm=|" + docSearchTerm + "|");
+		//clear out any existing filter 
+		clearDocumentFilter();
 		
 		//loop through annotations and captions of each page
 		if (docSearchTerm != null && docSearchTerm!=""){
@@ -148,7 +149,7 @@
 				
 				//if page contained the search term, then add it to the array of filtered pages
 				if (thisPageHasIt){
-					console.log("adding found match page on pgNum=" + pgNum);
+					//console.log("adding found match page on pgNum=" + pgNum);
 					docPagesAreFiltered=true;
 					matchingPages.push(JSON.parse(JSON.stringify(docPages[pgNum])));
 				}
@@ -156,11 +157,7 @@
 			
 			// if matches were found then load docPages with reduced (filtered) set of pages
 			if (foundSomeMatches) {
-				console.log("JSON.stringify(matchingPages)=" + JSON.stringify(matchingPages));
-				console.log("docPages.length before filter = " + docPages.length);
-				docPages = JSON.parse(JSON.stringify(matchingPages));
-				console.log("docPages.length after filter = " + docPages.length);
-				
+				docPages = JSON.parse(JSON.stringify(matchingPages));		
 				let totDocPgs = document.getElementById("totalDocPages");
 				totalDocPages.innerHTML = " of " + docPages.length;
 				loadDocPageNum(0);

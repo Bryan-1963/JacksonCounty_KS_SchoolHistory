@@ -206,6 +206,8 @@
 			margin-bottom: 4px;
 			margin-left: 4px;
 			font-size: 12px;
+			padding-left: 2px;
+			padding-right: 2px;
 		}
 
 		.input-wrapper {
@@ -244,8 +246,8 @@
 
 		#nestedBan {
 		  position: absolute;
-		  top: 0px;
-		  left: -8px;
+		  top: 2px;
+		  left: -6px;
 		  font-size: 200%;
 		  color: rgba(217, 83, 79, 0.7);
 		}
