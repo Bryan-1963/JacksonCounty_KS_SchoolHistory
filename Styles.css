@@ -209,8 +209,8 @@
 		/* --------------------------------------------- */		
 		.searchBtnHldr {
 			display: inline-block;
-			overflow: hidden;
 			z-index:695;
+			position: relative;
 		}
 
 		.searchBtnHldr .searchBtn {
@@ -218,19 +218,20 @@
 		  font-family: Sans-serif;
 		  border: 1px solid black;
 		  color: black;
-		  padding: 4px 6px;
-		  background-color: gray;
+		  background-color: #f9f9f9;
 		  margin: 0;
 		  z-index:699;
+		  min-width:75px;
 		}
 	
 		.searchBtn-content {
 		  display: none;
 		  position: absolute;
 		  background-color: #f9f9f9;
-		  box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.2);
+		  min-width: 160px;
+		  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 		  z-index:699;
-		  column-count: 1;
+		  column-count: 3;
 		  column-gap: none;
 		  column-rule-style: solid;
 		  column-rule-width: 1px;

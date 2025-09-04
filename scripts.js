@@ -154,18 +154,20 @@
 			let word = "";
 			for (let i=0;i<=docSearchTermInput.length-1;i++){
 				let char = docSearchTermInput[i];
-				console.log(i + ") char=|"+char+"|");
-				if ((char === "'" || char === "\"" ) && !startQuote) {
+				let charIsQuote = /^[“"']/.test(char);
+
+				console.log(i + ") char=|"+char+"|, charIsQuote=" + charIsQuote);
+				
+				if (charIsQuote && !startQuote) {
 					startQuote=true;
 					console.log("    startQuote=true, word=|" + word + "|");
 				}
-				else if ((char === "'" || char === "\"") && !startQuote) {
+				else if (charIsQuote && !startQuote) {
 					//found end of words in quotes
 					startQuote=false;
 					docSearchPatterns.push(word);
 					console.log("    startQuote=false, pushing word=|" + word + "|");
 					word = "";
-					
 				}
 				else if (char === " " && !startQuote) {
 					//found end of word
