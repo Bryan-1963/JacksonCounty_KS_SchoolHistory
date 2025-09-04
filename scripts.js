@@ -134,7 +134,7 @@
 	//	3) fuzzy search
 	//==========================================================================================
 	function searchDocument(type){  //type can be 'exact' or 'fuzzy'
-		console.log("in searchDocument, rcd type=" + type);
+		
 		
 		//initialize variables
 		let foundSomeMatches = false;
@@ -145,6 +145,8 @@
 
 		//get value(s) to search for 
 		docSearchTermInput = docPageSearchInput.value.toString().trim().toLowerCase();
+		console.log("in searchDocument, rcd type=" + type ", and docSearchTermInput=" + docSearchTermInput);
+		
 		
 		if (docSearchTermInput != null && docSearchTermInput!=""){
 			//keep anything between quotes as an individual item, otherwise split them up
@@ -166,6 +168,10 @@
 					//found end of word
 					docSearchPatterns.push(word);
 					word = "";
+				}
+				else if (i===docSearchTermInput.length-1){
+					//reached end of input String
+					docSearchPatterns.push(word);
 				}
 				else {
 					word = word + char;

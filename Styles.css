@@ -207,6 +207,44 @@
 		/* --------------------------------------------- */		
 		/* search input 								 */
 		/* --------------------------------------------- */		
+		.searchBtnHldr {
+			display: inline-block;
+			overflow: hidden;
+			z-index:695;
+		}
+
+		.searchBtnHldr .searchBtn {
+		  font-size: 12px;  
+		  font-family: Sans-serif;
+		  border: 1px solid black;
+		  color: black;
+		  padding: 14px 16px;
+		  background-color: gray;
+		  margin: 0;
+		  z-index:699;
+		}
+	
+		.searchBtn-content {
+		  display: none;
+		  position: absolute;
+		  background-color: #f9f9f9;
+		  min-width: 160px;
+		  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		  z-index:699;
+		  column-count: 1;
+		  column-gap: none;
+		  column-rule-style: solid;
+		  column-rule-width: 1px;
+		}
+		
+		.searchBtn-content a:hover {
+		  background-color: #ddd;
+		}
+
+		.searchBtnHldr:hover .searchBtn-content {
+		  display: block;
+		}
+		
 		.searchHolder {
 			border: 1px solid gray;
 			border-radius: 6px;
