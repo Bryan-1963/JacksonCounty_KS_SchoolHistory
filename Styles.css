@@ -242,12 +242,12 @@
 		
 		#unFilterContainer {
 		  position: relative
-		}
+		}	
 
 		#nestedBan {
 		  position: absolute;
-		  top: 2px;
-		  left: -6px;
+		  top: -4px;
+		  left: -4px;
 		  font-size: 200%;
 		  color: rgba(217, 83, 79, 0.7);
 		}
