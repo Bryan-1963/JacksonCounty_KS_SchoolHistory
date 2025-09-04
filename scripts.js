@@ -15,6 +15,7 @@
 	var docPagesAreSearched = false;
 	var docSearchResultPages = []; //array of page numbers containing the searched for text
 	var docSearchResultCurrPg = 0;
+	var docSearchPatterns = []; //array of regex patterns to search for
 	var docSearchTerm = "";
 	var docPgNum = 0;
 	var webRootLocation = "https://bryan-1963.github.io/JacksonCounty_KS_SchoolHistory/";
@@ -99,13 +100,23 @@
 		thisSearchBox.focus();
 		thisSearchBox.dispatchEvent(new Event('input'));
 		
+		//reset the search results counter
+		document.getElementById("docSearchResultsQty").innerHTML='0/0';
+		docSearchResultCurrPg=0;
+		
+		//clear out the search results
+		clearDocumentSearch();
+		
 	};
 	
 	//==========================================================================================
 	// clearDocumentSearch
 	//==========================================================================================	
 	function clearDocumentSearch(){
-					
+		
+		//reset the search patterns
+		docSearchPatterns.length = 0;		
+		
 		//reset flag
 		docPagesAreSearched=false;
 		
@@ -122,34 +133,67 @@
 	//	2) search for all the non-quoted words individually
 	//	3) fuzzy search
 	//==========================================================================================
-	function searchDocument(){
-		//get value to search for 
-		docSearchTerm = docPageSearchInput.value.toString().trim().toLowerCase();
+	function searchDocument(type){  //type can be 'exact' or 'fuzzy'
+	
+		//initialize variables
 		let foundSomeMatches = false;
 		let matchingPages = [];
 		
 		//clear out any existing search 
 		clearDocumentSearch();
+
+		//get value(s) to search for 
+		docSearchTermInput = docPageSearchInput.value.toString().trim().toLowerCase();
 		
-		//loop through annotations and captions of each page
 		if (docSearchTerm != null && docSearchTerm!=""){
+			//keep anything between quotes as an individual item, otherwise split them up
+			let startQuote = false;
+			let word = "";
+			for (let i=0;i<=docSearchTermInput.length-1;i++){
+				let char = docSearchTermInput[i];
+				
+				if ((char==="'" || char="\"") && !startQuote) {
+					startQuote=true;
+				}
+				else if ((char==="'" || char="\"") && !startQuote) {
+					//found end of words in quotes
+					startQuote=false;
+					docSearchPatterns.push(word);
+					word = "";
+				}
+				else if (char===" " && !startQuote) {
+					//found end of word
+					docSearchPatterns.push(word);
+					word = "";
+				}
+				else {
+					word = word + char;
+				}
+			}
+			console.log("search patterns = " + JSON.stringify(docSearchPatterns));
+			
+			//loop through annotations and captions of each page
 			for (let pgNum=0; pgNum<=docPages.length-1; pgNum++){
 				let thisPageHasIt = false;
 				//loop thru all the annotation paragraphs
 				let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
 				for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
 					let thisTxt = thisAnnotation[paraNum].toString();
-					if(thisTxt.toLowerCase().includes(docSearchTerm)){
-						thisPageHasIt=true;
-						foundSomeMatches=true;
+					for (let term=0;term<=docSearchPatterns-1;term++){
+						if(thisTxt.toLowerCase().includes(docSearchTerm)){
+							thisPageHasIt=true;
+							foundSomeMatches=true;
+						}
 					}
 				} //end of paraNum loop
 				
 				//check the caption
 				thisTxt = docPages[pgNum]['caption'].toString();
-				if(thisTxt.toLowerCase().includes(docSearchTerm)){
-					thisPageHasIt=true;
-					foundSomeMatches=true;
+				for (let term=0;term<=docSearchPatterns-1;term++){
+					if(thisTxt.toLowerCase().includes(docSearchTerm)){
+						thisPageHasIt=true;
+						foundSomeMatches=true;
+					}
 				}
 				
 				//if page contained the search term, then add it to the results array
