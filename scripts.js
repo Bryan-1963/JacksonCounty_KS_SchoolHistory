@@ -135,7 +135,6 @@
 	//==========================================================================================
 	function searchDocument(type){  //type can be 'exact' or 'fuzzy'
 		
-		
 		//initialize variables
 		let foundSomeMatches = false;
 		let matchingPages = [];
@@ -149,6 +148,7 @@
 		
 		
 		if (docSearchTermInput != null && docSearchTermInput!=""){
+			
 			//keep anything between quotes as an individual item, otherwise split them up
 			let startQuote = false;
 			let word = "";
