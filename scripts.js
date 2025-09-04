@@ -75,7 +75,7 @@
 		{  
 			let searchTerm = docPageSearchInput.value;
 			if (searchTerm != null && searchTerm!=""){
-				filterDocument();
+				searchDocument();
 			}
 		}
 	});	
@@ -105,10 +105,7 @@
 	// clearDocumentSearch
 	//==========================================================================================	
 	function clearDocumentSearch(){
-		
-		//hide the unfilter Button
-		document.getElementById("unfilterButton").style.visibility='hidden';
-				
+					
 		//reset flag
 		docPagesAreSearched=false;
 		
@@ -131,7 +128,7 @@
 		let foundSomeMatches = false;
 		let matchingPages = [];
 		
-		//clear out any existing filter 
+		//clear out any existing search 
 		clearDocumentSearch();
 		
 		//loop through annotations and captions of each page
@@ -165,20 +162,20 @@
 			
 			// if matches were found then show qty & go to first page
 			if (foundSomeMatches) {
-				document.getElementById("docSearchResultsQty").innerHTML='1/' + docSearchResultPages.length;
+				document.getElementById("docSearchResultsQty").innerHTML='1\/' + docSearchResultPages.length;
 				docSearchResultCurrPg=0;
 				loadDocPageNum(docSearchResultPages[0]);
 			}
 			// else reset to 0/0 and do not change pages
 			else {
-				document.getElementById("docSearchResultsQty").innerHTML='0/0';
+				document.getElementById("docSearchResultsQty").innerHTML='0\/0';
 				docSearchResultCurrPg=0;
 			}
 			
 		}  //end of if (searchTerm != null && searchTerm!="")
 			
 		
-	}; //end of function filterDocument
+	}; //end of function searchDocument
 	
 	//==========================================================================================
 	// navDocSearchResults
