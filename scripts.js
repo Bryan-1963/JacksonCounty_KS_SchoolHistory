@@ -162,13 +162,13 @@
 			
 			// if matches were found then show qty & go to first page
 			if (foundSomeMatches) {
-				document.getElementById("docSearchResultsQty").innerHTML='1\/' + docSearchResultPages.length;
+				document.getElementById("docSearchResultsQty").innerHTML='1/' + docSearchResultPages.length;
 				docSearchResultCurrPg=0;
 				loadDocPageNum(docSearchResultPages[0]);
 			}
 			// else reset to 0/0 and do not change pages
 			else {
-				document.getElementById("docSearchResultsQty").innerHTML='0\/0';
+				document.getElementById("docSearchResultsQty").innerHTML='0/0';
 				docSearchResultCurrPg=0;
 			}
 			
@@ -180,19 +180,23 @@
 	//==========================================================================================
 	// navDocSearchResults
 	//==========================================================================================	
-	function navDocSearchResults(){
+	function navDocSearchResults(movement){
+		
 		if (movement === 'next'){
 			docSearchResultCurrPg=docSearchResultCurrPg+1;
 		}
 		else if (movement === 'prev'){
 			docSearchResultCurrPg=docSearchResultCurrPg-1;
 		};
+		
 		if (docSearchResultCurrPg>docSearchResultPages.length-1){
 			docSearchResultCurrPg=0;
 		};
+		
 		if (docSearchResultCurrPg<0){
 			docSearchResultCurrPg=docSearchResultPages.length-1;
 		};
+		
 		loadDocPageNum(docSearchResultPages[docSearchResultCurrPg]);
 	}
 	
