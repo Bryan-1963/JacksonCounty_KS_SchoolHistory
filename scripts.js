@@ -210,10 +210,10 @@
 				for (let term=0; term<=startLen-1; term++){
 					let thisTerm = docSearchPatterns[term];
 					let thisLen = thisTerm.length;
-					let newTerm = '[a-z]' + thisTerm.slice(1);
-					docSearchPatterns.push(newTerm);
+					//let newTerm = '[a-z]' + thisTerm.slice(1);
+					//docSearchPatterns.push(newTerm);
 					for (let i=0;i<=thisLen-1;i++){
-						newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
+						let newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
 						docSearchPatterns.push(newTerm);
 					}
 				}
@@ -269,12 +269,11 @@
 						//console.log("     thisTxt=" + thisTxt);
 						
 						for (let term=0; term<=docSearchPatterns.length-1; term++){
-							console.log("     docSearchPatterns[term]=|" + docSearchPatterns[term] + "|");
+							//console.log("     docSearchPatterns[term]=|" + docSearchPatterns[term] + "|");
 							if(thisTxt.toLowerCase().includes(docSearchPatterns[term])){
 								thisPageHasIt=true;
 								foundSomeMatches=true;
-								
-								console.log("FOUND Match for |" + docSearchPatterns[term] +"| in pgNum="+pgNum+", paraNum="+paraNum);
+								//console.log("FOUND Match for |" + docSearchPatterns[term] +"| in pgNum="+pgNum+", paraNum="+paraNum);
 							}
 						}
 					} //end of paraNum loop
@@ -447,12 +446,12 @@
 				text = docAnnot.innerHTML;
 				result = re.exec(text);
 				if (result !=null){
-					console.log("text=" + text);
-					console.log("result=" + JSON.stringify(result));
+					//console.log("text=" + text);
+					//console.log("result=" + JSON.stringify(result));
 					for (let rslt=0;rslt<=result.length-1;rslt++){
 						text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
 					}
-					console.log("NOW text =" + text);
+					//console.log("NOW text =" + text);
 					docAnnot.innerHTML = text;
 				}
 
