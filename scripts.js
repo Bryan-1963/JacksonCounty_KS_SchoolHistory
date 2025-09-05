@@ -199,7 +199,7 @@
 			console.log("docPages.length=" + docPages.length);
 			console.log("docSearchPatterns.length=" + docSearchPatterns.length);
 			
-			if (docSearchPatterns.length>)){
+			if (docSearchPatterns.length>0){
 			
 				//loop through annotations and captions of each page
 				for (let pgNum=0; pgNum<=docPages.length-1; pgNum++){
