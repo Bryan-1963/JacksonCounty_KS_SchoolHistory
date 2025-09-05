@@ -177,7 +177,9 @@
 				}
 				else if (i===docSearchTermInput.length-1){
 					//reached end of input String
-					word = word + char;
+					if (!charIsQuote){
+						word = word + char;
+					}
 					console.log("    end of string, pushing word=|" + word + "|");
 					docSearchPatterns.push(word);
 				}
@@ -185,7 +187,7 @@
 					if (!charIsQuote){
 						word = word + char;
 					}
-					console.log("    add to word, now word=|" + word + "|");
+					console.log("    regular char, add to word, now word=|" + word + "|");
 				}
 			}
 			console.log("search patterns = " + JSON.stringify(docSearchPatterns));
