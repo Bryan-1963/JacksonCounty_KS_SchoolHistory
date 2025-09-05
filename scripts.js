@@ -165,14 +165,18 @@
 				else if (charIsQuote && startQuote) {
 					//found end of words in quotes
 					startQuote=false;
-					docSearchPatterns.push(word);
+					if (word !=""){
+						docSearchPatterns.push(word);
+					}
 					console.log("    startQuote=false, pushing word=|" + word + "|");
 					word = "";
 				}
 				else if (char === " " && !startQuote) {
 					//found end of word
 					console.log("    found blank, pushing word=|" + word + "|");
-					docSearchPatterns.push(word);
+					if (word !=""){
+						docSearchPatterns.push(word);
+					}
 					word = "";
 				}
 				else if (i===docSearchTermInput.length-1){
@@ -181,47 +185,58 @@
 						word = word + char;
 					}
 					console.log("    end of string, pushing word=|" + word + "|");
-					docSearchPatterns.push(word);
+					if (word !=""){
+						docSearchPatterns.push(word);
+					}
 				}
 				else if (!charIsQuote){
-						word = word + char;
+					word = word + char;
 					console.log("    regular char, add to word, now word=|" + word + "|");
 				}
 			}
-			console.log("search patterns = " + JSON.stringify(docSearchPatterns));
 			
-			//loop through annotations and captions of each page
-			for (let pgNum=0; pgNum<=docPages.length-1; pgNum++){
-				let thisPageHasIt = false;
-				//loop thru all the annotation paragraphs
-				let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
-				for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
-					let thisTxt = thisAnnotation[paraNum].toString();
+			console.log("search patterns = " + JSON.stringify(docSearchPatterns));
+			console.log("docPages.length=" + docPages.length);
+			console.log("docSearchPatterns.length=" + docSearchPatterns.length);
+			
+			if (docSearchPatterns.length>)){
+			
+				//loop through annotations and captions of each page
+				for (let pgNum=0; pgNum<=docPages.length-1; pgNum++){
+					
+					let thisPageHasIt = false;
+					//loop thru all the annotation paragraphs
+					let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
+					for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
+						console.log("pgNum=" + pgNum + ", paraNum=" + paraNum);
+						let thisTxt = thisAnnotation[paraNum].toString();
+						for (let term=0;term<=docSearchPatterns-1;term++){
+							if(thisTxt.toLowerCase().includes(docSearchPatterns[term])){
+								thisPageHasIt=true;
+								foundSomeMatches=true;
+								console.log("FOUND Match for |" + docSearchPatterns[term] +"| in pgNum="+pgNum+", paraNum="+paraNum);
+							}
+						}
+					} //end of paraNum loop
+					
+					//check the caption
+					thisTxt = docPages[pgNum]['caption'].toString();
 					for (let term=0;term<=docSearchPatterns-1;term++){
 						if(thisTxt.toLowerCase().includes(docSearchPatterns[term])){
 							thisPageHasIt=true;
 							foundSomeMatches=true;
-							console.log("FOUND Match for |" + docSearchPatterns[term] +"| in pgNum="+pgNum+", paraNum="+paraNum);
 						}
 					}
-				} //end of paraNum loop
-				
-				//check the caption
-				thisTxt = docPages[pgNum]['caption'].toString();
-				for (let term=0;term<=docSearchPatterns-1;term++){
-					if(thisTxt.toLowerCase().includes(docSearchPatterns[term])){
-						thisPageHasIt=true;
-						foundSomeMatches=true;
+					
+					//if page contained the search term, then add it to the results array
+					if (thisPageHasIt){
+						docPagesAreSearched=true;
+						docSearchResultPages.push(pgNum);
 					}
-				}
-				
-				//if page contained the search term, then add it to the results array
-				if (thisPageHasIt){
-					docPagesAreSearched=true;
-					docSearchResultPages.push(pgNum);
-				}
-				
+					
 			} //end of pgNum loop
+			
+			}
 			
 			// if matches were found then show qty & go to first page
 			if (foundSomeMatches) {
