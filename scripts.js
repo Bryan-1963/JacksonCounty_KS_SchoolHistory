@@ -114,6 +114,16 @@
 	//==========================================================================================	
 	function clearDocumentSearch(){
 		
+		//remove highlights from current page
+		let re = new RegExp('<mark>',"gi");
+		let docAnnot = document.getElementById("docAnnotation");
+		let figCapt = document.getElementById('figCaption');
+		docAnnot.innerHTML = docAnnot.innerHTML.replace(re,"");
+		figCapt.innerHTML = figCapt.innerHTML.replace(re,"");
+		re = new RegExp('</mark>',"gi");
+		docAnnot.innerHTML = docAnnot.innerHTML.replace(re,"");
+		figCapt.innerHTML = figCapt.innerHTML.replace(re,"");
+		
 		//reset the search patterns
 		docSearchPatterns.length = 0;		
 		
@@ -129,9 +139,7 @@
 	// searchDocument
 	//==========================================================================================
 	// TO-DO:	
-	//	1) quotes around words
-	//	2) search for all the non-quoted words individually
-	//	3) fuzzy search
+	//	1) fuzzy search
 	//==========================================================================================
 	function searchDocument(type){  //type can be 'exact' or 'fuzzy'
 		
@@ -142,11 +150,10 @@
 		//clear out any existing search 
 		clearDocumentSearch();
 
-		//get value(s) to search for 
+		// load docSearchPatterns
+		//.................................................
 		docSearchTermInput = docPageSearchInput.value.toString().trim().toLowerCase();
 		console.log("in searchDocument, rcd type=" + type + ", and docSearchTermInput=" + docSearchTermInput);
-		
-		
 		if (docSearchTermInput != null && docSearchTermInput!=""){
 			
 			//keep anything between quotes as an individual item, otherwise split them up
@@ -195,10 +202,57 @@
 				}
 			}
 			
+			// add fuzzy search patterns 
+			if (type==='fuzzy') {
+				let startLen = docSearchPatterns.length;
+				
+				// one character changed
+				for (let term=0; term<=startLen-1; term++){
+					let thisTerm = docSearchPatterns[term];
+					let thisLen = thisTerm.length;
+					let newTerm = '[a-z]' + thisTerm.slice(1);
+					docSearchPatterns.push(newTerm);
+					for (let i=0;i<=thisLen-1;i++){
+						newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
+						docSearchPatterns.push(newTerm);
+					}
+				}
+				console.log("   FUZZY 1) search patterns = " + JSON.stringify(docSearchPatterns));
+				
+				//one character missing in search
+				for (let term=0; term<=startLen-1; term++){
+					let thisTerm = docSearchPatterns[term];
+					let thisLen = thisTerm.length;
+					newTerm = '[a-z]' + thisTerm.slice(0);
+					docSearchPatterns.push(newTerm);
+					for (let i=0;i<=thisLen-1;i++){
+						newTerm= thisTerm.slice(0,i+1) + '[a-z]' + thisTerm.slice(i+1);
+						docSearchPatterns.push(newTerm);
+					}
+				}	
+				console.log("   FUZZY 2) search patterns = " + JSON.stringify(docSearchPatterns));		
+
+				//one character missing in result
+				for (let term=0; term<=startLen-1; term++){
+					let thisTerm = docSearchPatterns[term];
+					let thisLen = thisTerm.length;
+
+					for (let i=0;i<=thisLen-1;i++){
+						newTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
+						docSearchPatterns.push(newTerm);
+					}
+				}	
+				console.log("   FUZZY 3) search patterns = " + JSON.stringify(docSearchPatterns));				
+				
+			}
+			
+			
 			console.log("search patterns = " + JSON.stringify(docSearchPatterns));
 			console.log("docPages.length=" + docPages.length);
 			console.log("docSearchPatterns.length=" + docSearchPatterns.length);
 			
+			//if we have docSearchPatterns, then find the pages that contain them
+			//.....................................................................
 			if (docSearchPatterns.length>0){
 			
 				//loop through annotations and captions of each page
@@ -245,6 +299,7 @@
 			}
 			
 			// if matches were found then show qty & go to first page
+			//.........................................................
 			if (foundSomeMatches) {
 				document.getElementById("docSearchResultsQty").innerHTML='1/' + docSearchResultPages.length;
 				docSearchResultCurrPg=0;
@@ -388,10 +443,6 @@
 					result.length = 0;
 				}
 				
-				
-				//let newText = text.replace(re, `<mark>${docSearchPatterns[term]}</mark>`);
-				//figCapt.innerHTML = newText;
-				
 				//highlight instances in annotation
 				text = docAnnot.innerHTML;
 				result = re.exec(text);
@@ -404,9 +455,7 @@
 					console.log("NOW text =" + text);
 					docAnnot.innerHTML = text;
 				}
-				
-				//newText = text.replace(re, `<mark>${docSearchPatterns[term]}</mark>`);
-				//docAnnot.innerHTML = newText;
+
 			}
 		}
 	};
