@@ -211,10 +211,10 @@
 					for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
 						
 						let thisTxt = thisAnnotation[paraNum].toString();
-						console.log("pgNum=" + pgNum + ", paraNum=" + paraNum);
-						console.log("     thisTxt=" + thisTxt);
+						//console.log("pgNum=" + pgNum + ", paraNum=" + paraNum);
+						//console.log("     thisTxt=" + thisTxt);
 						
-						for (let term=0;term<=docSearchPatterns-1;term++){
+						for (let term=0; term<=docSearchPatterns.length-1; term++){
 							console.log("     docSearchPatterns[term]=|" + docSearchPatterns[term] + "|");
 							if(thisTxt.toLowerCase().includes(docSearchPatterns[term])){
 								thisPageHasIt=true;
@@ -227,7 +227,7 @@
 					
 					//check the caption
 					thisTxt = docPages[pgNum]['caption'].toString();
-					for (let term=0;term<=docSearchPatterns-1;term++){
+					for (let term=0; term<=docSearchPatterns.length-1; term++){
 						if(thisTxt.toLowerCase().includes(docSearchPatterns[term])){
 							thisPageHasIt=true;
 							foundSomeMatches=true;
