@@ -205,15 +205,21 @@
 				for (let pgNum=0; pgNum<=docPages.length-1; pgNum++){
 					
 					let thisPageHasIt = false;
+					
 					//loop thru all the annotation paragraphs
 					let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
 					for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
-						console.log("pgNum=" + pgNum + ", paraNum=" + paraNum);
+						
 						let thisTxt = thisAnnotation[paraNum].toString();
+						console.log("pgNum=" + pgNum + ", paraNum=" + paraNum);
+						console.log("     thisTxt=" + thisTxt);
+						
 						for (let term=0;term<=docSearchPatterns-1;term++){
+							console.log("     docSearchPatterns[term]=|" + docSearchPatterns[term] + "|");
 							if(thisTxt.toLowerCase().includes(docSearchPatterns[term])){
 								thisPageHasIt=true;
 								foundSomeMatches=true;
+								
 								console.log("FOUND Match for |" + docSearchPatterns[term] +"| in pgNum="+pgNum+", paraNum="+paraNum);
 							}
 						}
