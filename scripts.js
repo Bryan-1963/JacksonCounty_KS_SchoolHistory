@@ -380,10 +380,12 @@
 				//highlight instances in caption
 				let text = figCapt.innerHTML;
 				let result = /e/.exec(text);  //returns array of all matching subtexts
-				for (let rslt=0;rslt<=result.length-1;rslt++){  //loop thru matching subtexts and highlight them
-					text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
+				if (result !=null){
+					for (let rslt=0;rslt<=result.length-1;rslt++){  //loop thru matching subtexts and highlight them
+						text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
+					}
+					figCapt.innerHTML = text;
 				}
-				figCapt.innerHTML = text;
 				result.length = 0;
 				
 				//let newText = text.replace(re, `<mark>${docSearchPatterns[term]}</mark>`);
@@ -392,10 +394,12 @@
 				//highlight instances in annotation
 				text = docAnnot.innerHTML;
 				result = /e/.exec(text);
-				for (let rslt=0;rslt<=result.length-1;rslt++){
-					text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
+				if (result !=null){
+					for (let rslt=0;rslt<=result.length-1;rslt++){
+						text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
+					}
+					docAnnot.innerHTML = text;
 				}
-				docAnnot.innerHTML = text;
 				
 				//newText = text.replace(re, `<mark>${docSearchPatterns[term]}</mark>`);
 				//docAnnot.innerHTML = newText;
