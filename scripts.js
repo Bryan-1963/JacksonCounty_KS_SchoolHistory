@@ -156,13 +156,13 @@
 				let char = docSearchTermInput[i];
 				let charIsQuote = /^[“"']/.test(char);
 
-				console.log(i + ") char=|"+char+"|, charIsQuote=" + charIsQuote);
+				console.log(i + ") char=|"+char+"|, charIsQuote=" + charIsQuote + ", startQuote=" + startQuote);
 				
 				if (charIsQuote && !startQuote) {
 					startQuote=true;
 					console.log("    startQuote=true, word=|" + word + "|");
 				}
-				else if (charIsQuote && !startQuote) {
+				else if (charIsQuote && startQuote) {
 					//found end of words in quotes
 					startQuote=false;
 					docSearchPatterns.push(word);
@@ -183,10 +183,8 @@
 					console.log("    end of string, pushing word=|" + word + "|");
 					docSearchPatterns.push(word);
 				}
-				else {
-					if (!charIsQuote){
+				else if (!charIsQuote){
 						word = word + char;
-					}
 					console.log("    regular char, add to word, now word=|" + word + "|");
 				}
 			}
