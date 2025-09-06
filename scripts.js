@@ -163,11 +163,10 @@
 				let char = docSearchTermInput[i];
 				let charIsQuote = /^[“"']/.test(char);
 
-				console.log(i + ") char=|"+char+"|, charIsQuote=" + charIsQuote + ", startQuote=" + startQuote);
+				//console.log(i + ") char=|"+char+"|, charIsQuote=" + charIsQuote + ", startQuote=" + startQuote);
 				
 				if (charIsQuote && !startQuote) {
 					startQuote=true;
-					console.log("    startQuote=true, word=|" + word + "|");
 				}
 				else if (charIsQuote && startQuote) {
 					//found end of words in quotes
@@ -175,12 +174,10 @@
 					if (word !=""){
 						docSearchPatterns.push(word);
 					}
-					console.log("    startQuote=false, pushing word=|" + word + "|");
 					word = "";
 				}
 				else if (char === " " && !startQuote) {
 					//found end of word
-					console.log("    found blank, pushing word=|" + word + "|");
 					if (word !=""){
 						docSearchPatterns.push(word);
 					}
@@ -191,14 +188,12 @@
 					if (!charIsQuote){
 						word = word + char;
 					}
-					console.log("    end of string, pushing word=|" + word + "|");
 					if (word !=""){
 						docSearchPatterns.push(word);
 					}
 				}
 				else if (!charIsQuote){
 					word = word + char;
-					console.log("    regular char, add to word, now word=|" + word + "|");
 				}
 			}
 			
@@ -210,8 +205,6 @@
 				for (let term=0; term<=startLen-1; term++){
 					let thisTerm = docSearchPatterns[term];
 					let thisLen = thisTerm.length;
-					//let newTerm = '[a-z]' + thisTerm.slice(1);
-					//docSearchPatterns.push(newTerm);
 					for (let i=0;i<=thisLen-1;i++){
 						let newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
 						docSearchPatterns.push(newTerm);
@@ -246,10 +239,9 @@
 				
 			}
 			
-			
-			console.log("search patterns = " + JSON.stringify(docSearchPatterns));
-			console.log("docPages.length=" + docPages.length);
-			console.log("docSearchPatterns.length=" + docSearchPatterns.length);
+			//console.log("search patterns = " + JSON.stringify(docSearchPatterns));
+			//console.log("docPages.length=" + docPages.length);
+			//console.log("docSearchPatterns.length=" + docSearchPatterns.length);
 			
 			//if we have docSearchPatterns, then find the pages that contain them
 			//.....................................................................
