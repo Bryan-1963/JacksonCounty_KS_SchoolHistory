@@ -462,10 +462,11 @@
 						re = new RegExp('</mark></mark>',"gi");
 						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,"</mark>");
 						figCapt.innerHTML = figCapt.innerHTML.replace(re,'</mark>');
+						
 						if (text.includes('cedar')){
-							console.log('    rslt=' + rslt);
-							console.log('    result[rslt]='+result[rslt]);
-							console.log("    result=" + JSON.stringify(result));
+							console.log('     rslt        =' + rslt);
+							console.log('     result[rslt]='+result[rslt]);
+							console.log("     result      =" + JSON.stringify(result));
 							console.log("========================================");
 							console.log("NOW text =" + text);
 						}
