@@ -440,7 +440,7 @@
 				//..................................
 				let text = figCapt.innerHTML;
 				
-				let result = re.exec(text);  //returns array of all matching subtexts
+				let result = text.match(re);  //returns array of all matching subtexts
 				if (result !=null){
 					for (let rslt=0;rslt<=result.length-1;rslt++){  //loop thru matching subtexts and highlight them
 						text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
@@ -453,7 +453,7 @@
 				//highlight instances in annotation
 				//..................................
 				text = docAnnot.innerHTML;
-				result = re.exec(text);
+				result = text.match(re);
 				
 				//DEBUG ONLY:				
 				if (text.includes('cedar')){
@@ -508,7 +508,6 @@
 					
 					//DEBUG ONLY:
 					if (text.includes('cedar')){
-						console.log("===========================================================================================================================================");
 						console.log("NOW text =" + text);
 					}
 					//END DEBUG ONLY:
