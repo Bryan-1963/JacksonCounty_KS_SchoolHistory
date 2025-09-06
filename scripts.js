@@ -442,7 +442,7 @@
 					for (let rslt=0;rslt<=result.length-1;rslt++){
 						text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
 					}
-					if (text.contains('cedar')){
+					if (text.includes('cedar')){
 						console.log("text=" + text);
 						console.log("re=" + re);
 						console.log("result=" + JSON.stringify(result));
