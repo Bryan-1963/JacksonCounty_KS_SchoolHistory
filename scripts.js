@@ -434,19 +434,47 @@
 					result.length = 0;
 				}
 				
+				if (text.includes('cedar')){
+					console.log("===================================================");
+					console.log("text=" + text);
+					console.log("term=" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
+					console.log("re=" + re);
+					console.log("===================================================");
+				}
+				
 				//highlight instances in annotation
 				text = docAnnot.innerHTML;
 				result = re.exec(text);
+				
+				if (text.includes('cedar')){
+					console.log("result=" + JSON.stringify(result));
+				}	
+				
 				if (result !=null){
 
 					for (let rslt=0;rslt<=result.length-1;rslt++){
 						text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
+					
+						//eliminage double flagging
+						let re = new RegExp('<mark><mark>',"gi");
+						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>');
+						figCapt.innerHTML = figCapt.innerHTML.replace(re,"");
+						re = new RegExp('</mark></mark>',"gi");
+						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,"</mark>");
+						figCapt.innerHTML = figCapt.innerHTML.replace(re,'</mark>');
+						if (text.includes('cedar')){
+							console.log('    rslt=" + rslt);
+							console.log('    result[rslt]='+result[rslt]);
+							console.log("    result=" + JSON.stringify(result));
+							console.log("========================================");
+							console.log("NOW text =" + text);
+						}
+						
 					}
 					if (text.includes('cedar')){
-						console.log("text=" + text);
-						console.log("re=" + re);
-						console.log("result=" + JSON.stringify(result));
+						console.log("===================================================");
 						console.log("NOW text =" + text);
+						console.log("===================================================");
 					}
 					docAnnot.innerHTML = text;
 					
