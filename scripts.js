@@ -475,14 +475,18 @@
 					
 						//eliminate double flagging
 						let re = new RegExp('<mark><mark>',"gi");
+						console.log("........................................");
 						console.log("re=" + re);
 						console.log("docAnnot.innerHTML="+docAnnot.innerHTML);
 						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>');
 						console.log("NOW docAnnot.innerHTML="+docAnnot.innerHTML);
 						figCapt.innerHTML = figCapt.innerHTML.replace(re,"");
 						re = new RegExp('</mark></mark>',"gi");
+						console.log("re=" + re);
 						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,"</mark>");
 						figCapt.innerHTML = figCapt.innerHTML.replace(re,'</mark>');
+						console.log("NOW docAnnot.innerHTML="+docAnnot.innerHTML);
+						console.log("........................................");
 						
 						//DEBUG ONLY:
 						if (text.includes('cedar')){
@@ -981,7 +985,7 @@
 				docPgImg.src='';
 
 				// LOAD SUBMENU click parameters
-				subMenuName = "CountyDistricts";
+				subMenuName = catFolderName;
 				subMenuCat = subCat;
 
 				contentSource= catFolderName + "/" + subCat + "/" + subCat + "_Overview.html";
