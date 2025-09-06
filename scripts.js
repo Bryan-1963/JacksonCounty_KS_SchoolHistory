@@ -420,7 +420,7 @@
 		// if docPagesAreSearched then search and highlight all the instances
 		if (docPagesAreSearched){
 			
-				if (text.includes('cedar')){
+				if (docAnnot.innerHTML.includes('cedar')){
 					console.log("===========================================================================================================================================");
 					for (let term=0; term<=docSearchPatterns.length-1; term++){
 						console.log("PATTERN# =" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
