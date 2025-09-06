@@ -11,6 +11,7 @@
 	var maps = []; //array of PageObjects for maps
 	var countySchoolDistricts = []; //array of PageObjects for elementary schools
 	var countyHighSchools = []; //array of PageObjects for high schools
+	var usdSchools = []; //array of PageObjects for USDs
 	var docPages = []; //array of AnnotatedPhotoObject, loaded by loadDocPages
 	var docPagesAreSearched = false;
 	var docSearchResultPages = []; //array of page numbers containing the searched for text
@@ -134,7 +135,7 @@
 		docSearchResultPages.length=0;
 
 	};
-	
+
 	//==========================================================================================
 	// searchDocument
 	//==========================================================================================
@@ -418,32 +419,29 @@
 		pgNumInput.dispatchEvent(new Event('input'));
 		
 		// if docPagesAreSearched then search and highlight all the instances
-		if (docPagesAreSearched){
+		if (docPagesAreSearched){	
 			
-				if (docAnnot.innerHTML.includes('cedar')){
-					console.log("===========================================================================================================================================");
-					for (let term=0; term<=docSearchPatterns.length-1; term++){
-						console.log("PATTERN# =" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
-					}
-					console.log("===========================================================================================================================================");
-				}			
-			
+			//DEBUG ONLY:
+			if (docAnnot.innerHTML.includes('cedar')){
+				console.log("===========================================================================================================================================");
+				for (let term=0; term<=docSearchPatterns.length-1; term++){
+					console.log("PATTERN# =" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
+				}
+				console.log("===========================================================================================================================================");
+			}	
+			//END DEBUG
 			
 			for (let term=0; term<=docSearchPatterns.length-1; term++){
+			
+		
 				
 				//build regex to search for
 				let re = new RegExp(docSearchPatterns[term],"gi");
 				
+				//..................................
 				//highlight instances in caption
+				//..................................
 				let text = figCapt.innerHTML;
-				
-				if (text.includes('cedar')){
-					console.log("===========================================================================================================================================");
-					console.log("PATTERN# =" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
-					console.log("re=" + re);
-					console.log("text=" + text);
-					console.log("===================================================");
-				}
 				
 				let result = re.exec(text);  //returns array of all matching subtexts
 				if (result !=null){
@@ -453,14 +451,23 @@
 					figCapt.innerHTML = text;
 					result.length = 0;
 				}
-								
+						
+				//..................................						
 				//highlight instances in annotation
+				//..................................
 				text = docAnnot.innerHTML;
 				result = re.exec(text);
 				
+				//DEBUG ONLY:				
 				if (text.includes('cedar')){
+					console.log("===========================================================================================================================================");
+					console.log("PATTERN# =" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
+					console.log("re=" + re);
+					console.log("text=" + text);
 					console.log("result=" + JSON.stringify(result));
+					console.log("===================================================");
 				}	
+				//END DEBUG ONLY:
 				
 				if (result !=null){
 
@@ -475,19 +482,25 @@
 						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,"</mark>");
 						figCapt.innerHTML = figCapt.innerHTML.replace(re,'</mark>');
 						
+						//DEBUG ONLY:
 						if (text.includes('cedar')){
 							console.log("========================================");
 							console.log('     rslt #      =' + rslt);
 							console.log('     result[rslt]=' + result[rslt]);
 							console.log("========================================");
 						}
+						//END DEBUG ONLY:
 						
 					}
+					
+					//DEBUG ONLY:
 					if (text.includes('cedar')){
 						console.log("===========================================================================================================================================");
 						console.log("NOW text =" + text);
 						console.log("===========================================================================================================================================");
 					}
+					//END DEBUG ONLY:
+					
 					docAnnot.innerHTML = text;
 					
 				}
@@ -536,8 +549,7 @@
 		//console.log("calling loadDocPage, sending docPgNum=" + docPgNum);
 		loadDocPageNum(docPgNum);
 	};
-	
-	
+		
 	//==========================================================================================
 	// startup
 	//==========================================================================================
@@ -545,8 +557,9 @@
 		//console.log("in startup");
 		countySchoolDistricts.length =0;
 		countyHighSchools.length = 0;
+		usdSchools.length=0;
 		initVars(); //load global variables
-		buildMenus(); //build dropdowns based on contents of countySchoolDistricts and countyHighSchools
+		buildMenus(); //build dropdowns based on contents of school arrays
 		sizeBars(); //size and place the menu bars
 		//console.log("countySchoolDistricts.length=" + countySchoolDistricts.length);
 	};
@@ -555,7 +568,9 @@
 	// buildMenus
 	//==========================================================================================	
 	function buildMenus(){
+		//............................
 		// County Districts
+		//............................
 		var dropDown = document.getElementById("CountyDistrictsDropdown");
 		var dropDownContents = dropDown.innerHTML;
 		var foundJoints = false;
@@ -580,7 +595,9 @@
 		}
 		dropDown.innerHTML = dropDownContents;
 		
+		//............................
 		// County High Schools
+		//............................
 		dropDown = document.getElementById("CountyHighSchoolsDropdown");
 		dropDownContents = dropDown.innerHTML;
 		foundJoints = false;
@@ -605,8 +622,36 @@
 		}
 		dropDown.innerHTML = dropDownContents;		
 		
+		//............................
+		// USDs
+		//............................
+		dropDown = document.getElementById("UsdSchoolsDropdown");
+		dropDownContents = dropDown.innerHTML;
+		foundJoints = false;
+		foundAdjacents = false;
+
+		for (var i = 0; i<=usdSchools.length-1;i++){
+
+			if (usdSchools[i].category === "Joint" && !foundJoints) {
+				dropDownContents = dropDownContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><u>JOINT DISTRICTS</u></a>";
+				foundJoints = true;
+			}
+
+			if (usdSchools[i].category === "Adjacent" && !foundAdjacents) {
+				dropDownContents = dropDownContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><u>ADJACENT DISTRICTS</u></a>";
+				foundAdjacents = true;
+			}
+			// Example:
+			//<a onclick="menuClick({category:'UnifiedSchoolDistricts',subCat:'USD337', title:'USD337 Royal Valley'})">USD337 Royal Valley</a>
+			dropDownContents = dropDownContents + String.fromCharCode(13) + "<a onclick=\"menuClick({category:'UnifiedSchoolDistricts', subCat:'" + usdSchools[i].number 
+			dropDownContents = dropDownContents + "', title:'" + usdSchools[i].title + "'})\">"+ usdSchools[i].title + "</a>";
 				
+		}
+		dropDown.innerHTML = dropDownContents;	
+		
+		//............................		
 		// Maps
+		//............................
 		dropDown = document.getElementById("MapsDropdown");
 		dropDownContents = dropDown.innerHTML;
 
@@ -665,7 +710,7 @@
 		if (params.title) {
 			title = params.title;
 		}
-		//console.log("menuClick: category=" + category + ", subCat=" + subCat);
+		console.log("menuClick: category=" + category + ", subCat=" + subCat);
 		var contentSource = '';
 		var subTitle = document.getElementById("SubTitle");
 		var subMenu = document.getElementById("SubMenu");
@@ -2202,6 +2247,37 @@
 		thisDist.category = "Joint"
 		countyHighSchools.push(thisDist);
 
+		//-----------------------------
+		// load usdSchools array
+		//-----------------------------		
+		var thisDist = new PageObject();
+		thisDist.number = "USD321";
+		thisDist.title = "USD321 Kaw Valley";
+		thisDist.path = "UnifiedSchoolDistricts\USD321\USD321_Overview.html";
+		thisDist.category = ""
+		usdSchools.push(thisDist);		
+
+		var thisDist = new PageObject();
+		thisDist.number = "USD335";
+		thisDist.title = "USD335 Jackson Heights";
+		thisDist.path = "UnifiedSchoolDistricts\USD335\USD335_Overview.html";
+		thisDist.category = ""
+		usdSchools.push(thisDist);		
+		
+		var thisDist = new PageObject();
+		thisDist.number = "USD336";
+		thisDist.title = "USD336 Holton";
+		thisDist.path = "UnifiedSchoolDistricts\USD336\USD336_Overview.html";
+		thisDist.category = ""
+		usdSchools.push(thisDist);	
+		
+		var thisDist = new PageObject();
+		thisDist.number = "USD337";
+		thisDist.title = "USD337 Holton";
+		thisDist.path = "UnifiedSchoolDistricts\USD337\USD337_Overview.html";
+		thisDist.category = ""
+		usdSchools.push(thisDist)
+		
 	};	
 
 
