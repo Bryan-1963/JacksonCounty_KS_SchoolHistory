@@ -460,10 +460,11 @@
 				//DEBUG ONLY:				
 				if (text.includes('cedar')){
 					console.log("===========================================================================================================================================");
-					console.log("PATTERN# =" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
+					console.log("PATTERN#" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
 					console.log("re=" + re);
 					console.log("text=" + text);
-					console.log("result=" + JSON.stringify(result));
+					console.log("result.length=" + result.length);
+					console.log("result=" + JSON.stringify(result) );
 					console.log("===================================================");
 				}	
 				//END DEBUG ONLY:
@@ -475,25 +476,33 @@
 					
 						//eliminate double flagging
 						let re = new RegExp('<mark><mark>',"gi");
-						console.log("........................................");
-						console.log("re=" + re);
-						console.log("docAnnot.innerHTML="+docAnnot.innerHTML);
-						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>');
-						console.log("NOW docAnnot.innerHTML="+docAnnot.innerHTML);
-						figCapt.innerHTML = figCapt.innerHTML.replace(re,"");
-						re = new RegExp('</mark></mark>',"gi");
-						console.log("re=" + re);
-						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,"</mark>");
-						figCapt.innerHTML = figCapt.innerHTML.replace(re,'</mark>');
-						console.log("NOW docAnnot.innerHTML="+docAnnot.innerHTML);
-						console.log("........................................");
 						
+												
 						//DEBUG ONLY:
 						if (text.includes('cedar')){
 							console.log("========================================");
 							console.log('     rslt #      =' + rslt);
 							console.log('     result[rslt]=' + result[rslt]);
 							console.log("========================================");
+							console.log("........................................");
+							console.log("re=" + re);
+							console.log("  1) docAnnot.innerHTML="+docAnnot.innerHTML);							
+						}
+						//END DEBUG ONLY:
+						
+
+						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>');
+						console.log("  2) docAnnot.innerHTML="+docAnnot.innerHTML);
+						figCapt.innerHTML = figCapt.innerHTML.replace(re,"");
+						re = new RegExp('</mark></mark>',"gi");
+						console.log("re=" + re);
+						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,"</mark>");
+						figCapt.innerHTML = figCapt.innerHTML.replace(re,'</mark>');
+						
+						//DEBUG ONLY:
+						if (text.includes('cedar')){
+							console.log("  3) docAnnot.innerHTML="+docAnnot.innerHTML);
+							console.log("........................................");
 						}
 						//END DEBUG ONLY:
 						
