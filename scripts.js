@@ -455,7 +455,7 @@
 					for (let rslt=0;rslt<=result.length-1;rslt++){
 						text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
 					
-						//eliminage double flagging
+						//eliminate double flagging
 						let re = new RegExp('<mark><mark>',"gi");
 						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>');
 						figCapt.innerHTML = figCapt.innerHTML.replace(re,"");
