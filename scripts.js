@@ -419,12 +419,32 @@
 		
 		// if docPagesAreSearched then search and highlight all the instances
 		if (docPagesAreSearched){
+			
+				if (text.includes('cedar')){
+					console.log("===========================================================================================================================================");
+					for (let term=0; term<=docSearchPatterns.length-1; term++){
+						console.log("PATTERN# =" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
+					}
+					console.log("===========================================================================================================================================");
+				}			
+			
+			
 			for (let term=0; term<=docSearchPatterns.length-1; term++){
+				
 				//build regex to search for
 				let re = new RegExp(docSearchPatterns[term],"gi");
 				
 				//highlight instances in caption
 				let text = figCapt.innerHTML;
+				
+				if (text.includes('cedar')){
+					console.log("===========================================================================================================================================");
+					console.log("PATTERN# =" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
+					console.log("re=" + re);
+					console.log("text=" + text);
+					console.log("===================================================");
+				}
+				
 				let result = re.exec(text);  //returns array of all matching subtexts
 				if (result !=null){
 					for (let rslt=0;rslt<=result.length-1;rslt++){  //loop thru matching subtexts and highlight them
@@ -433,15 +453,7 @@
 					figCapt.innerHTML = text;
 					result.length = 0;
 				}
-				
-				if (text.includes('cedar')){
-					console.log("===================================================");
-					console.log("text=" + text);
-					console.log("term=" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
-					console.log("re=" + re);
-					console.log("===================================================");
-				}
-				
+								
 				//highlight instances in annotation
 				text = docAnnot.innerHTML;
 				result = re.exec(text);
@@ -464,18 +476,17 @@
 						figCapt.innerHTML = figCapt.innerHTML.replace(re,'</mark>');
 						
 						if (text.includes('cedar')){
-							console.log('     rslt        =' + rslt);
-							console.log('     result[rslt]='+result[rslt]);
-							console.log("     result      =" + JSON.stringify(result));
 							console.log("========================================");
-							console.log("NOW text =" + text);
+							console.log('     rslt #      =' + rslt);
+							console.log('     result[rslt]=' + result[rslt]);
+							console.log("========================================");
 						}
 						
 					}
 					if (text.includes('cedar')){
-						console.log("===================================================");
+						console.log("===========================================================================================================================================");
 						console.log("NOW text =" + text);
-						console.log("===================================================");
+						console.log("===========================================================================================================================================");
 					}
 					docAnnot.innerHTML = text;
 					
