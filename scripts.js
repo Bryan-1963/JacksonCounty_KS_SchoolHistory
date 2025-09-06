@@ -207,7 +207,7 @@
 					let thisTerm = docSearchPatterns[term];
 					let thisLen = thisTerm.length;
 					for (let i=0;i<=thisLen-1;i++){
-						let newTerm= thisTerm.slice(0,i) + '.' + thisTerm.slice(i+1);
+						let newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
 						docSearchPatterns.push(newTerm);
 					}
 				}
@@ -217,10 +217,10 @@
 				for (let term=0; term<=startLen-1; term++){
 					let thisTerm = docSearchPatterns[term];
 					let thisLen = thisTerm.length;
-					newTerm = '.' + thisTerm.slice(0);
+					newTerm = '[a-z]' + thisTerm.slice(0);
 					docSearchPatterns.push(newTerm);
 					for (let i=0;i<=thisLen-1;i++){
-						newTerm= thisTerm.slice(0,i+1) + '.' + thisTerm.slice(i+1);
+						newTerm= thisTerm.slice(0,i+1) + '[a-z]' + thisTerm.slice(i+1);
 						docSearchPatterns.push(newTerm);
 					}
 				}	
@@ -431,9 +431,7 @@
 			//END DEBUG
 			
 			for (let term=0; term<=docSearchPatterns.length-1; term++){
-			
-		
-				
+
 				//build regex to search for
 				let re = new RegExp(docSearchPatterns[term],"gi");
 				
