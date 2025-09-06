@@ -438,13 +438,18 @@
 				text = docAnnot.innerHTML;
 				result = re.exec(text);
 				if (result !=null){
-					//console.log("text=" + text);
-					//console.log("result=" + JSON.stringify(result));
+
 					for (let rslt=0;rslt<=result.length-1;rslt++){
 						text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
 					}
-					//console.log("NOW text =" + text);
+					if (text.contains('cedar'){
+						console.log("text=" + text);
+						console.log("re=" + re);
+						console.log("result=" + JSON.stringify(result));
+						console.log("NOW text =" + text);
+					}
 					docAnnot.innerHTML = text;
+					
 				}
 
 			}
