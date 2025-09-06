@@ -207,7 +207,7 @@
 					let thisTerm = docSearchPatterns[term];
 					let thisLen = thisTerm.length;
 					for (let i=0;i<=thisLen-1;i++){
-						let newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
+						let newTerm= thisTerm.slice(0,i) + '.' + thisTerm.slice(i+1);
 						docSearchPatterns.push(newTerm);
 					}
 				}
@@ -217,10 +217,10 @@
 				for (let term=0; term<=startLen-1; term++){
 					let thisTerm = docSearchPatterns[term];
 					let thisLen = thisTerm.length;
-					newTerm = '[a-z]' + thisTerm.slice(0);
+					newTerm = '.' + thisTerm.slice(0);
 					docSearchPatterns.push(newTerm);
 					for (let i=0;i<=thisLen-1;i++){
-						newTerm= thisTerm.slice(0,i+1) + '[a-z]' + thisTerm.slice(i+1);
+						newTerm= thisTerm.slice(0,i+1) + '.' + thisTerm.slice(i+1);
 						docSearchPatterns.push(newTerm);
 					}
 				}	
@@ -427,7 +427,6 @@
 				for (let term=0; term<=docSearchPatterns.length-1; term++){
 					console.log("PATTERN# =" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
 				}
-				console.log("===========================================================================================================================================");
 			}	
 			//END DEBUG
 			
@@ -476,7 +475,10 @@
 					
 						//eliminate double flagging
 						let re = new RegExp('<mark><mark>',"gi");
+						console.log("re=" + re);
+						console.log("docAnnot.innerHTML="+docAnnot.innerHTML);
 						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>');
+						console.log("NOW docAnnot.innerHTML="+docAnnot.innerHTML);
 						figCapt.innerHTML = figCapt.innerHTML.replace(re,"");
 						re = new RegExp('</mark></mark>',"gi");
 						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,"</mark>");
@@ -497,7 +499,6 @@
 					if (text.includes('cedar')){
 						console.log("===========================================================================================================================================");
 						console.log("NOW text =" + text);
-						console.log("===========================================================================================================================================");
 					}
 					//END DEBUG ONLY:
 					
@@ -643,7 +644,7 @@
 			}
 			// Example:
 			//<a onclick="menuClick({category:'UnifiedSchoolDistricts',subCat:'USD337', title:'USD337 Royal Valley'})">USD337 Royal Valley</a>
-			dropDownContents = dropDownContents + String.fromCharCode(13) + "<a onclick=\"menuClick({category:'UnifiedSchoolDistricts', subCat:'" + usdSchools[i].number 
+			dropDownContents = dropDownContents + String.fromCharCode(13) + "<a onclick=\"menuClick({category:'Unified School Districts', subCat:'" + usdSchools[i].number 
 			dropDownContents = dropDownContents + "', title:'" + usdSchools[i].title + "'})\">"+ usdSchools[i].title + "</a>";
 				
 		}
