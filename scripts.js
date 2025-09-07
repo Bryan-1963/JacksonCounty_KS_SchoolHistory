@@ -137,8 +137,6 @@
 		//initialize variables
 		let foundSomeMatches = false;
 		let matchingPages = [];
-		let patterns = []; //array of search patterns
-		let patternsMatrix = []; //array of arrays of patterns
 		
 		//clear out any existing search 
 		clearDocumentSearch();
@@ -166,14 +164,14 @@
 					//found end of words in quotes
 					startQuote=false;
 					if (word !=""){
-						patterns.push(word);
+						docSearchPatterns.push(word);
 					}
 					word = "";
 				}
 				else if (char === " " && !startQuote) {
 					//found end of word
 					if (word !=""){
-						patterns.push(word);
+						docSearchPatterns.push(word);
 					}
 					word = "";
 				}
@@ -183,56 +181,52 @@
 						word = word + char;
 					}
 					if (word !=""){
-						patterns.push(word);
+						docSearchPatterns.push(word);
 					}
 				}
 				else if (!charIsQuote){
 					word = word + char;
 				}
 			}
-			patternsMatrix.push(patterns); //loads basic inputs into [0] of patternsMatrix
-			console.log("   patternsMatrix[0] = " + JSON.stringify(patternsMatrix[0]));
+			console.log("   docSearchPatterns = " + JSON.stringify(docSearchPatterns));
 			
 			// add fuzzy search patterns 
 			if (type==='fuzzy') {
-				let startLen = patternsMatrix[0].length;		
+				let startLen = docSearchPatterns.length;		
 				
 				for (let term=0; term<=startLen-1; term++){
-					let thisTerm = patternsMatrix[0][term];
+					let thisTerm = docSearchPatterns[term];
 					let thisLen = thisTerm.length;
 					//................................................................................
 					// fuzzies for any length of term >=4 (one char differences)
 					//................................................................................
 					if (thisLen>=4){
-						patterns.length = 0;
 						// one character changed
 						for (let i=0;i<=thisLen-1;i++){
 							let newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
-							patterns.push(newTerm);
+							docSearchPatterns.push(newTerm);
 						}
 
 						//one character missing in search
 						newTerm = '[a-z]' + thisTerm.slice(0);
-						patterns.push(newTerm);
+						docSearchPatterns.push(newTerm);
 						for (let i=0;i<=thisLen-1;i++){
 							newTerm= thisTerm.slice(0,i+1) + '[a-z]' + thisTerm.slice(i+1);
-							patterns.push(newTerm);
+							docSearchPatterns.push(newTerm);
 						}
 						
 						//one character missing in result
 						for (let i=0;i<=thisLen-1;i++){
 							newTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
-							patterns.push(newTerm);
+							docSearchPatterns.push(newTerm);
 						}
 						
-						patternsMatrix.push(patterns); //loads one char diff patterns into [1] of patternsMatrix
-						console.log("   patternsMatrix[1] = " + JSON.stringify(patternsMatrix[1]));
+						console.log("   added 1 char fuzzies = " + JSON.stringify(docSearchPatterns));
 					}
 					
 					//................................................................................
 					// fuzzies for terms longer than 10 characters, two characters changed, two chars missing
 					//................................................................................		
-					patterns.length = 0;
 					if (thisLen>=10){
 						//two characters different 
 						for (let i=0;i<=thisLen-1;i++){
@@ -240,7 +234,7 @@
 							for (let j=i+5;j<=baseTerm.length-1;j++){
 								newTerm= baseTerm.slice(0,j) + '[a-z]' + baseTerm.slice(j+1);
 								console.log("            newTerm=" + newterm);
-								patterns.push(newTerm);
+								docSearchPatterns.push(newTerm);
 							}
 						}
 						//two character missing in search
@@ -253,7 +247,7 @@
 							}
 							for (let j=i+5;j<=baseTerm.length-1;j++){
 								newTerm= baseTerm.slice(0,j) + '[a-z]' + thisTerm.slice(j+1);
-								patterns.push(newTerm);
+								docSearchPatterns.push(newTerm);
 							}
 						}
 						
@@ -262,11 +256,10 @@
 							baseTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
 							for (let j=i+5;j<=baseTerm.length-1;j++){
 								newTerm= baseTerm.slice(0,j) + thisTerm.slice(j+1);
-								patterns.push(newTerm);
+								docSearchPatterns.push(newTerm);
 							}
 						}
-						patternsMatrix.push(patterns); //loads 2 char diffs in search patterns into [2] of patternsMatrix
-						console.log("   patternsMatrix[2] = " + JSON.stringify(patternsMatrix[2]));	
+						console.log("   added 2 char fuzzies = " + JSON.stringify(docSearchPatterns));	
 					}
 
 				
@@ -277,30 +270,10 @@
 				
 					
 				}
-
-				
-
-
-
-
 				
 			} // end of if (type==='fuzzy')
 			
-			//combine the search patterns found into docSearchPatterns
-			console.log("patternsMatrix.length=" + patternsMatrix.length);
-			console.log("patternsMatrix=" + JSON.stringify(patternsMatrix));
-			for (let i=0;i<=patternsMatrix.length-1;i++){
-				console.log("  patternsMatrix[" + i + "].length=" + patternsMatrix[i].length);
-				console.log("  patternsMatrix[" + i + "]=" + JSON.stringify(patternsMatrix[i]));
-				if (patternsMatrix[i].length>0){
-					for (let j=0;j<=patternsMatrix[i].length-1;j++){
-						console.log("    patternsMatrix[" + i + "]["+j+"].length=" + patternsMatrix[i].length);
-						console.log("    patternsMatrix[" + i + "]["+j+"]=" + patternsMatrix[i][j]);
-						docSearchPatterns.push(patternsMatrix[i][j]);
-					}
-				}
-			}
-			console.log("docSearchPatterns=" + JSON.stringify(docSearchPatterns));
+
 			
 			//if we have docSearchPatterns, then find the pages that contain them
 			//.....................................................................
