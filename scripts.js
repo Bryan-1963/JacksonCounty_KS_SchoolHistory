@@ -231,11 +231,13 @@
 					//................................................................................		
 					if (thisLen>=10){
 						//two characters different 
+						console.log("thisTerm="+thisTerm);
 						for (let i=0;i<=thisLen-1;i++){
 							baseTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
+							console.log("    baseTerm="+baseTerm);
 							for (let j=i+5;j<=baseTerm.length-1;j++){
 								newTerm= baseTerm.slice(0,j) + '[a-z]' + baseTerm.slice(j+1);
-								console.log("            newTerm=" + newTerm);
+								console.log("        newTerm=" + newTerm);
 								docSearchPatterns.push(newTerm);
 							}
 						}
@@ -247,20 +249,21 @@
 							else {
 								baseTerm= thisTerm.slice(0,i+1) + '[a-z]' + thisTerm.slice(i+1);
 							}
+							console.log("   baseTerm="+baseTerm);
 							for (let j=i+5;j<=baseTerm.length-1;j++){
 								newTerm= baseTerm.slice(0,j) + '[a-z]' + baseTerm.slice(j+1);
+								console.log("        newTerm=" + newTerm);
 								docSearchPatterns.push(newTerm);
 							}
 						}
 						
 						//two character missing in result
 						for (let i=0;i<=thisLen-1;i++){
-							console.log("thisTerm="+thisTerm);
 							baseTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
 							console.log("   baseTerm="+baseTerm);
-							for (let j=i+1;j<=baseTerm.length-1;j++){
+							for (let j=0;j<=baseTerm.length-1;j++){
 								newTerm= baseTerm.slice(0,j) + baseTerm.slice(j+1);
-								console.log("   newTerm="+newTerm);
+								console.log("       newTerm="+newTerm);
 								docSearchPatterns.push(newTerm);
 							}
 						}
