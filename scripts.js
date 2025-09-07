@@ -204,7 +204,6 @@
 					let thisLen = thisTerm.length;
 					for (let i=0;i<=thisLen-1;i++){
 						let newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
-						//docSearchPatterns.push(newTerm);
 						patterns.push(newTerm);
 					}
 				}
@@ -220,7 +219,6 @@
 					docSearchPatterns.push(newTerm);
 					for (let i=0;i<=thisLen-1;i++){
 						newTerm= thisTerm.slice(0,i+1) + '[a-z]' + thisTerm.slice(i+1);
-						//docSearchPatterns.push(newTerm);
 						patterns.push(newTerm);
 					}
 				}	
@@ -235,7 +233,6 @@
 
 					for (let i=0;i<=thisLen-1;i++){
 						newTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
-						//docSearchPatterns.push(newTerm);
 						patterns.push(newTerm);
 					}
 				}	
@@ -264,9 +261,14 @@
 			} // end of if (type==='fuzzy')
 			
 			//combine the search patterns found into docSearchPatterns
+			console.log("patternsMatrix.length=" + patternsMatrix.length);
+			console.log("patternsMatrix=" + JSON.stringify(patternsMatrix));
 			for (let i=0;i<=patternsMatrix.length-1;i++){
-				console.log("patternsMatrix[" + i+"]=" + JSON.stringify(patternsMatrix[i]));
+				console.log("  patternsMatrix[" + i + "].length=" + patternsMatrix[i].length);
+				console.log("  patternsMatrix[" + i + "]=" + JSON.stringify(patternsMatrix[i]));
 				for (let j=0;j<=patternsMatrix[i].length-1;j++){
+					console.log("    patternsMatrix[" + i + "]["+j+"].length=" + patternsMatrix[i].length);
+					console.log("    patternsMatrix[" + i + "]["+j+"]=" + patternsMatrix[i][j]);
 					docSearchPatterns.push(patternsMatrix[i][j]);
 				}
 			}
