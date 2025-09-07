@@ -114,17 +114,7 @@
 	// clearDocumentSearch
 	//==========================================================================================	
 	function clearDocumentSearch(){
-		
-		//remove highlights from current page
-		let re = new RegExp('<mark>',"gi");
-		let docAnnot = document.getElementById("docAnnotation");
-		let figCapt = document.getElementById('figCaption');
-		docAnnot.innerHTML = docAnnot.innerHTML.replace(re,"");
-		figCapt.innerHTML = figCapt.innerHTML.replace(re,"");
-		re = new RegExp('</mark>',"gi");
-		docAnnot.innerHTML = docAnnot.innerHTML.replace(re,"");
-		figCapt.innerHTML = figCapt.innerHTML.replace(re,"");
-		
+
 		//reset the search patterns
 		docSearchPatterns.length = 0;		
 		
@@ -133,14 +123,14 @@
 		
 		//reset the results array
 		docSearchResultPages.length=0;
+		
+		//remove highlights from current page by reloading it without highlights
+		loadDocPageNum(docPgNum);
 
 	};
 
 	//==========================================================================================
 	// searchDocument
-	//==========================================================================================
-	// TO-DO:	
-	//	1) fuzzy search
 	//==========================================================================================
 	function searchDocument(type){  //type can be 'exact' or 'fuzzy'
 		
@@ -461,8 +451,13 @@
 					console.log("PATTERN#" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
 					console.log("re=" + re);
 					console.log("text=" + text);
+					if (result !=null){
 					console.log("result.length=" + result.length);
-					console.log("result=" + JSON.stringify(result) );
+					console.log("result=" + JSON.stringify(result) );						
+					}
+					else {
+						console.log("no results");
+					}
 					console.log("===================================================");
 				}	
 				//END DEBUG ONLY:
@@ -473,7 +468,7 @@
 						text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
 					
 						//eliminate double flagging
-						let re = new RegExp('<mark><mark>',"gi");
+						let re = new RegExp('&ltmark&gt&ltmark&gt',"gi");
 						
 												
 						//DEBUG ONLY:
@@ -487,16 +482,7 @@
 							console.log("  1) docAnnot.innerHTML="+docAnnot.innerHTML);							
 						}
 						//END DEBUG ONLY:
-						
-
-						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>');
-						console.log("  2) docAnnot.innerHTML="+docAnnot.innerHTML);
-						figCapt.innerHTML = figCapt.innerHTML.replace(re,"");
-						re = new RegExp('</mark></mark>',"gi");
-						console.log("re=" + re);
-						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,"</mark>");
-						figCapt.innerHTML = figCapt.innerHTML.replace(re,'</mark>');
-						
+												
 						//DEBUG ONLY:
 						if (text.includes('cedar')){
 							console.log("  3) docAnnot.innerHTML="+docAnnot.innerHTML);
