@@ -423,9 +423,8 @@
 			for (let term=0; term<=docSearchPatterns.length-1; term++){
 
 				//build regex to search for
-				let re = new RegExp("(?<!mark\\>)" + docSearchPatterns[term],"gi"); // '(?<!mark>)' is negative lookahead assertion, wont re-find words already marked
-				console.log("re=" + re);
-				
+				let re = new RegExp("(?<!mark\>)" + docSearchPatterns[term],"gi"); // '(?<!mark\>)' is negative lookahead assertion, shouldn't re-find words already marked
+			
 				//..................................
 				//highlight instances in caption
 				//..................................
