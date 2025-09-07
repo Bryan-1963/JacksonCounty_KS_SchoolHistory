@@ -196,6 +196,8 @@
 				
 				for (let term=0; term<=startLen-1; term++){
 					let thisTerm = docSearchPatterns[term];
+					let newTerm="";
+					let baseTerm="";
 					let thisLen = thisTerm.length;
 					//................................................................................
 					// fuzzies for any length of term >=4 (one char differences)
@@ -203,7 +205,7 @@
 					if (thisLen>=4){
 						// one character changed
 						for (let i=0;i<=thisLen-1;i++){
-							let newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
+							newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
 							docSearchPatterns.push(newTerm);
 						}
 
@@ -230,7 +232,7 @@
 					if (thisLen>=10){
 						//two characters different 
 						for (let i=0;i<=thisLen-1;i++){
-							let baseTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
+							baseTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
 							for (let j=i+5;j<=baseTerm.length-1;j++){
 								newTerm= baseTerm.slice(0,j) + '[a-z]' + baseTerm.slice(j+1);
 								console.log("            newTerm=" + newterm);
