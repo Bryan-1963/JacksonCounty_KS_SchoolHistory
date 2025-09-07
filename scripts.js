@@ -256,7 +256,7 @@
 						//two character missing in result
 						for (let i=0;i<=thisLen-1;i++){
 							baseTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
-							for (let j=i+5;j<=baseTerm.length-1;j++){
+							for (let j=i+1;j<=baseTerm.length-1;j++){
 								newTerm= baseTerm.slice(0,j) + thisTerm.slice(j+1);
 								docSearchPatterns.push(newTerm);
 							}
