@@ -249,10 +249,10 @@
 							else {
 								baseTerm= thisTerm.slice(0,i+1) + '[a-z]' + thisTerm.slice(i+1);
 							}
-							console.log("   baseTerm="+baseTerm);
+							console.log("   " + i + ") baseTerm="+baseTerm);
 							for (let j=i+5;j<=baseTerm.length-1;j++){
 								newTerm= baseTerm.slice(0,j) + '[a-z]' + baseTerm.slice(j+1);
-								console.log("        newTerm=" + newTerm);
+								console.log("       " + j + ") newTerm=" + newTerm);
 								docSearchPatterns.push(newTerm);
 							}
 						}
@@ -260,10 +260,10 @@
 						//two character missing in result
 						for (let i=0;i<=thisLen-1;i++){
 							baseTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
-							console.log("   baseTerm="+baseTerm);
+							console.log("   " + i + ") baseTerm="+baseTerm);
 							for (let j=0;j<=baseTerm.length-1;j++){
 								newTerm= baseTerm.slice(0,j) + baseTerm.slice(j+1);
-								console.log("       newTerm="+newTerm);
+								console.log("       " + j + ") newTerm="+newTerm);
 								docSearchPatterns.push(newTerm);
 							}
 						}
