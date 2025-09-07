@@ -208,7 +208,7 @@
 						patterns.push(newTerm);
 					}
 				}
-				pattermsMatrix.push(patterns); //loads one char diff patterns into [1] of patternsMatrix
+				patternsMatrix.push(patterns); //loads one char diff patterns into [1] of patternsMatrix
 				console.log("   patternsMatrix[1] = " + JSON.stringify(patternsMatrix[1]));
 				
 				//one character missing in search
@@ -224,7 +224,7 @@
 						patterns.push(newTerm);
 					}
 				}	
-				pattermsMatrix.push(patterns); //loads one char missing in search patterns into [2] of patternsMatrix
+				patternsMatrix.push(patterns); //loads one char missing in search patterns into [2] of patternsMatrix
 				console.log("   patternsMatrix[2] = " + JSON.stringify(patternsMatrix[2]));	
 
 				//one character missing in result
@@ -239,7 +239,7 @@
 						patterns.push(newTerm);
 					}
 				}	
-				pattermsMatrix.push(patterns); //loads one char missing in result patterns into [3] of patternsMatrix
+				patternsMatrix.push(patterns); //loads one char missing in result patterns into [3] of patternsMatrix
 				console.log("   patternsMatrix[3] = " + JSON.stringify(patternsMatrix[3]));		
 
 				//terms longer than 10 characters, two characters changed
@@ -257,7 +257,7 @@
 							}
 						}
 					}
-					pattermsMatrix.push(patterns); //loads 2 char diffs in search patterns into [4] of patternsMatrix
+					patternsMatrix.push(patterns); //loads 2 char diffs in search patterns into [4] of patternsMatrix
 					console.log("   patternsMatrix[4] = " + JSON.stringify(patternsMatrix[4]));	
 				}
 				
@@ -270,6 +270,7 @@
 					docSearchPatterns.push(patternsMatrix[i][j]);
 				}
 			}
+			console.log("docSearchPatterns=" + JSON.stringify(docSearchPatterns));
 			
 			//if we have docSearchPatterns, then find the pages that contain them
 			//.....................................................................
