@@ -137,10 +137,13 @@
 		//initialize variables
 		let foundSomeMatches = false;
 		let matchingPages = [];
+		let patterns = []; //array of search patterns
+		let patternsMatrix = []; //array of arrays of patterns
 		
 		//clear out any existing search 
 		clearDocumentSearch();
-
+		docSearchPatterns.length = 0;
+		
 		// load docSearchPatterns
 		//.................................................
 		docSearchTermInput = docPageSearchInput.value.toString().trim().toLowerCase();
@@ -163,14 +166,14 @@
 					//found end of words in quotes
 					startQuote=false;
 					if (word !=""){
-						docSearchPatterns.push(word);
+						patterns.push(word);
 					}
 					word = "";
 				}
 				else if (char === " " && !startQuote) {
 					//found end of word
 					if (word !=""){
-						docSearchPatterns.push(word);
+						patterns.push(word);
 					}
 					word = "";
 				}
@@ -180,30 +183,36 @@
 						word = word + char;
 					}
 					if (word !=""){
-						docSearchPatterns.push(word);
+						patterns.push(word);
 					}
 				}
 				else if (!charIsQuote){
 					word = word + char;
 				}
 			}
+			patternsMatrix.push(patterns); //loads basic inputs into [0] of patternsMatrix
+			console.log("   patternsMatrix[0] = " + JSON.stringify(patternsMatrix[0]));
 			
 			// add fuzzy search patterns 
 			if (type==='fuzzy') {
 				let startLen = docSearchPatterns.length;
 				
 				// one character changed
+				patterns.length = 0;
 				for (let term=0; term<=startLen-1; term++){
 					let thisTerm = docSearchPatterns[term];
 					let thisLen = thisTerm.length;
 					for (let i=0;i<=thisLen-1;i++){
 						let newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
-						docSearchPatterns.push(newTerm);
+						//docSearchPatterns.push(newTerm);
+						patterns.push(newTerm);
 					}
 				}
-				console.log("   FUZZY 1) search patterns = " + JSON.stringify(docSearchPatterns));
+				pattermsMatrix.push(patterns); //loads one char diff patterns into [1] of patternsMatrix
+				console.log("   patternsMatrix[1] = " + JSON.stringify(patternsMatrix[1]));
 				
 				//one character missing in search
+				patterns.length = 0;
 				for (let term=0; term<=startLen-1; term++){
 					let thisTerm = docSearchPatterns[term];
 					let thisLen = thisTerm.length;
@@ -211,28 +220,55 @@
 					docSearchPatterns.push(newTerm);
 					for (let i=0;i<=thisLen-1;i++){
 						newTerm= thisTerm.slice(0,i+1) + '[a-z]' + thisTerm.slice(i+1);
-						docSearchPatterns.push(newTerm);
+						//docSearchPatterns.push(newTerm);
+						patterns.push(newTerm);
 					}
 				}	
-				console.log("   FUZZY 2) search patterns = " + JSON.stringify(docSearchPatterns));		
+				pattermsMatrix.push(patterns); //loads one char missing in search patterns into [2] of patternsMatrix
+				console.log("   patternsMatrix[2] = " + JSON.stringify(patternsMatrix[2]));	
 
 				//one character missing in result
+				patterns.length = 0;
 				for (let term=0; term<=startLen-1; term++){
 					let thisTerm = docSearchPatterns[term];
 					let thisLen = thisTerm.length;
 
 					for (let i=0;i<=thisLen-1;i++){
 						newTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
-						docSearchPatterns.push(newTerm);
+						//docSearchPatterns.push(newTerm);
+						patterns.push(newTerm);
 					}
 				}	
-				console.log("   FUZZY 3) search patterns = " + JSON.stringify(docSearchPatterns));				
+				pattermsMatrix.push(patterns); //loads one char missing in result patterns into [3] of patternsMatrix
+				console.log("   patternsMatrix[3] = " + JSON.stringify(patternsMatrix[3]));		
+
+				//terms longer than 10 characters, two characters changed
+				patterns.length = 0;
+				for (let term=0; term<=startLen-1; term++){
+					thisTerm = docSearchPatterns[term];
+					thisLen = thisTerm.length;
+					if (thisLen>=10){
+						for (let i=0;i<=thisLen-1;i++){
+							let newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
+							for (let j=i+1;j<=thisLen-1;j++){
+								newTerm= thisTerm.slice(0,j) + '[a-z]' + thisTerm.slice(j+1);
+								console.log("            newTerm=" + newterm);
+								patterns.push(newTerm);
+							}
+						}
+					}
+					pattermsMatrix.push(patterns); //loads 2 char diffs in search patterns into [4] of patternsMatrix
+					console.log("   patternsMatrix[4] = " + JSON.stringify(patternsMatrix[4]));	
+				}
 				
-			}
+			} // end of if (type==='fuzzy')
 			
-			//console.log("search patterns = " + JSON.stringify(docSearchPatterns));
-			//console.log("docPages.length=" + docPages.length);
-			//console.log("docSearchPatterns.length=" + docSearchPatterns.length);
+			//combine the search patterns found into docSearchPatterns
+			for (let i=0;i<=patternsMatrix.length-1;i++){
+				for (let j=0;j<=patternsMatrix[i].length-j;i++){
+					docSearchPatterns.push(patternsMatrix[i][j]);
+				}
+			}
 			
 			//if we have docSearchPatterns, then find the pages that contain them
 			//.....................................................................
@@ -423,7 +459,7 @@
 			for (let term=0; term<=docSearchPatterns.length-1; term++){
 
 				//build regex to search for
-				let re = new RegExp("(?<!mark\\\>)" + docSearchPatterns[term],"gi"); // '(?<!mark\\>)' is negative lookahead assertion, shouldn't re-find words already marked
+				let re = new RegExp("(?<!mark\\>)" + docSearchPatterns[term],"gi"); // '(?<!mark\\>)' is negative lookahead assertion, shouldn't re-find words already marked
 			
 				//..................................
 				//highlight instances in caption
