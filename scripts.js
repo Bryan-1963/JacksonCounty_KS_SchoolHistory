@@ -217,7 +217,7 @@
 							docSearchPatterns.push(newTerm);
 						}
 						
-						//one character missing in result
+						//one character missing in text
 						for (let i=0;i<=thisLen-1;i++){
 							newTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
 							docSearchPatterns.push(newTerm);
@@ -232,22 +232,24 @@
 					if (thisLen>=10){
 						//two characters different 
 						console.log("thisTerm="+thisTerm);
+						console.log("    TWO CHARS DIFF");
 						for (let i=0;i<=thisLen-1;i++){
 							baseTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
-							console.log("    baseTerm="+baseTerm);
+							console.log("   " + i + ") baseTerm="+baseTerm);
 							for (let j=i+5;j<=baseTerm.length-1;j++){
 								newTerm= baseTerm.slice(0,j) + '[a-z]' + baseTerm.slice(j+1);
-								console.log("        newTerm=" + newTerm);
+								console.log("       " + j + ") newTerm=" + newTerm);
 								docSearchPatterns.push(newTerm);
 							}
 						}
-						//two character missing in search
+						//two characters missing in search
+						console.log("    TWO CHARS MISSING IN SEARCH");
 						for (let i=0;i<=thisLen-1;i++){
 							if (i===0){
 								baseTerm = '[a-z]' + thisTerm.slice(0);;
 							}
 							else {
-								baseTerm= thisTerm.slice(0,i+1) + '[a-z]' + thisTerm.slice(i+1);
+								baseTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i);
 							}
 							console.log("   " + i + ") baseTerm="+baseTerm);
 							for (let j=i+5;j<=baseTerm.length-1;j++){
@@ -257,7 +259,8 @@
 							}
 						}
 						
-						//two character missing in result
+						//two character missing in text
+						console.log("    TWO CHARS MISSING IN TEXT");
 						for (let i=0;i<=thisLen-1;i++){
 							baseTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
 							console.log("   " + i + ") baseTerm="+baseTerm);
