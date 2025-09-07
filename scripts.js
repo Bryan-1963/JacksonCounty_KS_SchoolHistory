@@ -265,7 +265,8 @@
 			
 			//combine the search patterns found into docSearchPatterns
 			for (let i=0;i<=patternsMatrix.length-1;i++){
-				for (let j=0;j<=patternsMatrix[i].length-j;i++){
+				console.log("patternsMatrix[" + i+"]=" + JSON.stringify(patternsMatrix[i]));
+				for (let j=0;j<=patternsMatrix[i].length-1;j++){
 					docSearchPatterns.push(patternsMatrix[i][j]);
 				}
 			}
