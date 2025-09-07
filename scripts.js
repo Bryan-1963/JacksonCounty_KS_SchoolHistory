@@ -235,7 +235,7 @@
 							baseTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
 							for (let j=i+5;j<=baseTerm.length-1;j++){
 								newTerm= baseTerm.slice(0,j) + '[a-z]' + baseTerm.slice(j+1);
-								console.log("            newTerm=" + newterm);
+								console.log("            newTerm=" + newTerm);
 								docSearchPatterns.push(newTerm);
 							}
 						}
