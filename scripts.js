@@ -248,16 +248,19 @@
 								baseTerm= thisTerm.slice(0,i+1) + '[a-z]' + thisTerm.slice(i+1);
 							}
 							for (let j=i+5;j<=baseTerm.length-1;j++){
-								newTerm= baseTerm.slice(0,j) + '[a-z]' + thisTerm.slice(j+1);
+								newTerm= baseTerm.slice(0,j) + '[a-z]' + baseTerm.slice(j+1);
 								docSearchPatterns.push(newTerm);
 							}
 						}
 						
 						//two character missing in result
 						for (let i=0;i<=thisLen-1;i++){
+							console.log("thisTerm="+thisTerm);
 							baseTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
+							console.log("   baseTerm="+baseTerm);
 							for (let j=i+1;j<=baseTerm.length-1;j++){
-								newTerm= baseTerm.slice(0,j) + thisTerm.slice(j+1);
+								newTerm= baseTerm.slice(0,j) + baseTerm.slice(j+1);
+								console.log("   newTerm="+newTerm);
 								docSearchPatterns.push(newTerm);
 							}
 						}
@@ -417,12 +420,9 @@
 	// loadDocPageNum
 	//==========================================================================================	
 	function loadDocPageNum(pgNum){
-		//console.log("in loadDocPageNum, rcd pgNum=" + pgNum + ". photoFilePath=" + docPages[pgNum]['photoFilePath'].toString());
 
 		let docImg = document.getElementById('docPageImg');
-		//console.log("docImg.src=|" + docImg.src + "|");
 		docImg.src = webRootLocation + docPages[pgNum]['photoFilePath'].toString();
-		//console.log("docImg.src changed to |" + docImg.src + "|");
 		
 		//update image caption
 		let figCapt = document.getElementById('figCaption');
@@ -454,15 +454,6 @@
 		// if docPagesAreSearched then search and highlight all the instances
 		if (docPagesAreSearched){	
 			
-			//DEBUG ONLY:
-			if (docAnnot.innerHTML.includes('cedar')){
-				console.log("===========================================================================================================================================");
-				for (let term=0; term<=docSearchPatterns.length-1; term++){
-					console.log("PATTERN# =" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
-				}
-			}	
-			//END DEBUG
-			
 			for (let term=0; term<=docSearchPatterns.length-1; term++){
 
 				//build regex to search for
@@ -488,23 +479,6 @@
 				text = docAnnot.innerHTML;
 				result = text.match(re);
 				
-				//DEBUG ONLY:				
-				if (text.includes('cedar')){
-					console.log("===========================================================================================================================================");
-					console.log("PATTERN#" + term + ", docSearchPatterns[term]=" + docSearchPatterns[term]);
-					console.log("re=" + re);
-					console.log("text=" + text);
-					if (result !=null){
-					console.log("result.length=" + result.length);
-					console.log("result=" + JSON.stringify(result) );						
-					}
-					else {
-						console.log("no results");
-					}
-					console.log("===================================================");
-				}	
-				//END DEBUG ONLY:
-				
 				if (result !=null){
 
 					for (let rslt=0;rslt<=result.length-1;rslt++){
@@ -512,37 +486,9 @@
 					
 						//eliminate double flagging
 						let re = new RegExp('&ltmark&gt&ltmark&gt',"gi");
-						
-												
-						//DEBUG ONLY:
-						if (text.includes('cedar')){
-							console.log("========================================");
-							console.log('     rslt #      =' + rslt);
-							console.log('     result[rslt]=' + result[rslt]);
-							console.log("========================================");
-							console.log("........................................");
-							console.log("re=" + re);
-							console.log("  1) docAnnot.innerHTML="+docAnnot.innerHTML);							
-						}
-						//END DEBUG ONLY:
-												
-						//DEBUG ONLY:
-						if (text.includes('cedar')){
-							console.log("  3) docAnnot.innerHTML="+docAnnot.innerHTML);
-							console.log("........................................");
-						}
-						//END DEBUG ONLY:
-						
 					}
-					
-					//DEBUG ONLY:
-					if (text.includes('cedar')){
-						console.log("NOW text =" + text);
-					}
-					//END DEBUG ONLY:
 					
 					docAnnot.innerHTML = text;
-					
 				}
 
 			}
