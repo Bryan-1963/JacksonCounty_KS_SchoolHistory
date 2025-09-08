@@ -1371,6 +1371,11 @@
 			if (docSearchPrecision>=1){
 				let re=new RegExp(thisTerm,"gi");
 				let result = textIn.match(re);  //returns array of all matching subtexts
+				//DEBUG ONLY
+				if (textIn.includes('Cedar') || textIn.includes('cedar')){
+					console.log("    re   =  " + re + ", result=" + JSON.stringify(result));
+				}
+				//DEBUG ONLY END
 				if (result !=null){
 					thisPageHasIt=true;
 					break; //out of (let termNum) loop
