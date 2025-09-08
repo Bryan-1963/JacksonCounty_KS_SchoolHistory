@@ -146,7 +146,7 @@
 		docSearchPatterns.length = 0;
 		
 		docSearchTermInput = docPageSearchInput.value.toString().trim().toLowerCase();
-		console.log("in searchDocument, rcd type=" + type + ", and docSearchTermInput=" + docSearchTermInput);
+		console.log("in searchDocument, rcd precisionRqd=" + precisionRqd + ", and docSearchTermInput=" + docSearchTermInput);
 		
 		if (docSearchTermInput != null && docSearchTermInput!=""){
 			// load docSearchPatterns
