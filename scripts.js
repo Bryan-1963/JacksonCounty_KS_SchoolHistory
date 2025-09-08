@@ -614,7 +614,7 @@
 				*/
 				
 				//DEBUG ONLY 
-				console.log("CALLING FindMatchSubStrings(" + text);
+				console.log("figCapt CALLING FindMatchSubStrings(" + text);
 				//DEBUG ONLY END
 				
 				let matchSubStrings = FindMatchSubStrings(text);
@@ -624,6 +624,11 @@
 				//highlight instances in annotation
 				//..................................
 				text = docAnnot.innerHTML;
+				//DEBUG ONLY 
+				console.log("docAnnot CALLING FindMatchSubStrings(" + text);
+				//DEBUG ONLY END
+				
+				let matchSubStrings = FindMatchSubStrings(text);	
 				
 				/*
 				result = text.match(re);
