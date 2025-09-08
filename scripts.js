@@ -614,7 +614,7 @@
 				*/
 				
 				//DEBUG ONLY 
-				console.log("figCapt CALLING FindMatchSubStrings(" + text);
+				//console.log("figCapt CALLING FindMatchSubStrings(" + text);
 				//DEBUG ONLY END
 				
 				let matchSubStrings = FindMatchSubStrings(text);
@@ -625,7 +625,7 @@
 				//..................................
 				text = docAnnot.innerHTML;
 				//DEBUG ONLY 
-				console.log("docAnnot CALLING FindMatchSubStrings(" + text);
+				//console.log("docAnnot CALLING FindMatchSubStrings(" + text);
 				//DEBUG ONLY END
 				
 				matchSubStrings = FindMatchSubStrings(text);	
@@ -1381,7 +1381,7 @@
 		if (textIn.includes('Cedar') || textIn.includes('cedar')){
 			console.log("------------------------------------------");
 			console.log("in TextHasSearchTerm.");
-			console.log("  Rcd textIn=             " + textIn);
+			//console.log("  Rcd textIn=             " + textIn);
 			console.log("  Rcd docSearchPatterns=  " + JSON.stringify(docSearchPatterns));
 			console.log("  Rcd docSearchPrecision= " + docSearchPrecision);
 		}
@@ -1411,11 +1411,11 @@
 				for (let len=thisStartLen; len<=thisEndLen; len++){
 					for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
 						
-						let wt = JaroWinklerDistance(thisTerm,textIn.substring(i,i+len-1));
+						let wt = JaroWinklerDistance(thisTerm,textIn.substring(startPos,startPos+len-1));
 						
 						//DEBUG ONLY
 						if (textIn.includes('Cedar') || textIn.includes('cedar')){
-							console.log("    weight   =  " + wt + " for substring=|" + textIn.substring(i,i+len-1) + "|");
+							console.log("    weight   =  " + wt + " for substring=|" + textIn.substring(startPos,startPos+len-1) + "|");
 						}
 						//DEBUG ONLY END
 
