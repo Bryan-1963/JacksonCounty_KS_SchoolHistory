@@ -405,7 +405,7 @@
 	function cleanStringOfPunctuation(inString){
 		var punctuationless = inString.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
 		var finalString = punctuationless.replace(/\s{2,}/g," ");
-		return findalString;
+		return finalString;
 	}
 	
 	//==========================================================================================
