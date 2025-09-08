@@ -267,7 +267,7 @@
 			for (let len=thisStartLen; len<=thisEndLen; len++){
 				for (let startPos=0;startPos<=thisTerm.length-1-len;startPos++){
 					console.log("    substring=|" + thisAnnotation.substring(i,i+len-1) + "|");
-					let wt = JaroWinklerDistance(thisTerm,thisAnnotation.substring(i,i+len-1);
+					let wt = JaroWinklerDistance(thisTerm,thisAnnotation.substring(i,i+len-1));
 					console.log("    weight   =  " + wt);
 					if (wt>=precisionRqd){
 						thisPageHasIt=true;
