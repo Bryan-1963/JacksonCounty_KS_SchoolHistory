@@ -628,7 +628,7 @@
 				console.log("docAnnot CALLING FindMatchSubStrings(" + text);
 				//DEBUG ONLY END
 				
-				let matchSubStrings = FindMatchSubStrings(text);	
+				matchSubStrings = FindMatchSubStrings(text);	
 				
 				/*
 				result = text.match(re);
