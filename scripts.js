@@ -1290,12 +1290,12 @@
 	//==========================================================================================	
 	function FindMatchSubStrings(textIn){
 		//==========================================================================================
-		//find unique substrings within textIn that match items in array docSearchTerms 
+		//find unique substrings within textIn that match items in array docSearchPatterns 
 		//		with precision docSearchPrecision
 		//==========================================================================================
 		console.log("in FindMatchSubStrings.");
 		console.log("  Rcd textIn=            " + textIn);
-		console.log("  Rcd docSearchTerms=    " + JSON.stringify(docSearchTerms));
+		console.log("  Rcd docSearchPatterns=    " + JSON.stringify(docSearchPatterns));
 		console.log("  Rcd docSearchPrecision=" + docSearchPrecision);
 		
 		let grossMatches= [];
@@ -1335,7 +1335,7 @@
 		//==========================================================================================
 		console.log("in TextHasSearchTerm.");
 		console.log("  Rcd textIn=            " + textIn);
-		console.log("  Rcd docSearchTerms=    " + JSON.stringify(docSearchTerms));
+		console.log("  Rcd docSearchPatterns=    " + JSON.stringify(docSearchPatterns));
 		console.log("  Rcd docSearchPrecision=" + docSearchPrecision);
 		
 		let thisPageHasIt=false;
