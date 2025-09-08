@@ -19,6 +19,7 @@
 	var docSearchResultCurrPg = 0;
 	var docSearchPatterns = []; //array of regex patterns to search for
 	var docSearchTerm = "";
+	var docDisplayMode='display'; //'display'=show from file, 'edit'=edit enabled
 	var docPgNum = 0;
 	var webRootLocation = "https://bryan-1963.github.io/JacksonCounty_KS_SchoolHistory/";
 	var subMenuName = '';
@@ -88,13 +89,22 @@
 	//=======================================================================================================================================================
 	
 	//==========================================================================================
-	// editDocAnnotation
+	// toggleDocDisplayMode
 	//==========================================================================================
-	function editDocAnnotation(){
-		document.getElementById('docAnnotationHolder').style.display = 'none';
-		document.getElementById('docAnnotationEditor').style.display = 'block';
-		document.getElementById('figCaption').style.display = 'none';
-		document.getElementById('figCaptionEditor').style.display = 'block';
+	function toggleDocDisplayMode(){
+		if (docDisplayMode==='display'){
+			docDisplayMode='edit'
+			document.getElementById('docAnnotationHolder').style.display = 'none';
+			document.getElementById('docAnnotationEditor').style.display = 'block';
+			document.getElementById('figCaption').style.display = 'none';
+			document.getElementById('figCaptionEditor').style.display = 'block';
+		else {
+			docDisplayMode='display'
+			document.getElementById('docAnnotationHolder').style.display = 'block';
+			document.getElementById('docAnnotationEditor').style.display = 'none';
+			document.getElementById('figCaption').style.display = 'block';
+			document.getElementById('figCaptionEditor').style.display = 'none';		
+		}
 	}
 	
 	//==========================================================================================
