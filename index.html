@@ -190,7 +190,7 @@
 			
 			<!-- edit -->
 			<div class='searchHolder'>
-				<button style='font-size:12px;display:inline-block' onclick="editDocAnnotation()" ><i class='far fa-edit'></i></button>
+				<button style='font-size:12px;display:inline-block;padding-top:4px;padding-bottom:4px' onclick="editDocAnnotation()" >Edit<i class='fas fa-edit'></i></button>
 			</div>		
 			
 		</span>
@@ -233,7 +233,7 @@
 				</figure>
 				
 				<!-- caption editor -->
-				<div id="figCaptionEditor"  ='display:none'>
+				<div id="figCaptionEditor" class='unNumberedFig' style='display:none'>
 					<textarea id='figCaptionEdited' rows='1' cols='400'class='unNumberedFig'>
 						<!-- content filled by javascript in loadDocPgNum() -->
 					</textarea>
@@ -249,7 +249,7 @@
 			</div>
 			
 			<!-- annotation editor -->
-			<div id="docAnnotationEditor" style='display:none'>
+			<div id="docAnnotationEditor" class='docPageAnnotationHolder' style='display:none'>
 				<textarea id='docAnnotationEdited' rows='80' cols='400' class='docPageAnnotation'>
 					<!-- content filled by javascript in loadDocPgNum() -->
 				</textarea>
