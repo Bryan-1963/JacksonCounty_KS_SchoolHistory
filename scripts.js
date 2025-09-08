@@ -628,7 +628,7 @@
 				//..................................
 				text = docAnnot.innerHTML;
 				//DEBUG ONLY 
-				//console.log("docAnnot CALLING FindMatchSubStrings(" + text);
+				console.log("docAnnot CALLING FindMatchSubStrings(" + text);
 				//DEBUG ONLY END
 				
 				matchSubStrings = FindMatchSubStrings(text);	
@@ -1326,14 +1326,14 @@
 		//		with precision docSearchPrecision
 		//==========================================================================================
 		//DEBUG ONLY
-		if (textIn.includes('Cedar') || textIn.includes('cedar')){
+		//if (textIn.includes('Cedar') || textIn.includes('cedar')){
 			console.log("------------------------------------------");
 			console.log("in FindMatchSubStrings.");
-			//console.log("  Rcd textIn             =" + textIn);
+			console.log("  Rcd textIn             =" + textIn);
 			console.log("  Rcd docSearchPatterns  =" + JSON.stringify(docSearchPatterns));
 			console.log("  Rcd docSearchPrecision =" + docSearchPrecision);
 			console.log("------------------------------------------");
-		}
+		//}
 		//DEBUG ONLY END
 		
 		let grossMatches= [];
