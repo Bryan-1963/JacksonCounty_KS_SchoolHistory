@@ -259,223 +259,6 @@
 	//==========================================================================================		
 	} //END OF FUNCTION searchDocument
 	//==========================================================================================
-
-	function ZZZZsearchDocument(type){  //type can be 'exact' or 'fuzzy'
-		
-		//initialize variables
-		let foundSomeMatches = false;
-		
-		//clear out any existing search 
-		clearDocumentSearch();
-		docSearchPatterns.length = 0;
-		
-		// load docSearchPatterns
-		//.................................................
-		docSearchTermInput = docPageSearchInput.value.toString().trim().toLowerCase();
-		console.log("in searchDocument, rcd type=" + type + ", and docSearchTermInput=" + docSearchTermInput);
-		if (docSearchTermInput != null && docSearchTermInput!=""){
-			
-			//keep anything between quotes as an individual item, otherwise split them up
-			let startQuote = false;
-			let word = "";
-			for (let i=0;i<=docSearchTermInput.length-1;i++){
-				let char = docSearchTermInput[i];
-				let charIsQuote = /^[“"']/.test(char);
-
-				//console.log(i + ") char=|"+char+"|, charIsQuote=" + charIsQuote + ", startQuote=" + startQuote);
-				
-				if (charIsQuote && !startQuote) {
-					startQuote=true;
-				}
-				else if (charIsQuote && startQuote) {
-					//found end of words in quotes
-					startQuote=false;
-					if (word !=""){
-						docSearchPatterns.push(word);
-					}
-					word = "";
-				}
-				else if (char === " " && !startQuote) {
-					//found end of word
-					if (word !=""){
-						docSearchPatterns.push(word);
-					}
-					word = "";
-				}
-				else if (i===docSearchTermInput.length-1){
-					//reached end of input String
-					if (!charIsQuote){
-						word = word + char;
-					}
-					if (word !=""){
-						docSearchPatterns.push(word);
-					}
-				}
-				else if (!charIsQuote){
-					word = word + char;
-				}
-			}
-			console.log("   docSearchPatterns = " + JSON.stringify(docSearchPatterns));
-			
-			// add fuzzy search patterns 
-			if (type==='fuzzy') {
-				let startLen = docSearchPatterns.length;		
-				
-				for (let term=0; term<=startLen-1; term++){
-					let thisTerm = docSearchPatterns[term];
-					let newTerm="";
-					let baseTerm="";
-					let thisLen = thisTerm.length;
-					//................................................................................
-					// fuzzies for any length of term >=4 (one char differences)
-					//................................................................................
-					if (thisLen>=4){
-						// one character changed
-						for (let i=0;i<=thisLen-1;i++){
-							newTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
-							docSearchPatterns.push(newTerm);
-						}
-
-						//one character missing in search
-						newTerm = '[a-z]' + thisTerm.slice(0);
-						docSearchPatterns.push(newTerm);
-						for (let i=0;i<=thisLen-1;i++){
-							newTerm= thisTerm.slice(0,i+1) + '[a-z]' + thisTerm.slice(i+1);
-							docSearchPatterns.push(newTerm);
-						}
-						
-						//one character missing in text
-						for (let i=0;i<=thisLen-1;i++){
-							newTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
-							docSearchPatterns.push(newTerm);
-						}
-						
-						console.log("   added 1 char fuzzies = " + JSON.stringify(docSearchPatterns));
-					}
-					
-					//................................................................................
-					// fuzzies for terms longer than 10 characters, two characters changed, two chars missing
-					//................................................................................		
-					if (thisLen>=10){
-						//two characters different 
-						console.log("thisTerm="+thisTerm);
-						console.log("    TWO CHARS DIFF");
-						for (let i=0;i<=thisLen-1;i++){
-							baseTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i+1);
-							console.log("   " + i + ") baseTerm="+baseTerm);
-							for (let j=i+5;j<=baseTerm.length-1;j++){
-								newTerm= baseTerm.slice(0,j) + '[a-z]' + baseTerm.slice(j+1);
-								console.log("       " + j + ") newTerm=" + newTerm);
-								docSearchPatterns.push(newTerm);
-							}
-						}
-						//two characters missing in search
-						console.log("    TWO CHARS MISSING IN SEARCH");
-						for (let i=0;i<=thisLen-1;i++){
-							if (i===0){
-								baseTerm = '[a-z]' + thisTerm.slice(0);;
-							}
-							else {
-								baseTerm= thisTerm.slice(0,i) + '[a-z]' + thisTerm.slice(i);
-							}
-							console.log("   " + i + ") baseTerm="+baseTerm);
-							for (let j=i+5;j<=baseTerm.length-1;j++){
-								newTerm= baseTerm.slice(0,j) + '[a-z]' + baseTerm.slice(j+1);
-								console.log("       " + j + ") newTerm=" + newTerm);
-								docSearchPatterns.push(newTerm);
-							}
-						}
-						
-						//two character missing in text
-						console.log("    TWO CHARS MISSING IN TEXT");
-						for (let i=0;i<=thisLen-1;i++){
-							baseTerm= thisTerm.slice(0,i) + thisTerm.slice(i+1);
-							console.log("   " + i + ") baseTerm="+baseTerm);
-							for (let j=0;j<=baseTerm.length-1;j++){
-								newTerm= baseTerm.slice(0,j) + baseTerm.slice(j+1);
-								console.log("       " + j + ") newTerm="+newTerm);
-								docSearchPatterns.push(newTerm);
-							}
-						}
-						console.log("   added 2 char fuzzies = " + JSON.stringify(docSearchPatterns));	
-					}
-
-				
-				//................................................................................
-				// fuzzies for terms longer than 15 characters, 3 characters changed, 3 chars missing
-				//................................................................................	
-				// TO-DO!!!!
-				
-					
-				}
-				
-			} // end of if (type==='fuzzy')
-			
-
-			
-			//if we have docSearchPatterns, then find the pages that contain them
-			//.....................................................................
-			if (docSearchPatterns.length>0){
-			
-				//loop through annotations and captions of each page
-				for (let pgNum=0; pgNum<=docPages.length-1; pgNum++){
-					
-					let thisPageHasIt = false;
-					
-					//loop thru all the annotation paragraphs
-					let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
-					for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
-						
-						let thisTxt = thisAnnotation[paraNum].toString();
-						//console.log("pgNum=" + pgNum + ", paraNum=" + paraNum);
-						//console.log("     thisTxt=" + thisTxt);
-						
-						for (let term=0; term<=docSearchPatterns.length-1; term++){
-							//console.log("     docSearchPatterns[term]=|" + docSearchPatterns[term] + "|");
-							if(thisTxt.toLowerCase().includes(docSearchPatterns[term])){
-								thisPageHasIt=true;
-								foundSomeMatches=true;
-								//console.log("FOUND Match for |" + docSearchPatterns[term] +"| in pgNum="+pgNum+", paraNum="+paraNum);
-							}
-						}
-					} //end of paraNum loop
-					
-					//check the caption
-					thisTxt = docPages[pgNum]['caption'].toString();
-					for (let term=0; term<=docSearchPatterns.length-1; term++){
-						if(thisTxt.toLowerCase().includes(docSearchPatterns[term])){
-							thisPageHasIt=true;
-							foundSomeMatches=true;
-						}
-					}
-					
-					//if page contained the search term, then add it to the results array
-					if (thisPageHasIt){
-						docPagesAreSearched=true;
-						docSearchResultPages.push(pgNum);
-					}
-					
-				} //end of pgNum loop
-			
-			}
-			
-			// if matches were found then show qty & go to first page
-			//.........................................................
-			if (foundSomeMatches) {
-				document.getElementById("docSearchResultsQty").innerHTML='1/' + docSearchResultPages.length;
-				docSearchResultCurrPg=0;
-				loadDocPageNum(docSearchResultPages[0]);
-			}
-			// else reset to 0/0 and do not change pages
-			else {
-				document.getElementById("docSearchResultsQty").innerHTML='0/0';
-				docSearchResultCurrPg=0;
-			}
-			
-		}  //end of if (searchTerm != null && searchTerm!="")
-			
-		
-	}; //end of function searchDocument
 	
 	//==========================================================================================
 	// navDocSearchResults
@@ -594,64 +377,25 @@
 			
 			for (let term=0; term<=docSearchPatterns.length-1; term++){
 
-				//build regex to search for
-				//let re = new RegExp("(?<!mark\\>)" + docSearchPatterns[term],"gi"); // '(?<!mark\\>)' is negative lookahead assertion, shouldn't re-find words already marked
-			
 				//..................................
 				//highlight instances in caption
 				//..................................
-				let text = figCapt.innerHTML;
-				
-				/*
-				let result = text.match(re);  //returns array of all matching subtexts
-				if (result !=null){
-					for (let rslt=0;rslt<=result.length-1;rslt++){  //loop thru matching subtexts and highlight them
-						text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
-					}
-					figCapt.innerHTML = text;
-					result.length = 0;
-				}
-				*/
-				
-				//DEBUG ONLY 
-				//console.log("figCapt CALLING FindMatchSubStrings(" + text);
-				//DEBUG ONLY END
-				
-				let matchSubStrings = FindMatchSubStrings(text);
+				let matchSubStrings = FindMatchSubStrings(figCapt.innerHTML);
 				for (let i=0;i<=matchSubStrings.length-1;i++){
-					text = text.replace(matchSubStrings[i],'<mark>' + matchSubStrings[i] + '</mark>');
+					let re = new RegExp(matchSubStrings[i],"gi");
+					text = text.replace(re,'<mark>' + matchSubStrings[i] + '</mark>');
 				}
 				figCapt.innerHTML = text;
 						
 				//..................................						
 				//highlight instances in annotation
 				//..................................
-				text = docAnnot.innerHTML;
-				//DEBUG ONLY 
-				//console.log("docAnnot CALLING FindMatchSubStrings(" + text);
-				//DEBUG ONLY END
-				
-				matchSubStrings = FindMatchSubStrings(text);	
+				matchSubStrings = FindMatchSubStrings(docAnnot.innerHTML);	
 				for (let i=0;i<=matchSubStrings.length-1;i++){
-					text = text.replace(matchSubStrings[i],'<mark>' + matchSubStrings[i] + '</mark>');
+					let re = new RegExp(matchSubStrings[i],"gi");
+					text = text.replace(re,'<mark>' + matchSubStrings[i] + '</mark>');
 				}
 				docAnnot.innerHTML = text;
-				
-				/*
-				result = text.match(re);
-				
-				if (result !=null){
-
-					for (let rslt=0;rslt<=result.length-1;rslt++){
-						text = text.replace(result[rslt],'<mark>' + result[rslt] + '</mark>');
-					
-						//eliminate double flagging
-						let re = new RegExp('&ltmark&gt&ltmark&gt',"gi");
-					}
-					
-					docAnnot.innerHTML = text;
-				}
-				*/
 				
 			}
 		}
@@ -709,7 +453,6 @@
 		initVars(); //load global variables
 		buildMenus(); //build dropdowns based on contents of school arrays
 		sizeBars(); //size and place the menu bars
-		//console.log("countySchoolDistricts.length=" + countySchoolDistricts.length);
 	};
 
 	//==========================================================================================
