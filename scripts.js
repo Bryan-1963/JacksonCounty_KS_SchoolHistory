@@ -1326,25 +1326,34 @@
 		//		with precision docSearchPrecision
 		//==========================================================================================
 		//DEBUG ONLY
-		//if (textIn.includes('Cedar') || textIn.includes('cedar')){
+		if (textIn.includes('Cedar') || textIn.includes('cedar')){
 			console.log("------------------------------------------");
 			console.log("in FindMatchSubStrings.");
-			console.log("  Rcd textIn             =" + textIn);
-			console.log("  Rcd docSearchPatterns  =" + JSON.stringify(docSearchPatterns));
-			console.log("  Rcd docSearchPrecision =" + docSearchPrecision);
+			console.log("  Rcd textIn                    =" + textIn);
+			console.log("  Rcd docSearchPatterns.length  =" + docSearchPatterns.length);
+			console.log("  Rcd docSearchPatterns         =" + JSON.stringify(docSearchPatterns));
+			console.log("  Rcd docSearchPrecision        =" + docSearchPrecision);
 			console.log("------------------------------------------");
-		//}
+		}
 		//DEBUG ONLY END
 		
 		let grossMatches= [];
 
 		for (let termNum=0; termNum<=docSearchPatterns.length-1; termNum++){
 			let thisTerm = docSearchPatterns[termNum];
+			
+			//DEBUG ONLY
+			if (textIn.includes('Cedar') || textIn.includes('cedar')){
+				console.log("      thisTerm =" + thisTerm);
+			}
+			//DEBUG ONLY END
+			
 			if (docSearchPrecision>=1){
 				let re=new RegExp(thisTerm,"gi");
 				let result = textIn.match(re);  //returns array of all matching subtexts
 				if (result !=null){
 					grossMatches = grossMatches.concat(result);
+					
 					//DEBUG ONLY
 					console.log("    thisTerm=|" + thisTerm+ "| result =" + JSON.stringify(result) + "| grossMatches =" + JSON.stringify(grossMatches));
 					//DEBUG ONLY END
@@ -1354,17 +1363,28 @@
 				//check substrings with lengths between docSearchPrecision*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
 				let thisStartLen = Math.floor(thisTerm.length*docSearchPrecision);
 				let thisEndLen = Math.ceil(thisTerm.length*(1+(1-docSearchPrecision)));
+				
+				//DEBUG ONLY
 				if (textIn.includes('Cedar') || textIn.includes('cedar')){
-					console.log("thisTerm.length = " + thisTerm.length + ", thisStartLen = " + thisStartLen + " and thisEndLen = " + thisEndLen);
+					console.log("    thisTerm.length = " + thisTerm.length + ", thisStartLen = " + thisStartLen + " and thisEndLen = " + thisEndLen);
 				}
+				//DEBUG ONLY END
+				
 				for (let len=thisEndLen; len>=thisStartLen; len--){
+					//DEBUG ONLY
+					if (textIn.includes('Cedar') || textIn.includes('cedar')){
+						console.log("   len = " + len);
+					}
+					//DEBUG ONLY END
+
+
 					for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
-						let subStr = textIn.substring(i,i+len-1);
+						let subStr = textIn.substring(startPos,startPos+len-1);
 						let wt = JaroWinklerDistance(thisTerm,subStr);
-						
+
 						//DEBUG ONLY
 						if (textIn.includes('Cedar') || textIn.includes('cedar')){
-							console.log("    substring= |" + subStr + "|, weight   =  " + wt );
+							console.log("      startPos=" + startPos + ", substring= |" + subStr + "|, weight   =  " + wt );
 						}
 						//DEBUG ONLY END
 						
