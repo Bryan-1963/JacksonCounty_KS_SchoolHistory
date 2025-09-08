@@ -380,26 +380,33 @@
 				//..................................
 				//highlight instances in caption
 				//..................................
-				let matchSubStrings = FindMatchSubStrings(figCapt.innerHTML);
+				let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML));
 				for (let i=0;i<=matchSubStrings.length-1;i++){
 					let re = new RegExp(matchSubStrings[i],"gi");
-					text = text.replace(re,'<mark>' + matchSubStrings[i] + '</mark>');
+					figCapt.innerHTML = figCapt.innerHTML.replace(re,'<mark>' + matchSubStrings[i] + '</mark>');
 				}
-				figCapt.innerHTML = text;
 						
 				//..................................						
 				//highlight instances in annotation
 				//..................................
-				matchSubStrings = FindMatchSubStrings(docAnnot.innerHTML);	
+				matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(docAnnot.innerHTML));	
 				for (let i=0;i<=matchSubStrings.length-1;i++){
 					let re = new RegExp(matchSubStrings[i],"gi");
-					text = text.replace(re,'<mark>' + matchSubStrings[i] + '</mark>');
+					docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>' + matchSubStrings[i] + '</mark>');
 				}
-				docAnnot.innerHTML = text;
 				
 			}
 		}
 	};
+	
+	//==========================================================================================
+	// cleanStringOfPunctuation
+	//==========================================================================================		
+	function cleanStringOfPunctuation(inString){
+		var punctuationless = inString.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+		var finalString = punctuationless.replace(/\s{2,}/g," ");
+		return findalString;
+	}
 	
 	//==========================================================================================
 	// navDocPage
