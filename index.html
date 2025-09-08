@@ -190,8 +190,8 @@
 			
 			<!-- edit -->
 			<div class='searchHolder'>
-				<button style='font-size:12px;display:inline-block;padding-top:6px;padding-bottom:6px' onclick="toggleDocDisplayMode()"><i class='fa fa-edit'></i></button>
-				<button style='font-size:12px;display:inline-block;padding-top:6px;padding-bottom:6px;margin-left:2px' onclick=""><i class='fa fa-save'></i></button>
+				<button style='font-size:12px;display:inline-block' onclick="toggleDocDisplayMode()"><i class='fa fa-edit'></i></button>
+				<button style='font-size:12px;display:inline-block' onclick=""><i class='fa fa-save'></i></button>
 			</div>		
 			
 		</span>
@@ -235,12 +235,12 @@
 				
 				<!-- caption editor -->
 				<div id="figCaptionEditor" class='unNumberedFig' style='display:none'>
-					<textarea id='figCaptionEdited' rows='1' cols='400'class='unNumberedFig'>
+					<textarea id='figCaptionEdited' rows='1' cols='100'class='unNumberedFig'>
 						<!-- content filled by javascript in loadDocPgNum() -->
 					</textarea>
 				</div>
 				
-			</div>
+			</div> <!-- end of docPageImage -->
 			
 			<!-- annotation display -->
 			<div id="docAnnotationHolder" class='docPageAnnotationHolder'>
@@ -250,7 +250,7 @@
 				<textarea id='docAnnotationEdited' rows='55' cols='100' class='docPageAnnotation' style='display:none'>
 					<!-- content filled by javascript in loadDocPgNum() -->
 				</textarea>
-			</div>
+			</div> <!-- end of docAnnotationHolder -->
 
 			
 		</div> <!-- end of docPage -->
