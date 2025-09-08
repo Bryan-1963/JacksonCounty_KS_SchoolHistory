@@ -94,15 +94,15 @@
 	function toggleDocDisplayMode(){
 		if (docDisplayMode==='display'){
 			docDisplayMode='edit'
-			document.getElementById('docAnnotationHolder').style.display = 'none';
-			document.getElementById('docAnnotationEditor').style.display = 'block';
+			document.getElementById('docAnnotation').style.display = 'none';
+			document.getElementById('docAnnotationEdited').style.display = 'block';
 			document.getElementById('figCaption').style.display = 'none';
 			document.getElementById('figCaptionEditor').style.display = 'block';
 		}
 		else {
 			docDisplayMode='display'
-			document.getElementById('docAnnotationHolder').style.display = 'block';
-			document.getElementById('docAnnotationEditor').style.display = 'none';
+			document.getElementById('docAnnotation').style.display = 'block';
+			document.getElementById('docAnnotationEdited').style.display = 'none';
 			document.getElementById('figCaption').style.display = 'block';
 			document.getElementById('figCaptionEditor').style.display = 'none';		
 		}
