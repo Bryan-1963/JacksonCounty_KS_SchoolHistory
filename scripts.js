@@ -1332,6 +1332,7 @@
 			//console.log("  Rcd textIn             =" + textIn);
 			console.log("  Rcd docSearchPatterns  =" + JSON.stringify(docSearchPatterns));
 			console.log("  Rcd docSearchPrecision =" + docSearchPrecision);
+			console.log("------------------------------------------");
 		}
 		//DEBUG ONLY END
 		
@@ -1353,17 +1354,23 @@
 				//check substrings with lengths between docSearchPrecision*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
 				let thisStartLen = Math.floor(thisTerm.length*docSearchPrecision);
 				let thisEndLen = Math.ceil(thisTerm.length*(1+(1-docSearchPrecision)));
+				if (textIn.includes('Cedar') || textIn.includes('cedar')){
+					console.log("thisTerm.length = " + thisTerm.length + ", thisStartLen = " + thisStartLen + " and thisEndLen = " + thisEndLen);
+				}
 				for (let len=thisEndLen; len>=thisStartLen; len--){
 					for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
 						let subStr = textIn.substring(i,i+len-1);
 						let wt = JaroWinklerDistance(thisTerm,subStr);
+						
 						//DEBUG ONLY
 						if (textIn.includes('Cedar') || textIn.includes('cedar')){
-							console.log("    substring= |" + subStr + "|, weight   =  " + wt + ", grossMatches =" + JSON.stringify(grossMatches));
+							console.log("    substring= |" + subStr + "|, weight   =  " + wt );
 						}
 						//DEBUG ONLY END
+						
 						if (wt>=docSearchPrecision){
-							grossMatches.push(subStr.triim());
+							grossMatches.push(subStr.trim());
+							console.log("    added |" + subStr.trim() + "| to grossMatches, grossMatches =" + JSON.stringify(grossMatches));
 						}
 					} //end of (let startPos) loop
 
@@ -1430,10 +1437,7 @@
 				if (textIn.includes('Cedar') || textIn.includes('cedar')){
 					console.log("thisTerm.length = " + thisTerm.length + ", thisStartLen = " + thisStartLen + " and thisEndLen = " + thisEndLen);
 				}
-				for (let len=thisEndLen; len>=thisStartLen; len--){
-					//DEBUG ONLY
-
-					//DEBUG ONLY END					
+				for (let len=thisEndLen; len>=thisStartLen; len--){		
 					for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
 						
 						let wt = JaroWinklerDistance(thisTerm,textIn.substring(startPos,startPos+len-1));
