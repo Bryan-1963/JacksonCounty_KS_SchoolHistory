@@ -1322,7 +1322,7 @@
 		if (textIn.includes('Cedar') || textIn.includes('cedar')){
 			console.log("------------------------------------------");
 			console.log("in FindMatchSubStrings.");
-			console.log("  Rcd textIn             =" + textIn);
+			//console.log("  Rcd textIn             =" + textIn);
 			console.log("  Rcd docSearchPatterns  =" + JSON.stringify(docSearchPatterns));
 			console.log("  Rcd docSearchPrecision =" + docSearchPrecision);
 		}
@@ -1409,13 +1409,18 @@
 				let thisStartLen = Math.floor(thisTerm.length*docSearchPrecision);
 				let thisEndLen = Math.ceil(thisTerm.length*(1+(1-docSearchPrecision)));
 				for (let len=thisStartLen; len<=thisEndLen; len++){
+					//DEBUG ONLY
+					if (textIn.includes('Cedar') || textIn.includes('cedar')){
+						console.log("thisTerm.length = " + thisTerm.length + "thisStartLen = " + thisStartLen + " for thisEndLen = " + thisEndLen);
+					}
+					//DEBUG ONLY END					
 					for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
 						
 						let wt = JaroWinklerDistance(thisTerm,textIn.substring(startPos,startPos+len-1));
 						
 						//DEBUG ONLY
 						if (textIn.includes('Cedar') || textIn.includes('cedar')){
-							console.log("    weight   =  " + wt + " for substring=|" + textIn.substring(startPos,startPos+len-1) + "|");
+							console.log("    weight = " + wt + " for substring=|" + textIn.substring(startPos,startPos+len-1) + "|");
 						}
 						//DEBUG ONLY END
 
