@@ -179,8 +179,7 @@ Jackson County, Kansas Schools History
 					<a onclick="searchDocument(0.82)">0.82 Fuzzy</a>
 				  </div>
 			</div>
-			
-			
+
 			<!-- results nav -->
 			<div class='navHolder' id='docSearchResultsNav'>
 				<div id='docSearchResultsQty' style='display:inline-block'>0/0</div>
@@ -188,6 +187,14 @@ Jackson County, Kansas Schools History
 				<button style='font-size:12px;display:inline-block' onclick="navDocSearchResults('next')"><i class='fa fa-angle-right'></i></button>
 			</div>
 		</div>
+		
+		<!-- edit -->
+		<div class='searchHolder'>
+			<button onclick="editDocAnnotation()" style='font-size:10px'>
+				<i class='far fa-edit' id='editDocAnnotationBtn'></i>
+			</button>
+		</div>		
+		
 	</span>
 </DIV>
 
@@ -223,12 +230,22 @@ Jackson County, Kansas Schools History
 					<!-- content filled by javascript in loadDocPgNum() -->
 				</figcaption>
 			</figure>
+			<div id="figCaptionEditor" rows='1' cols='400' style='display:none'>
+				<textarea id='figCaptionEdited' class='unNumberedFig'>
+					<!-- content filled by javascript in loadDocPgNum() -->
+				</textarea	>
+			<div>	
 		</div>
 		<div id="docAnnotationHolder" class='docPageAnnotationHolder'>
 			<p id='docAnnotation' class='docPageAnnotation'>
 				<!-- content filled by javascript in loadDocPgNum() -->
 			</p>
 		<div>
+		<div id="docAnnotationEditor" rows='80' cols='400' style='display:none'>
+			<textarea id='docAnnotationEdited' class='docPageAnnotation'>
+				<!-- content filled by javascript in loadDocPgNum() -->
+			</textarea	>
+		<div>		
 	</div>
 </div>
 

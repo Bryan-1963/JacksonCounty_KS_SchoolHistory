@@ -86,7 +86,17 @@
 	//=======================================================================================================================================================
 	// FUNCTIONS
 	//=======================================================================================================================================================
-		
+	
+	//==========================================================================================
+	// editDocAnnotation
+	//==========================================================================================
+	function editDocAnnotation(){
+		document.getElementById('docAnnotationHolder').style.display = 'none';
+		document.getElementById('docAnnotationEditor').style.display = 'block';
+		document.getElementById('figCaption').style.display = 'none';
+		document.getElementById('figCaptionEditor').style.display = 'block';
+	}
+	
 	//==========================================================================================
 	// clearSearchInput
 	//==========================================================================================
@@ -134,7 +144,7 @@
 	// searchDocument
 	//==========================================================================================
 	function searchDocument(precisionRqd=1.00){  
-		//0.70 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
+		//0.82 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
 	
 		//initialize variables
 		let foundSomeMatches = false;
@@ -142,10 +152,8 @@
 		
 		//clear out any existing search 
 		clearDocumentSearch();
-		docSearchPatterns.length = 0;
-		
+		docSearchPatterns.length = 0;	
 		docSearchTermInput = docPageSearchInput.value.toString().trim().toLowerCase();
-		console.log("in searchDocument, rcd precisionRqd=" + precisionRqd + ", and docSearchTermInput=" + docSearchTermInput);
 		
 		if (docSearchTermInput != null && docSearchTermInput!=""){
 			
@@ -158,8 +166,6 @@
 			for (let i=0;i<=docSearchTermInput.length-1;i++){
 				let char = docSearchTermInput[i];
 				let charIsQuote = /^[“"']/.test(char);
-
-				//console.log(i + ") char=|"+char+"|, charIsQuote=" + charIsQuote + ", startQuote=" + startQuote);
 				
 				if (charIsQuote && !startQuote) {
 					startQuote=true;
@@ -192,8 +198,7 @@
 					word = word + char;
 				}
 			}
-			
-			console.log("   docSearchPatterns = " + JSON.stringify(docSearchPatterns));
+
 			
 			//.................................................
 			// search document text fields for matches
@@ -228,9 +233,6 @@
 				if (thisPageHasIt){
 					docSearchResultPages.push(pgNum);
 					foundSomeMatches = true;
-					//DEBUG ONLY 
-					//console.log("searchDocument, pgNum=" + pgNum +", thisPageHasIt=" + thisPageHasIt);
-					//DEBUG ONLY END
 				}
 
 			} //end of pgNum loop
@@ -239,11 +241,7 @@
 			// if matches were found then show qty & go to first page
 			//.........................................................
 			if (foundSomeMatches) {
-				docPagesAreSearched=true;
-				//DEBUG ONLY 
-				console.log("searchDocument, docSearchResultPages.length=" + docSearchResultPages.length +", docSearchResultPages=" + JSON.stringify(docSearchResultPages));
-				//DEBUG ONLY END
-				
+				docPagesAreSearched=true;			
 				document.getElementById("docSearchResultsQty").innerHTML='1/' + docSearchResultPages.length;
 				docSearchResultCurrPg=0;
 				loadDocPageNum(docSearchResultPages[0]);
@@ -264,7 +262,7 @@
 	// navDocSearchResults
 	//==========================================================================================	
 	function navDocSearchResults(movement){
-		//console.log("navDocSearchResults, docSearchResultCurrPg=" + docSearchResultCurrPg + ", rcd movement=" + movement );
+
 		if (docPagesAreSearched) {
 			if (movement === 'next'){
 				docSearchResultCurrPg=docSearchResultCurrPg+1;
@@ -284,7 +282,6 @@
 			//update results quantity curr page number and load the page
 			document.getElementById("docSearchResultsQty").innerHTML= (docSearchResultCurrPg +1) + '/' + docSearchResultPages.length;
 			docPgNum = docSearchResultPages[docSearchResultCurrPg];
-			//console.log("    NOW docSearchResultCurrPg=" + docSearchResultCurrPg + " and docPgNum=" + docPgNum);
 			loadDocPageNum(docPgNum);
 		}
 	}
@@ -293,7 +290,7 @@
 	// loadDocPages
 	//==========================================================================================
 	async function loadDocPages(filePath, docTitle){
-		//console.log("in loadDocPages, rcd filePath=|" + filePath + "|");
+
 		subMenuName = '';
 		subMenuCat = '';
 		
@@ -338,9 +335,6 @@
 	// loadDocPageNum
 	//==========================================================================================	
 	function loadDocPageNum(pgNum){
-		//DEBUG ONLY 
-		//console.log("loadDocPageNum, rcd pgNum=" + pgNum + ", docPagesAreSearched=" + docPagesAreSearched);
-		//DEBUG ONLY 
 		
 		let docImg = document.getElementById('docPageImg');
 		docImg.src = webRootLocation + docPages[pgNum]['photoFilePath'].toString();
@@ -353,16 +347,21 @@
 		else {
 			figCapt.innerHTML = "";
 		}
+		document.getElementById('figCaptionEditor').innerHTML = figCapt.innerHTML
 		
-		//update the annotation page HTML
+		//update the annotation HTML
 		let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
 		let totalAnnotation = "";
+		let totalEditAnnotation = "";
 		for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
 			thisAnnotation[paraNum] = thisAnnotation[paraNum].toString().replace(/[\r\n]/g,"<br>");
 			totalAnnotation = totalAnnotation + thisAnnotation[paraNum] + "<br><br>";
+			totalEditAnnotation=totalEditAnnotation+thisAnnotation[paraNum] + '\r\n\r\n';
 		}
 		let docAnnot = document.getElementById("docAnnotation");
 		docAnnot.innerHTML=totalAnnotation;
+		let docAnnotEditor = document.getElementById("docAnnotation");
+		docAnnotEditor.innerHTML = totalEditAnnotation;
 		
 		//update the page number input box
 		let pgNumInput = document.getElementById("docPageNumInput");
@@ -412,7 +411,7 @@
 	// navDocPage
 	//==========================================================================================	
 	function navDocPage(movement){
-		console.log("in navDocPage, rcd movement=" + movement );
+
 		if (movement === 'first'){
 			docPgNum=0;
 		}
@@ -445,7 +444,6 @@
 		pgNumInput.dispatchEvent(new Event('input'));
 		
 		//load the requested page	
-		//console.log("calling loadDocPage, sending docPgNum=" + docPgNum);
 		loadDocPageNum(docPgNum);
 	};
 		
@@ -453,7 +451,6 @@
 	// startup
 	//==========================================================================================
 	function startup(){
-		//console.log("in startup");
 		countySchoolDistricts.length =0;
 		countyHighSchools.length = 0;
 		usdSchools.length=0;
@@ -595,7 +592,6 @@
 	  var spacer = document.getElementById("Spacer");
 	  spacer.style.height = (topTitleHeight + topMenuHeight + subTitleHeight + subMenuHeight + contentTitleHeight) + 'px';
 	  
-	  //console.log("topTitleHeight="+topTitleHeight+", topMenuHeight="+topMenuHeight+", subTitleHeight="+subTitleHeight+", subMenuHeight=" + subMenuHeight+", contentTitleHeight=" + contentTitleHeight);
 	};
 	
 	//==========================================================================================
@@ -608,7 +604,6 @@
 		if (params.title) {
 			title = params.title;
 		}
-		console.log("menuClick: category=" + category + ", subCat=" + subCat);
 		var contentSource = '';
 		var subTitle = document.getElementById("SubTitle");
 		var subMenu = document.getElementById("SubMenu");
@@ -1052,7 +1047,7 @@
 	// schoolSubMenuClick
 	//==========================================================================================
 	function schoolSubMenuClick(category) {
-		console.log("schoolSubMenuClick: subMenuName=" + subMenuName + ", category=" + category + ", subCat=" + subMenuCat);
+
 		var contentTitleBar = document.getElementById("ContentTitle");
 		var contentHolder = document.getElementById("ContentHolder");
 
@@ -1075,40 +1070,17 @@
 		//find unique substrings within textIn that match items in array docSearchPatterns 
 		//		with precision docSearchPrecision
 		//==========================================================================================
-		//DEBUG ONLY
-		/*
-		if (textIn.includes('Cedar') || textIn.includes('cedar')){
-			console.log("------------------------------------------");
-			console.log("in FindMatchSubStrings.");
-			console.log("  Rcd textIn                    =" + textIn);
-			console.log("  Rcd docSearchPatterns.length  =" + docSearchPatterns.length);
-			console.log("  Rcd docSearchPatterns         =" + JSON.stringify(docSearchPatterns));
-			console.log("  Rcd docSearchPrecision        =" + docSearchPrecision);
-			console.log("------------------------------------------");
-		}
-		*/
-		//DEBUG ONLY END
 		
-		let grossMatches= [];
+		let foundMatches= [];
 
 		for (let termNum=0; termNum<=docSearchPatterns.length-1; termNum++){
 			let thisTerm = docSearchPatterns[termNum];
-			
-			//DEBUG ONLY
-			//if (textIn.includes('Cedar') || textIn.includes('cedar')){
-			//	console.log("      thisTerm =" + thisTerm);
-			//}
-			//DEBUG ONLY END
 			
 			if (docSearchPrecision>=1){
 				let re=new RegExp(thisTerm,"gi");
 				let result = textIn.match(re);  //returns array of all matching subtexts
 				if (result !=null){
-					grossMatches = grossMatches.concat(result);
-					
-					//DEBUG ONLY
-					//console.log("    thisTerm=|" + thisTerm+ "| result =" + JSON.stringify(result) + "| grossMatches =" + JSON.stringify(grossMatches));
-					//DEBUG ONLY END
+					foundMatches = foundMatches.concat(result);
 				}
 			}
 			else {	
@@ -1116,33 +1088,14 @@
 				let thisStartLen = Math.floor(thisTerm.length*docSearchPrecision);
 				let thisEndLen = Math.ceil(thisTerm.length*(1+(1-docSearchPrecision)));
 				
-				//DEBUG ONLY
-				//if (textIn.includes('Cedar') || textIn.includes('cedar')){
-				//	console.log("    thisTerm.length = " + thisTerm.length + ", thisStartLen = " + thisStartLen + " and thisEndLen = " + thisEndLen);
-				//}
-				//DEBUG ONLY END
-				
 				for (let len=thisEndLen; len>=thisStartLen; len--){
-					//DEBUG ONLY
-					//if (textIn.includes('Cedar') || textIn.includes('cedar')){
-					//	console.log("   len = " + len);
-					//}
-					//DEBUG ONLY END
-
 
 					for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
 						let subStr = textIn.substring(startPos,startPos+len-1);
 						let wt = JaroWinklerDistance(thisTerm,subStr);
-
-						//DEBUG ONLY
-						if (subStr==='cidar' || subStr==='cdar'){
-							console.log("      startPos=" + startPos + ", substring= |" + subStr + "|, weight   =  " + wt );
-						}
-						//DEBUG ONLY END
 						
 						if (wt>=docSearchPrecision){
-							grossMatches.push(subStr.trim());
-							//console.log("    added |" + subStr.trim() + "| to grossMatches, grossMatches =" + JSON.stringify(grossMatches));
+							foundMatches.push(subStr.trim());
 						}
 					} //end of (let startPos) loop
 
@@ -1152,11 +1105,10 @@
 			} //end of else docSearchPrecision<1
 		} //end of (let termNum)
 		
-		//reduce grossMatches to unique values only, then sort longest to shortest values
-		grossMatches = grossMatches.filter(onlyUniqueArrayVals);
-		grossMatches.sort((a, b) => b.length - a.length);
-		//console.log("grossMatches = " + JSON.stringify(grossMatches));
-		return grossMatches;
+		//reduce foundMatches to unique values only, then sort longest to shortest values
+		foundMatches = foundMatches.filter(onlyUniqueArrayVals);
+		foundMatches.sort((a, b) => b.length - a.length);
+		return foundMatches;
 	}
 	
 	//==========================================================================================
@@ -1174,18 +1126,7 @@
 		// Returns true if any term in array docSearchPatterns matches any part of 
 		//		textIn with precisionRqd
 		//==========================================================================================
-		
-		//DEBUG ONLY
-		/*
-		if (textIn.includes('Cedar') || textIn.includes('cedar')){
-			console.log("------------------------------------------");
-			console.log("in TextHasSearchTerm.");
-			//console.log("  Rcd textIn=             " + textIn);
-			console.log("  Rcd docSearchPatterns=  " + JSON.stringify(docSearchPatterns));
-			console.log("  Rcd docSearchPrecision= " + docSearchPrecision);
-		}
-		*/
-		//DEBUG ONLY END
+
 		
 		let thisPageHasIt=false;
 		for (let termNum=0; termNum<=docSearchPatterns.length-1; termNum++){
@@ -1194,11 +1135,7 @@
 			if (docSearchPrecision>=1){
 				let re=new RegExp(thisTerm,"gi");
 				let result = textIn.match(re);  //returns array of all matching subtexts
-				//DEBUG ONLY
-				//if (textIn.includes('Cedar') || textIn.includes('cedar')){
-				//	console.log("    re   =  " + re + ", result=" + JSON.stringify(result));
-				//}
-				//DEBUG ONLY END
+
 				if (result !=null){
 					thisPageHasIt=true;
 					break; //out of (let termNum) loop
@@ -1208,19 +1145,11 @@
 				//check substrings with lengths between docSearchPrecision*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
 				let thisStartLen = Math.floor(thisTerm.length*docSearchPrecision);
 				let thisEndLen = Math.ceil(thisTerm.length*(1+(1-docSearchPrecision)));
-				//if (textIn.includes('Cedar') || textIn.includes('cedar')){
-				//	console.log("thisTerm.length = " + thisTerm.length + ", thisStartLen = " + thisStartLen + " and thisEndLen = " + thisEndLen);
-				//}
+
 				for (let len=thisEndLen; len>=thisStartLen; len--){		
 					for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
 						
 						let wt = JaroWinklerDistance(thisTerm,textIn.substring(startPos,startPos+len-1));
-						
-						//DEBUG ONLY
-						//if (textIn.includes('Cedar') || textIn.includes('cedar')){
-						//	console.log("    weight = " + wt + " for substring=|" + textIn.substring(startPos,startPos+len-1) + "|");
-						//}
-						//DEBUG ONLY END
 
 						if (wt>=docSearchPrecision){
 							thisPageHasIt=true;
@@ -1240,13 +1169,7 @@
 			} //end of else docSearchPrecision<1
 			
 		} //end of (let termNum) loop		
-		
-		//DEBUG ONLY
-		//if (textIn.includes('Cedar') || textIn.includes('cedar')){
-		//	console.log("  thisPageHasIt=          " + thisPageHasIt);
-		//}
-		//DEBUG ONLY END
-		
+			
 		return(thisPageHasIt);
 		
 	}
@@ -1288,11 +1211,11 @@
                 high = (i + range <= s2.length) ? (i + range) : (s2.length - 1);
 
             for ( j = low; j <= high; j++ ) {
-            if ( s1Matches[i] !== true && s2Matches[j] !== true && s1[i] === s2[j] ) {
-                ++m;
-                s1Matches[i] = s2Matches[j] = true;
-                break;
-            }
+				if ( s1Matches[i] !== true && s2Matches[j] !== true && s1[i] === s2[j] ) {
+					++m;
+					s1Matches[i] = s2Matches[j] = true;
+					break;
+				}
             }
         }
 
