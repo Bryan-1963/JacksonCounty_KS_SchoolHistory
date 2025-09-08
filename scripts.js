@@ -13,6 +13,7 @@
 	var countyHighSchools = []; //array of PageObjects for high schools
 	var usdSchools = []; //array of PageObjects for USDs
 	var docPages = []; //array of AnnotatedPhotoObject, loaded by loadDocPages
+	var docSearchPrecision = 1.00;
 	var docPagesAreSearched = false;
 	var docSearchResultPages = []; //array of page numbers containing the searched for text
 	var docSearchResultCurrPg = 0;
@@ -138,6 +139,7 @@
 		//initialize variables
 		let foundSomeMatches = false;
 		let matchingPages = [];
+		docSearchPrecision = precisionRqd; //save to global variable
 		
 		//clear out any existing search 
 		clearDocumentSearch();
@@ -205,7 +207,7 @@
 				for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
 					
 					let thisTxt = thisAnnotation[paraNum].toString();
-					thisPageHasIt = checkTextForSearchTerm(thisTxt, precisionRqd);
+					thisPageHasIt = TextHasSearchTerm(thisTxt);
 					
 					if (thisPageHasIt){
 						break; //out of (let paraNum) loop
@@ -216,7 +218,7 @@
 				//check the caption
 				if (!thisPageHasIt){
 					thisTxt = docPages[pgNum]['caption'].toString();
-					thisPageHasIt = checkTextForSearchTerm(thisTxt, precisionRqd);
+					thisPageHasIt = TextHasSearchTerm(thisTxt);
 				}
 				
 				//if found match, add this page to matchingPages array
@@ -248,49 +250,7 @@
 	//==========================================================================================		
 	} //END OF FUNCTION searchDocument
 	//==========================================================================================
-		
-	//==========================================================================================
-	// checkTextForSearchTerm
-	//==========================================================================================	
-	function checkTextForSearchTerm(textIn, precisionRqd) {
-		console.log("in checkTextForSearchTerm.");
-		console.log("  Rcd textIn=" + textIn);
-		console.log("  Rcd precisionRqd=" + precisionRqd);
-		
-		let thisPageHasIt=false;
-		for (let termNum=0; termNum<=docSearchPatterns.length-1; termNum++){
-			let thisTerm = docSearchPatterns[termNum];
-			
-			//check substrings with lengths between precisionRqd*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
-			let thisStartLen = Math.floor(thisTerm.length*precisionRqd);
-			let thisEndLen = Math.ceiling(thisTerm.length*(1+(1-precisionRqd)));
-			for (let len=thisStartLen; len<=thisEndLen; len++){
-				for (let startPos=0;startPos<=thisTerm.length-1-len;startPos++){
-					console.log("    substring=|" + thisAnnotation.substring(i,i+len-1) + "|");
-					let wt = JaroWinklerDistance(thisTerm,thisAnnotation.substring(i,i+len-1));
-					console.log("    weight   =  " + wt);
-					if (wt>=precisionRqd){
-						thisPageHasIt=true;
-						break; //out of (let startPos) loop
-					}
-				} //end of (let startPos) loop
-				
-				if (thisPageHasIt){
-					break; //out of (let len) loop
-				}
-				
-			} //end of (let len) loop
-			
-			if (thisPageHasIt){
-				break; //out of (let termNum) loop
-			}
-			
-		} //end of (let termNum) loop		
-		
-		return(thisPageHasIt);
-		
-	}
-	
+
 	function ZZZZsearchDocument(type){  //type can be 'exact' or 'fuzzy'
 		
 		//initialize variables
@@ -622,13 +582,14 @@
 			for (let term=0; term<=docSearchPatterns.length-1; term++){
 
 				//build regex to search for
-				let re = new RegExp("(?<!mark\\>)" + docSearchPatterns[term],"gi"); // '(?<!mark\\>)' is negative lookahead assertion, shouldn't re-find words already marked
+				//let re = new RegExp("(?<!mark\\>)" + docSearchPatterns[term],"gi"); // '(?<!mark\\>)' is negative lookahead assertion, shouldn't re-find words already marked
 			
 				//..................................
 				//highlight instances in caption
 				//..................................
 				let text = figCapt.innerHTML;
 				
+				/*
 				let result = text.match(re);  //returns array of all matching subtexts
 				if (result !=null){
 					for (let rslt=0;rslt<=result.length-1;rslt++){  //loop thru matching subtexts and highlight them
@@ -637,6 +598,10 @@
 					figCapt.innerHTML = text;
 					result.length = 0;
 				}
+				*/
+				
+				let matchSubStrings = FindMatchSubStrings(text);
+				
 						
 				//..................................						
 				//highlight instances in annotation
@@ -1319,6 +1284,93 @@
 		sizeBars()
 		
 	}; // end of function subMenuClick 
+	
+	//==========================================================================================
+	// FindMatchSubStrings
+	//==========================================================================================	
+	function FindMatchSubStrings(textIn){
+		//==========================================================================================
+		//find unique substrings within textIn that match items in array docSearchTerms 
+		//		with precision docSearchPrecision
+		//==========================================================================================
+		console.log("in FindMatchSubStrings.");
+		console.log("  Rcd textIn=            " + textIn);
+		console.log("  Rcd docSearchTerms=    " + JSON.stringify(docSearchTerms));
+		console.log("  Rcd docSearchPrecision=" + docSearchPrecision);
+		
+		let grossMatches= [];
+		
+		for (let termNum=0; termNum<=docSearchPatterns.length-1; termNum++){
+			let thisTerm = docSearchPatterns[termNum];
+				
+			//check substrings with lengths between docSearchPrecision*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
+			let thisStartLen = Math.floor(thisTerm.length*docSearchPrecision);
+			let thisEndLen = Math.ceiling(thisTerm.length*(1+(1-docSearchPrecision)));
+			for (let len=thisStartLen; len<=thisEndLen; len++){
+				for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
+					let subStr = textIn.substring(i,i+len-1);
+					console.log("    substring= |" + subStr + "|");
+					let wt = JaroWinklerDistance(thisTerm,subStr);
+					console.log("    weight   =  " + wt);
+					if (wt>=docSearchPrecision){
+						grossMatches.push(subStr);
+					}
+				} //end of (let startPos) loop
+
+				
+			} //end of (let len) loop
+
+			
+		} //end of (let termNum)
+		console.log("grossMatches = " + JSON.stringify(grossMatches));
+	}
+			
+	//==========================================================================================
+	// TextHasSearchTerm
+	//==========================================================================================	
+	function TextHasSearchTerm(textIn) {
+		//==========================================================================================
+		// Returns true if any term in array docSearchPatterns matches any part of 
+		//		textIn with precisionRqd
+		//==========================================================================================
+		console.log("in TextHasSearchTerm.");
+		console.log("  Rcd textIn=            " + textIn);
+		console.log("  Rcd docSearchTerms=    " + JSON.stringify(docSearchTerms));
+		console.log("  Rcd docSearchPrecision=" + docSearchPrecision);
+		
+		let thisPageHasIt=false;
+		for (let termNum=0; termNum<=docSearchPatterns.length-1; termNum++){
+			let thisTerm = docSearchPatterns[termNum];
+			
+			//check substrings with lengths between docSearchPrecision*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
+			let thisStartLen = Math.floor(thisTerm.length*docSearchPrecision);
+			let thisEndLen = Math.ceiling(thisTerm.length*(1+(1-docSearchPrecision)));
+			for (let len=thisStartLen; len<=thisEndLen; len++){
+				for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
+					console.log("    substring=|" + textIn.substring(i,i+len-1) + "|");
+					let wt = JaroWinklerDistance(thisTerm,textIn.substring(i,i+len-1));
+					console.log("    weight   =  " + wt);
+					if (wt>=docSearchPrecision){
+						thisPageHasIt=true;
+						break; //out of (let startPos) loop
+					}
+				} //end of (let startPos) loop
+				
+				if (thisPageHasIt){
+					break; //out of (let len) loop
+				}
+				
+			} //end of (let len) loop
+			
+			if (thisPageHasIt){
+				break; //out of (let termNum) loop
+			}
+			
+		} //end of (let termNum) loop		
+		
+		return(thisPageHasIt);
+		
+	}
 	
 	//==========================================================================================
 	// JaroWinklerDistance
