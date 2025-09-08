@@ -1305,7 +1305,7 @@
 				
 			//check substrings with lengths between docSearchPrecision*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
 			let thisStartLen = Math.floor(thisTerm.length*docSearchPrecision);
-			let thisEndLen = Math.ceiling(thisTerm.length*(1+(1-docSearchPrecision)));
+			let thisEndLen = Math.ceil(thisTerm.length*(1+(1-docSearchPrecision)));
 			for (let len=thisStartLen; len<=thisEndLen; len++){
 				for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
 					let subStr = textIn.substring(i,i+len-1);
@@ -1344,7 +1344,7 @@
 			
 			//check substrings with lengths between docSearchPrecision*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
 			let thisStartLen = Math.floor(thisTerm.length*docSearchPrecision);
-			let thisEndLen = Math.ceiling(thisTerm.length*(1+(1-docSearchPrecision)));
+			let thisEndLen = Math.ceil(thisTerm.length*(1+(1-docSearchPrecision)));
 			for (let len=thisStartLen; len<=thisEndLen; len++){
 				for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
 					console.log("    substring=|" + textIn.substring(i,i+len-1) + "|");
