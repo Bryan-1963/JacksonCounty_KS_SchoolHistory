@@ -78,7 +78,7 @@
 		{  
 			let searchTerm = docPageSearchInput.value;
 			if (searchTerm != null && searchTerm!=""){
-				searchDocument('exact');
+				searchDocument(1);
 			}
 		}
 	});	
@@ -220,6 +220,9 @@
 					thisTxt = docPages[pgNum]['caption'].toString();
 					thisPageHasIt = TextHasSearchTerm(thisTxt);
 				}
+				//DEBUG ONLY 
+				console.log("searchDocument, pgNum=" + pgNum +", thisPageHasIt=" + thisPageHasIt);
+				//DEBUG ONLY END
 				
 				//if found match, add this page to matchingPages array
 				if (thisPageHasIt){
@@ -235,6 +238,10 @@
 			// if matches were found then show qty & go to first page
 			//.........................................................
 			if (foundSomeMatches) {
+				//DEBUG ONLY 
+				console.log("searchDocument, docSearchResultPages.length=" + docSearchResultPages.length +", docSearchResultPages=" + JSON.stringify(docSearchResultPages));
+				//DEBUG ONLY END
+				
 				document.getElementById("docSearchResultsQty").innerHTML='1/' + docSearchResultPages.length;
 				docSearchResultCurrPg=0;
 				loadDocPageNum(docSearchResultPages[0]);
@@ -545,7 +552,10 @@
 	// loadDocPageNum
 	//==========================================================================================	
 	function loadDocPageNum(pgNum){
-
+		//DEBUG ONLY 
+		console.log("loadDocPageNum, rcd pgNum=" + pgNum);
+		//DEBUG ONLY 
+		
 		let docImg = document.getElementById('docPageImg');
 		docImg.src = webRootLocation + docPages[pgNum]['photoFilePath'].toString();
 		
