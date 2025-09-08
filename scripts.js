@@ -336,6 +336,7 @@
 	//==========================================================================================	
 	function loadDocPageNum(pgNum){
 		
+		// update image source path
 		let docImg = document.getElementById('docPageImg');
 		docImg.src = webRootLocation + docPages[pgNum]['photoFilePath'].toString();
 		
@@ -347,7 +348,7 @@
 		else {
 			figCapt.innerHTML = "";
 		}
-		document.getElementById('figCaptionEditor').innerHTML = figCapt.innerHTML
+		document.getElementById('figCaptionEdited').innerHTML = figCapt.innerHTML
 		
 		//update the annotation HTML
 		let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
@@ -360,8 +361,8 @@
 		}
 		let docAnnot = document.getElementById("docAnnotation");
 		docAnnot.innerHTML=totalAnnotation;
-		let docAnnotEditor = document.getElementById("docAnnotation");
-		docAnnotEditor.innerHTML = totalEditAnnotation;
+		let docAnnotEdited = document.getElementById("docAnnotationEdited");
+		docAnnotEdited.innerHTML = totalEditAnnotation;
 		
 		//update the page number input box
 		let pgNumInput = document.getElementById("docPageNumInput");
