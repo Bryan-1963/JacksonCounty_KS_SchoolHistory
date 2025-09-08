@@ -229,7 +229,7 @@
 					docSearchResultPages.push(pgNum);
 					foundSomeMatches = true;
 					//DEBUG ONLY 
-					console.log("searchDocument, pgNum=" + pgNum +", thisPageHasIt=" + thisPageHasIt);
+					//console.log("searchDocument, pgNum=" + pgNum +", thisPageHasIt=" + thisPageHasIt);
 					//DEBUG ONLY END
 				}
 
@@ -556,7 +556,7 @@
 	//==========================================================================================	
 	function loadDocPageNum(pgNum){
 		//DEBUG ONLY 
-		console.log("loadDocPageNum, rcd pgNum=" + pgNum + ", docPagesAreSearched=" + docPagesAreSearched);
+		//console.log("loadDocPageNum, rcd pgNum=" + pgNum + ", docPagesAreSearched=" + docPagesAreSearched);
 		//DEBUG ONLY 
 		
 		let docImg = document.getElementById('docPageImg');
@@ -1392,7 +1392,7 @@
 						
 						if (wt>=docSearchPrecision){
 							grossMatches.push(subStr.trim());
-							console.log("    added |" + subStr.trim() + "| to grossMatches, grossMatches =" + JSON.stringify(grossMatches));
+							//console.log("    added |" + subStr.trim() + "| to grossMatches, grossMatches =" + JSON.stringify(grossMatches));
 						}
 					} //end of (let startPos) loop
 
@@ -1405,7 +1405,7 @@
 		//reduce grossMatches to unique values only, then sort longest to shortest values
 		grossMatches = grossMatches.filter(onlyUniqueArrayVals);
 		grossMatches.sort((a, b) => b.length - a.length);
-		//console.log("grossMatches = " + JSON.stringify(grossMatches));
+		console.log("grossMatches = " + JSON.stringify(grossMatches));
 		return grossMatches;
 	}
 	
@@ -1458,9 +1458,9 @@
 				//check substrings with lengths between docSearchPrecision*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
 				let thisStartLen = Math.floor(thisTerm.length*docSearchPrecision);
 				let thisEndLen = Math.ceil(thisTerm.length*(1+(1-docSearchPrecision)));
-				if (textIn.includes('Cedar') || textIn.includes('cedar')){
-					console.log("thisTerm.length = " + thisTerm.length + ", thisStartLen = " + thisStartLen + " and thisEndLen = " + thisEndLen);
-				}
+				//if (textIn.includes('Cedar') || textIn.includes('cedar')){
+				//	console.log("thisTerm.length = " + thisTerm.length + ", thisStartLen = " + thisStartLen + " and thisEndLen = " + thisEndLen);
+				//}
 				for (let len=thisEndLen; len>=thisStartLen; len--){		
 					for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
 						
@@ -1514,7 +1514,11 @@
 		//
 		//==========================================================================================
         var m = 0;
-
+		
+		//make this case insensitive
+		s1 = s1.toLowerCase();
+		s2 = s2.toLowerCase();
+		
         // Exit early if either are empty.
         if ( s1.length === 0 || s2.length === 0 ) {
             return 0;
