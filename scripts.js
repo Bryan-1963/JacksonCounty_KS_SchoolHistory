@@ -618,6 +618,9 @@
 				//DEBUG ONLY END
 				
 				let matchSubStrings = FindMatchSubStrings(text);
+				for (let i=0;i<=matchSubStrings.length-1;i++){
+					text = text.replace(result[rslt],'<mark>' + matchSubStrings[i] + '</mark>');
+				}
 				
 						
 				//..................................						
@@ -629,6 +632,9 @@
 				//DEBUG ONLY END
 				
 				matchSubStrings = FindMatchSubStrings(text);	
+				for (let i=0;i<=matchSubStrings.length-1;i++){
+					text = text.replace(result[rslt],'<mark>' + matchSubStrings[i] + '</mark>');
+				}
 				
 				/*
 				result = text.match(re);
@@ -1346,7 +1352,7 @@
 				//check substrings with lengths between docSearchPrecision*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
 				let thisStartLen = Math.floor(thisTerm.length*docSearchPrecision);
 				let thisEndLen = Math.ceil(thisTerm.length*(1+(1-docSearchPrecision)));
-				for (let len=thisStartLen; len<=thisEndLen; len++){
+				for (let len=thisEndLen; len>=thisStartLen; len--){
 					for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
 						let subStr = textIn.substring(i,i+len-1);
 						let wt = JaroWinklerDistance(thisTerm,subStr);
@@ -1356,7 +1362,7 @@
 						}
 						//DEBUG ONLY END
 						if (wt>=docSearchPrecision){
-							grossMatches.push(subStr);
+							grossMatches.push(subStr.triim());
 						}
 					} //end of (let startPos) loop
 
@@ -1365,9 +1371,21 @@
 
 			} //end of else docSearchPrecision<1
 		} //end of (let termNum)
+		
+		//reduce grossMatches to unique values only, then sort longest to shortest values
+		grossMatches = grossMatches.filter(onlyUniqueArrayVals);
+		grossMatches.sort((a, b) => b.length - a.length);
 		console.log("grossMatches = " + JSON.stringify(grossMatches));
+		return grossMatches;
 	}
-			
+	
+	//==========================================================================================
+	// onlyUniqueArrayVals
+	//==========================================================================================	
+	function onlyUniqueArrayVals(value, index, array) {
+	  return array.indexOf(value) === index;
+	}
+
 	//==========================================================================================
 	// TextHasSearchTerm
 	//==========================================================================================	
@@ -1408,11 +1426,12 @@
 				//check substrings with lengths between docSearchPrecision*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
 				let thisStartLen = Math.floor(thisTerm.length*docSearchPrecision);
 				let thisEndLen = Math.ceil(thisTerm.length*(1+(1-docSearchPrecision)));
-				for (let len=thisStartLen; len<=thisEndLen; len++){
+				if (textIn.includes('Cedar') || textIn.includes('cedar')){
+					console.log("thisTerm.length = " + thisTerm.length + ", thisStartLen = " + thisStartLen + " and thisEndLen = " + thisEndLen);
+				}
+				for (let len=thisEndLen; len>=thisStartLen; len--){
 					//DEBUG ONLY
-					if (textIn.includes('Cedar') || textIn.includes('cedar')){
-						console.log("thisTerm.length = " + thisTerm.length + "thisStartLen = " + thisStartLen + " for thisEndLen = " + thisEndLen);
-					}
+
 					//DEBUG ONLY END					
 					for (let startPos=0;startPos<=textIn.length-1-len;startPos++){
 						
