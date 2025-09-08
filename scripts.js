@@ -134,7 +134,7 @@
 	// searchDocument
 	//==========================================================================================
 	function searchDocument(precisionRqd=1.00){  
-		//0.75 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
+		//0.70 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
 	
 		//initialize variables
 		let foundSomeMatches = false;
@@ -235,12 +235,11 @@
 
 			} //end of pgNum loop
 		
-		
-		
-		
+			//.........................................................
 			// if matches were found then show qty & go to first page
 			//.........................................................
 			if (foundSomeMatches) {
+				docPagesAreSearched=true;
 				//DEBUG ONLY 
 				console.log("searchDocument, docSearchResultPages.length=" + docSearchResultPages.length +", docSearchResultPages=" + JSON.stringify(docSearchResultPages));
 				//DEBUG ONLY END
@@ -482,6 +481,7 @@
 	// navDocSearchResults
 	//==========================================================================================	
 	function navDocSearchResults(movement){
+		console.log("navDocSearchResults, docSearchResultCurrPg=" + docSearchResultCurrPg + ", rcd movement=" + movement );
 		if (docPagesAreSearched) {
 			if (movement === 'next'){
 				docSearchResultCurrPg=docSearchResultCurrPg+1;
@@ -501,6 +501,7 @@
 			//update results quantity curr page number and load the page
 			document.getElementById("docSearchResultsQty").innerHTML= (docSearchResultCurrPg +1) + '/' + docSearchResultPages.length;
 			docPgNum = docSearchResultPages[docSearchResultCurrPg];
+			console.log("    NOW docSearchResultCurrPg=" + docSearchResultCurrPg + " and docPgNum=" + docPgNum);
 			loadDocPageNum(docPgNum);
 		}
 	}
@@ -555,7 +556,7 @@
 	//==========================================================================================	
 	function loadDocPageNum(pgNum){
 		//DEBUG ONLY 
-		console.log("loadDocPageNum, rcd pgNum=" + pgNum);
+		console.log("loadDocPageNum, rcd pgNum=" + pgNum + ", docPagesAreSearched=" + docPagesAreSearched);
 		//DEBUG ONLY 
 		
 		let docImg = document.getElementById('docPageImg');
