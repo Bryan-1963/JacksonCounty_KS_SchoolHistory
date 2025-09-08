@@ -138,7 +138,6 @@
 	
 		//initialize variables
 		let foundSomeMatches = false;
-		let matchingPages = [];
 		docSearchPrecision = precisionRqd; //save to global variable
 		
 		//clear out any existing search 
@@ -149,6 +148,8 @@
 		console.log("in searchDocument, rcd precisionRqd=" + precisionRqd + ", and docSearchTermInput=" + docSearchTermInput);
 		
 		if (docSearchTermInput != null && docSearchTermInput!=""){
+			
+			//.................................................
 			// load docSearchPatterns
 			//.................................................
 			//keep anything between quotes as an individual item, otherwise split them up
@@ -193,7 +194,8 @@
 			}
 			
 			console.log("   docSearchPatterns = " + JSON.stringify(docSearchPatterns));
-				
+			
+			//.................................................
 			// search document text fields for matches
 			//.................................................				
 			//loop through annotations and captions of each page
@@ -220,14 +222,15 @@
 					thisTxt = docPages[pgNum]['caption'].toString();
 					thisPageHasIt = TextHasSearchTerm(thisTxt);
 				}
-				//DEBUG ONLY 
-				console.log("searchDocument, pgNum=" + pgNum +", thisPageHasIt=" + thisPageHasIt);
-				//DEBUG ONLY END
+
 				
-				//if found match, add this page to matchingPages array
+				//if found match, add this page to docSearchResultPages array
 				if (thisPageHasIt){
-					matchingPages.push(pgNum);
+					docSearchResultPages.push(pgNum);
 					foundSomeMatches = true;
+					//DEBUG ONLY 
+					console.log("searchDocument, pgNum=" + pgNum +", thisPageHasIt=" + thisPageHasIt);
+					//DEBUG ONLY END
 				}
 
 			} //end of pgNum loop
@@ -262,7 +265,6 @@
 		
 		//initialize variables
 		let foundSomeMatches = false;
-		let matchingPages = [];
 		
 		//clear out any existing search 
 		clearDocumentSearch();
