@@ -619,9 +619,9 @@
 				
 				let matchSubStrings = FindMatchSubStrings(text);
 				for (let i=0;i<=matchSubStrings.length-1;i++){
-					text = text.replace(result[rslt],'<mark>' + matchSubStrings[i] + '</mark>');
+					text = text.replace(matchSubStrings[i],'<mark>' + matchSubStrings[i] + '</mark>');
 				}
-				
+				figCapt.innerHTML = text;
 						
 				//..................................						
 				//highlight instances in annotation
@@ -633,8 +633,9 @@
 				
 				matchSubStrings = FindMatchSubStrings(text);	
 				for (let i=0;i<=matchSubStrings.length-1;i++){
-					text = text.replace(result[rslt],'<mark>' + matchSubStrings[i] + '</mark>');
+					text = text.replace(matchSubStrings[i],'<mark>' + matchSubStrings[i] + '</mark>');
 				}
+				docAnnot.innerHTML = text;
 				
 				/*
 				result = text.match(re);
