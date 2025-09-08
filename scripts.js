@@ -481,7 +481,7 @@
 	// navDocSearchResults
 	//==========================================================================================	
 	function navDocSearchResults(movement){
-		console.log("navDocSearchResults, docSearchResultCurrPg=" + docSearchResultCurrPg + ", rcd movement=" + movement );
+		//console.log("navDocSearchResults, docSearchResultCurrPg=" + docSearchResultCurrPg + ", rcd movement=" + movement );
 		if (docPagesAreSearched) {
 			if (movement === 'next'){
 				docSearchResultCurrPg=docSearchResultCurrPg+1;
@@ -501,7 +501,7 @@
 			//update results quantity curr page number and load the page
 			document.getElementById("docSearchResultsQty").innerHTML= (docSearchResultCurrPg +1) + '/' + docSearchResultPages.length;
 			docPgNum = docSearchResultPages[docSearchResultCurrPg];
-			console.log("    NOW docSearchResultCurrPg=" + docSearchResultCurrPg + " and docPgNum=" + docPgNum);
+			//console.log("    NOW docSearchResultCurrPg=" + docSearchResultCurrPg + " and docPgNum=" + docPgNum);
 			loadDocPageNum(docPgNum);
 		}
 	}
@@ -613,6 +613,10 @@
 				}
 				*/
 				
+				//DEBUG ONLY 
+				console.log("CALLING FindMatchSubStrings(" + text);
+				//DEBUG ONLY END
+				
 				let matchSubStrings = FindMatchSubStrings(text);
 				
 						
@@ -620,6 +624,8 @@
 				//highlight instances in annotation
 				//..................................
 				text = docAnnot.innerHTML;
+				
+				/*
 				result = text.match(re);
 				
 				if (result !=null){
@@ -633,7 +639,8 @@
 					
 					docAnnot.innerHTML = text;
 				}
-
+				*/
+				
 			}
 		}
 	};
@@ -1326,9 +1333,7 @@
 				if (result !=null){
 					grossMatches = grossMatches.concat(result);
 					//DEBUG ONLY
-					if (textIn.includes('Cedar') || textIn.includes('cedar')){
-						console.log("    thisTerm=|" + thisTerm + "| grossMatches =" + JSON.stringify(grossMatches));
-					}
+					console.log("    thisTerm=|" + thisTerm+ "| result =" + JSON.stringify(result) + "| grossMatches =" + JSON.stringify(grossMatches));
 					//DEBUG ONLY END
 				}
 			}
