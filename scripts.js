@@ -98,6 +98,7 @@
 			document.getElementById('docAnnotationEditor').style.display = 'block';
 			document.getElementById('figCaption').style.display = 'none';
 			document.getElementById('figCaptionEditor').style.display = 'block';
+		}
 		else {
 			docDisplayMode='display'
 			document.getElementById('docAnnotationHolder').style.display = 'block';
@@ -358,7 +359,7 @@
 		else {
 			figCapt.innerHTML = "";
 		}
-		document.getElementById('figCaptionEdited').innerHTML = figCapt.innerHTML
+		document.getElementById('figCaptionEdited').value = figCapt.innerHTML
 		
 		//update the annotation HTML
 		let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
@@ -372,7 +373,7 @@
 		let docAnnot = document.getElementById("docAnnotation");
 		docAnnot.innerHTML=totalAnnotation;
 		let docAnnotEdited = document.getElementById("docAnnotationEdited");
-		docAnnotEdited.innerHTML = totalEditAnnotation;
+		docAnnotEdited.value = totalEditAnnotation;
 		
 		//update the page number input box
 		let pgNumInput = document.getElementById("docPageNumInput");
