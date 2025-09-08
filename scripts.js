@@ -1135,9 +1135,9 @@
 						let wt = JaroWinklerDistance(thisTerm,subStr);
 
 						//DEBUG ONLY
-						//if (textIn.includes('Cedar') || textIn.includes('cedar')){
-						//	console.log("      startPos=" + startPos + ", substring= |" + subStr + "|, weight   =  " + wt );
-						//}
+						if (subStr==='cidar' || subStr==='cdar'){
+							console.log("      startPos=" + startPos + ", substring= |" + subStr + "|, weight   =  " + wt );
+						}
 						//DEBUG ONLY END
 						
 						if (wt>=docSearchPrecision){
@@ -1155,7 +1155,7 @@
 		//reduce grossMatches to unique values only, then sort longest to shortest values
 		grossMatches = grossMatches.filter(onlyUniqueArrayVals);
 		grossMatches.sort((a, b) => b.length - a.length);
-		console.log("grossMatches = " + JSON.stringify(grossMatches));
+		//console.log("grossMatches = " + JSON.stringify(grossMatches));
 		return grossMatches;
 	}
 	
