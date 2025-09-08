@@ -6,252 +6,266 @@
 </HEAD>
 
 <BODY onload="startup();">
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- TITLE BAR -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<div id="TitleBar" class="titleBar">
-Jackson County, Kansas Schools History
-</div>
-
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- MAIN MENU -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<div id="MainMenu" class="navbar" >
-	<!-- Home -->
-	<!-- -------------------- -->
-	<a onclick="menuClick({category:'Home',subCat:''})">Home</a>
-
-	<!-- Overview -->
-	<!-- -------------------- -->
-	<div class="dropdown">
-		<button class="dropbtn">Overview 
-		  <i class="fa fa-caret-down"></i>
-		</button>
-		  <div class="dropdown-content">
-			<a onclick="menuClick({category:'Overview',subCat:'Overview'})">Overview</a>
-			<a onclick="menuClick({category:'Overview',subCat:'CoDistrictSumm'})">Co. Districts Summary</a>
-			<a onclick="menuClick({category:'Overview',subCat:'CoHSSumm'})">Co. High Schools Summary</a>
-			<a onclick="menuClick({category:'Overview',subCat:'TeachersInst'})">Teachers Institute</a>
-		  </div>
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<!-- TITLE BAR -->
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<div id="TitleBar" class="titleBar">
+	Jackson County, Kansas Schools History
 	</div>
-	
-	<!-- Maps -->
-	<!-- -------------------- -->
-	<div class="dropdown">
-		<button class="dropbtn">Maps 
-		  <i class="fa fa-caret-down"></i>
-		</button>
-		  <div id="MapsDropdown" class="dropdown-content">
-			<!-- CONTENT HERE IS LOADED BY CODE USING CONTENTS OF VARIABLE maps -->
-		  </div>
-	</div>
-	
-	
-	<!-- Territorial -->
-	<!-- -------------------- -->
-	<a onclick="menuClick({category:'Pre-Org',subCat:'Territorial'})">Territorial KS</a>
-	
-	<!-- County Districts -->
-	<!-- -------------------- -->
-	<div class="dropdown">
-		<button class="dropbtn">Co. Districts 
-		  <i class="fa fa-caret-down"></i>
-		</button>
-		  <div id="CountyDistrictsDropdown" class="dropdown-content" style="column-count: 4;">
-			<a><u>Jackson Co. DISTRICTS</u></A>		
-			<!-- CONTENT HERE IS LOADED BY CODE USING CONTENTS OF VARIABLE countySchoolDistricts -->
 
-		  </div>
-	</div>
-		
-	<!-- Pottawatomie Mission -->
-	<!-- -------------------- -->
-	<a onclick="menuClick({category:'Pottawatomie Mission',subCat:''})">Pottawatomie Mission</a>
-	
-	<!-- High Schools -->
-	<!-- -------------------- -->
-	<div class="dropdown">
-		<button class="dropbtn">Co. High Schools 
-		  <i class="fa fa-caret-down"></i>
-		</button>	
-		  <div id="CountyHighSchoolsDropdown" class="dropdown-content">
-			<a><u>Jackson Co. Districts</u></A>
-			<!-- CONTENT HERE IS LOADED BY CODE USING CONTENTS OF VARIABLE countyHighSchools -->
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<!-- MAIN MENU -->
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<div id="MainMenu" class="navbar" >
+		<!-- Home -->
+		<!-- -------------------- -->
+		<a onclick="menuClick({category:'Home',subCat:''})">Home</a>
 
-		  </div>
-	</div>
-	
-	<!-- Unified School Districts -->
-	<!-- -------------------- -->
-	<div class="dropdown">
-		<button class="dropbtn">USDs
-		  <i class="fa fa-caret-down"></i>
-		</button>	
-		  <div id="UsdSchoolsDropdown" class="dropdown-content">
-			<!-- CONTENT HERE IS LOADED BY CODE USING CONTENTS OF VARIABLE usdSchools -->
-		  </div>
-	</div>
-	
-	<!-- Colleges -->
-	<!-- -------------------- -->
-	<div class="dropdown">
-		<button class="dropbtn">Colleges 
-		  <i class="fa fa-caret-down"></i>
-		</button>
-		  <div class="dropdown-content">
-			<a onclick="menuClick({category:'Colleges',subCat:'CampbellCollege', title:'Campbell College'})">Campbell College</a>
-			<a onclick="menuClick({category:'Colleges',subCat:'CirclevilleSeminary', title:'Circleville Seminary'})">Circleville Seminary</a>
-		  </div>
-	</div>
-	
-	<!-- References -->
-	<!-- -------------------- -->
-	<a onclick="menuClick({category:'References',subCat:''})">References</a>
-	
-	<!-- Source Materials -->
-	<!-- -------------------- -->
-	<a onclick="menuClick({category:'SourceMatl',subCat:''})">Source Materials</a>
-	
-	<!-- Contact -->
-	<!-- -------------------- -->
-	<a onclick="menuClick({category:'Contact',subCat:''})">Contact</a>
-		
-	<!-- TEST ONLY -->
-	<!-- -------------------- -->
-	<a onclick="menuClick({category:'Test',subCat:''})" style="display: none;">TEST ONLY</a>
-	
-</div> <!-- END OF NAVIGATION BAR -->
-
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- SUBTITLE -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<DIV id="SubTitle" class="titleBar2" >
-	<!-- changed programmatically -->
-	Welcome
-</DIV>
-
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- SUBMENU -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<DIV id="SubMenu" class="navBar2" >
-	<!-- displays switched programmatically -->
-	
-	<!-- school subMenu -->
-	<span id='schoolNavBar' style='display: none;'>
-		<a onclick="schoolSubMenuClick('Overview')">Overview</a>
-		<a onclick="schoolSubMenuClick('Locations')">Location(s) and Bldgs</a>
-		<a onclick="schoolSubMenuClick('People')">People</a>
-		<a onclick="schoolSubMenuClick('Events')">Events</a>
-	</span>
-	
-	<!-- document subMenu -->
-	<span id='docNavBar' style='display: none;'>
-	
-		<!-- Navigate through images -->
-		<div class='searchHolder'>
-			<button style='font-size:14px' onclick="navDocPage('first')"><i class='fa fa-angle-double-left'></i></button>
-			<button style='font-size:14px' onclick="navDocPage('prev')"><i class='fa fa-angle-left'></i></button>
-			<input type="number" id="docPageNumInput" name="docPageNumInput" class='pageNumInput'> <!-- there's a listener on this -->
-			<span id="totalDocPages"> of </span>
-			<button style='font-size:14px' onclick="navDocPage('next')"><i class='fa fa-angle-right'></i></button>
-			<button style='font-size:14px' onclick="navDocPage('last')"><i class='fa fa-angle-double-right'></i></button>
-		</div>
-		
-		<!-- Search document -->
-		<div class='searchHolder'>
-			
-			<div class='input-wrapper'>
-				<input type='text' id='docPageSearchInput' name='docPageSearchInput' class='searchInput' placeholder='Search this document'>
-				<button onclick="clearSearchInput('docPageSearchInput')" style='font-size:10px'>
-					<i class='fa fa-close' id='clearInputBtn'></i>
-				</button>
-			</div>
-			
-			<!-- search button -->
-			<div class="searchBtnHldr">
-				<button class="searchBtn">Search
-				  <i class="fa fa-caret-down"></i>
-				</button>	
-				  <div class="searchBtn-content">
-					<a onclick="searchDocument(1.00)">1.00 Exact</a>
-					<a onclick="searchDocument(0.94)">0.94 Fuzzy</a>
-					<a onclick="searchDocument(0.88)">0.88 Fuzzy</a>
-					<a onclick="searchDocument(0.82)">0.82 Fuzzy</a>
-				  </div>
-			</div>
-
-			<!-- results nav -->
-			<div class='navHolder' id='docSearchResultsNav'>
-				<div id='docSearchResultsQty' style='display:inline-block'>0/0</div>
-				<button style='font-size:12px;display:inline-block' onclick="navDocSearchResults('prev')"><i class='fa fa-angle-left'></i></button>
-				<button style='font-size:12px;display:inline-block' onclick="navDocSearchResults('next')"><i class='fa fa-angle-right'></i></button>
-			</div>
-		</div>
-		
-		<!-- edit -->
-		<div class='searchHolder'>
-			<button onclick="editDocAnnotation()" style='font-size:10px'>
-				<i class='far fa-edit' id='editDocAnnotationBtn'></i>
+		<!-- Overview -->
+		<!-- -------------------- -->
+		<div class="dropdown">
+			<button class="dropbtn">Overview 
+			  <i class="fa fa-caret-down"></i>
 			</button>
-		</div>		
-		
-	</span>
-</DIV>
-
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- CONTENT TITLE BAR -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<DIV id="ContentTitle" class="titleBar3Empty" >
-	<!-- changed programmatically, hidden for document displaying -->
-	&nbsp
-</DIV>
-
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- SPACER (behind titles and menus to force the content down -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<DIV id="Spacer" class="divSpacer"></DIV>
-
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- PAGE CONTENT -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<div id="iFrameHolder" class="iFrameHolder">
-	<iframe id="ContentHolder" src="Welcome/Welcome.html" title="description" class="contentHolder" ></iframe>
-</div>
-
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- DOCUMENT CONTENT  -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<div id="documentContentHolder" class='iFrameHolder'>
-	<div class='docPage'>
-		<div id="docPage" class='docPageImage'>
-			<figure class='docFigure' id='docPageFigure'>
-				<img id='docPageImg' src='' style='max-height: 600px;'> <!-- source filled by javascript in loadDocPgNum() -->
-				<figcaption id='figCaption' class='unNumberedFig'>
-					<!-- content filled by javascript in loadDocPgNum() -->
-				</figcaption>
-			</figure>
-
+			  <div class="dropdown-content">
+				<a onclick="menuClick({category:'Overview',subCat:'Overview'})">Overview</a>
+				<a onclick="menuClick({category:'Overview',subCat:'CoDistrictSumm'})">Co. Districts Summary</a>
+				<a onclick="menuClick({category:'Overview',subCat:'CoHSSumm'})">Co. High Schools Summary</a>
+				<a onclick="menuClick({category:'Overview',subCat:'TeachersInst'})">Teachers Institute</a>
+			  </div>
 		</div>
 		
-		<div id="docAnnotationHolder" class='docPageAnnotationHolder'>
-			<p id='docAnnotation' class='docPageAnnotation'>
-				<!-- content filled by javascript in loadDocPgNum() -->
-			</p>
-		<div>
+		<!-- Maps -->
+		<!-- -------------------- -->
+		<div class="dropdown">
+			<button class="dropbtn">Maps 
+			  <i class="fa fa-caret-down"></i>
+			</button>
+			  <div id="MapsDropdown" class="dropdown-content">
+				<!-- CONTENT HERE IS LOADED BY CODE USING CONTENTS OF VARIABLE maps -->
+			  </div>
+		</div>
 		
-		<div id="docAnnotationEditor" rows='80' cols='400' style='display:none'>
-			<textarea id='docAnnotationEdited' class='docPageAnnotation'>
-				<!-- content filled by javascript in loadDocPgNum() -->
-			</textarea	>
-		<div>		
+		
+		<!-- Territorial -->
+		<!-- -------------------- -->
+		<a onclick="menuClick({category:'Pre-Org',subCat:'Territorial'})">Territorial KS</a>
+		
+		<!-- County Districts -->
+		<!-- -------------------- -->
+		<div class="dropdown">
+			<button class="dropbtn">Co. Districts 
+			  <i class="fa fa-caret-down"></i>
+			</button>
+			  <div id="CountyDistrictsDropdown" class="dropdown-content" style="column-count: 4;">
+				<a><u>Jackson Co. DISTRICTS</u></A>		
+				<!-- CONTENT HERE IS LOADED BY CODE USING CONTENTS OF VARIABLE countySchoolDistricts -->
+
+			  </div>
+		</div>
+			
+		<!-- Pottawatomie Mission -->
+		<!-- -------------------- -->
+		<a onclick="menuClick({category:'Pottawatomie Mission',subCat:''})">Pottawatomie Mission</a>
+		
+		<!-- High Schools -->
+		<!-- -------------------- -->
+		<div class="dropdown">
+			<button class="dropbtn">Co. High Schools 
+			  <i class="fa fa-caret-down"></i>
+			</button>	
+			  <div id="CountyHighSchoolsDropdown" class="dropdown-content">
+				<a><u>Jackson Co. Districts</u></A>
+				<!-- CONTENT HERE IS LOADED BY CODE USING CONTENTS OF VARIABLE countyHighSchools -->
+
+			  </div>
+		</div>
+		
+		<!-- Unified School Districts -->
+		<!-- -------------------- -->
+		<div class="dropdown">
+			<button class="dropbtn">USDs
+			  <i class="fa fa-caret-down"></i>
+			</button>	
+			  <div id="UsdSchoolsDropdown" class="dropdown-content">
+				<!-- CONTENT HERE IS LOADED BY CODE USING CONTENTS OF VARIABLE usdSchools -->
+			  </div>
+		</div>
+		
+		<!-- Colleges -->
+		<!-- -------------------- -->
+		<div class="dropdown">
+			<button class="dropbtn">Colleges 
+			  <i class="fa fa-caret-down"></i>
+			</button>
+			  <div class="dropdown-content">
+				<a onclick="menuClick({category:'Colleges',subCat:'CampbellCollege', title:'Campbell College'})">Campbell College</a>
+				<a onclick="menuClick({category:'Colleges',subCat:'CirclevilleSeminary', title:'Circleville Seminary'})">Circleville Seminary</a>
+			  </div>
+		</div>
+		
+		<!-- References -->
+		<!-- -------------------- -->
+		<a onclick="menuClick({category:'References',subCat:''})">References</a>
+		
+		<!-- Source Materials -->
+		<!-- -------------------- -->
+		<a onclick="menuClick({category:'SourceMatl',subCat:''})">Source Materials</a>
+		
+		<!-- Contact -->
+		<!-- -------------------- -->
+		<a onclick="menuClick({category:'Contact',subCat:''})">Contact</a>
+			
+		<!-- TEST ONLY -->
+		<!-- -------------------- -->
+		<a onclick="menuClick({category:'Test',subCat:''})" style="display: none;">TEST ONLY</a>
+		
+	</div> <!-- END OF NAVIGATION BAR -->
+
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<!-- SUBTITLE -->
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<DIV id="SubTitle" class="titleBar2" >
+		<!-- changed programmatically -->
+		Welcome
+	</DIV>
+
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<!-- SUBMENU -->
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<DIV id="SubMenu" class="navBar2" >
+		<!-- displays switched programmatically -->
+		
+		<!-- school subMenu -->
+		<span id='schoolNavBar' style='display: none;'>
+			<a onclick="schoolSubMenuClick('Overview')">Overview</a>
+			<a onclick="schoolSubMenuClick('Locations')">Location(s) and Bldgs</a>
+			<a onclick="schoolSubMenuClick('People')">People</a>
+			<a onclick="schoolSubMenuClick('Events')">Events</a>
+		</span>
+		
+		<!-- document subMenu -->
+		<span id='docNavBar' style='display: none;'>
+		
+			<!-- Navigate through images -->
+			<div class='searchHolder'>
+				<button style='font-size:14px' onclick="navDocPage('first')"><i class='fa fa-angle-double-left'></i></button>
+				<button style='font-size:14px' onclick="navDocPage('prev')"><i class='fa fa-angle-left'></i></button>
+				<input type="number" id="docPageNumInput" name="docPageNumInput" class='pageNumInput'> <!-- there's a listener on this -->
+				<span id="totalDocPages"> of </span>
+				<button style='font-size:14px' onclick="navDocPage('next')"><i class='fa fa-angle-right'></i></button>
+				<button style='font-size:14px' onclick="navDocPage('last')"><i class='fa fa-angle-double-right'></i></button>
+			</div>
+			
+			<!-- Search document -->
+			<div class='searchHolder'>
+				
+				<div class='input-wrapper'>
+					<input type='text' id='docPageSearchInput' name='docPageSearchInput' class='searchInput' placeholder='Search this document'>
+					<button onclick="clearSearchInput('docPageSearchInput')" style='font-size:10px'>
+						<i class='fa fa-close' id='clearInputBtn'></i>
+					</button>
+				</div>
+				
+				<!-- search button -->
+				<div class="searchBtnHldr">
+					<button class="searchBtn">Search
+					  <i class="fa fa-caret-down"></i>
+					</button>	
+					  <div class="searchBtn-content">
+						<a onclick="searchDocument(1.00)">1.00 Exact</a>
+						<a onclick="searchDocument(0.94)">0.94 Fuzzy</a>
+						<a onclick="searchDocument(0.88)">0.88 Fuzzy</a>
+						<a onclick="searchDocument(0.82)">0.82 Fuzzy</a>
+					  </div>
+				</div>
+
+				<!-- results nav -->
+				<div class='navHolder' id='docSearchResultsNav'>
+					<div id='docSearchResultsQty' style='display:inline-block'>0/0</div>
+					<button style='font-size:12px;display:inline-block' onclick="navDocSearchResults('prev')"><i class='fa fa-angle-left'></i></button>
+					<button style='font-size:12px;display:inline-block' onclick="navDocSearchResults('next')"><i class='fa fa-angle-right'></i></button>
+				</div>
+			</div>
+			
+			<!-- edit -->
+			<div class='searchHolder'>
+				<button onclick="editDocAnnotation()" style='font-size:10px'>
+					<i class='far fa-edit' id='editDocAnnotationBtn'></i>
+				</button>
+			</div>		
+			
+		</span>
+	</DIV>
+
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<!-- CONTENT TITLE BAR -->
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<DIV id="ContentTitle" class="titleBar3Empty" >
+		<!-- changed programmatically, hidden for document displaying -->
+		&nbsp
+	</DIV>
+
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<!-- SPACER (behind titles and menus to force the content down -->
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<DIV id="Spacer" class="divSpacer"></DIV>
+
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<!-- PAGE CONTENT -->
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<div id="iFrameHolder" class="iFrameHolder">
+		<iframe id="ContentHolder" src="Welcome/Welcome.html" title="description" class="contentHolder" ></iframe>
 	</div>
-</div>
 
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- SCRIPTS -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<SCRIPT src="scripts_initVars.js"></SCRIPT>
-<SCRIPT src="scripts.js"></SCRIPT>
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<!-- DOCUMENT CONTENT  -->
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<div id="documentContentHolder" class='iFrameHolder'>
+		<div class='docPage'>
+		
+			<!-- image -->
+			<div id="docPageImage" class='docPageImage'>
+				<!-- figure -->
+				<figure class='docFigure' id='docPageFigure'>
+					<img id='docPageImg' src='' style='max-height: 600px;'> <!-- source filled by javascript in loadDocPgNum() -->
+					<figcaption id='figCaption' class='unNumberedFig'>
+						<!-- content filled by javascript in loadDocPgNum() -->
+					</figcaption>
+				</figure>
+				
+				<!-- caption editor -->
+				<div id="figCaptionEditor" rows='1' cols='400' style='display:none'>
+					<textarea id='figCaptionEdited' class='unNumberedFig'>
+						<!-- content filled by javascript in loadDocPgNum() -->
+					</textarea>
+				</div>
+				
+			</div>
+			
+			<!-- annotation display -->
+			<div id="docAnnotationHolder" class='docPageAnnotationHolder'>
+				<p id='docAnnotation' class='docPageAnnotation'>
+					<!-- content filled by javascript in loadDocPgNum() -->
+				</p>
+			</div>
+			
+			<!-- annotation editor -->
+			<div id="docAnnotationEditor" rows='80' cols='400' style='display:none'>
+				<textarea id='docAnnotationEdited' class='docPageAnnotation'>
+					<!-- content filled by javascript in loadDocPgNum() -->
+				</textarea>
+			</div>	
+			
+		</div> <!-- end of docPage -->
+	</div> <!-- end of documentContentHolder -->
 
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<!-- SCRIPTS -->
+	<!-- ---------------------------------------------------------------------------------------------- -->
+	<SCRIPT src="scripts_initVars.js"></SCRIPT>
+	<SCRIPT src="scripts.js"></SCRIPT>
+
+	
 </BODY>
 </HTML>
