@@ -392,13 +392,6 @@
 			justify-content: left;
 		}
 		
-		/* Change flex direction for narrow screens */
-		@media (max-width: 800px) {
-		  .docPage {
-			flex-direction: column;
-		  }
-		}
-		
 		.docPageImage{
 			flex: 50%
 			min-height:600px;
@@ -412,6 +405,37 @@
 		
 		.docPageAnnotation{
 			padding: 6px;
+			border: 1px solid black;
+		}
+				
+		.docPageAnnotationEdited{
+			padding: 6px;
+			display:none;
+			margin-top:16px;
+			min-height:600px;
+			min-width:600px;
+		}
+		
+		/*..........................................*/
+		/* Change flex direction for narrow screens */
+		/*..........................................*/
+		@media (max-width: 1100px) {
+		  .docPage {
+			flex-direction: column;
+		  }
+		}
+		
+		@media (max-width: 500px) {
+		  .docPage {
+			flex-direction: column;
+		  }
+		  .docPageAnnotationEdited{
+			padding: 6px;
+			display:none;
+			margin-top:16px;
+			min-height:400px;
+			min-width:400px;
+		  }
 		}
 		
 		/* --------------------------------------------- */
@@ -488,6 +512,20 @@
 			font-size: 14px;
 			margin-left: 20px;
 			padding-bottom: 12px;
+		}
+		
+		.unNumberedFig{
+			font-weight: bold;
+			font-style: italic;
+			font-size: 14px;
+			margin-left: 20px;
+			padding-bottom: 12px;		
+		}
+		
+		.figCaptionEdited{
+			border: 1px solid black;
+			min-width:600px;
+			height: 25px;
 		}
 		
 		.myFigure figcaption:before {
