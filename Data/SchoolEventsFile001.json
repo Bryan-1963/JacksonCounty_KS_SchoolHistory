@@ -1,0 +1,20 @@
+[
+	{
+		"id":1,
+		"schools":[1],
+		"categories":["overview"],
+		"startDisplayDate":"",
+		"startSortDate":"",
+		"endDisplayDate":"",
+		"endSortDate":"",	
+		"description":"",
+		"descriptionReferences":[],
+		"mediaDisplays":[],
+		"tableTitle":"",
+		"tableColHeadings":[],
+		"tableData":[],
+		"tableDataReferences":[]
+	}
+
+
+]

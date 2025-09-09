@@ -1,0 +1,25 @@
+[
+	{
+		"id":1,
+		"type":"CountyDistrict",
+		"subType":"County Grade School",
+		"distNum":"001",
+		"distLabel":"1",
+		"governingBody":"Jackson County",
+		"names": [
+			{"name":"Brick","startDate":"","endDate""}
+		],
+		"dataFileId":"",
+		"organizationDate":"",
+		"disbandDate":"",
+		"locations":[
+			{"buildingId":"", "startDate":"", "endDate":"", "disposition":""}
+		],
+		"districtMorphs": [
+			{"date":"", "intoOrOutOf":"", "schoolId":"", "notes":""}
+		],
+		
+	}
+
+
+]

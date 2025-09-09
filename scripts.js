@@ -509,21 +509,39 @@
 		else {
 			figCapt.innerHTML = "";
 		}
+		
+		//NOTE: CANNOT EDIT AND SAVE ON gitHub, FUTURE PROJECT ON DIFFERENT SERVICE WITH SERVER-SIDE Database
+		/*
 		document.getElementById('figCaptionEdited').value = figCapt.innerHTML
+		*/
 		
 		//update the annotation HTML
 		let thisAnnotation = docPages[pgNum]['description'] ;  //NOTE: thisAnnotation is an array of paragraph texts
 		let totalAnnotation = "";
+		
+		//NOTE: CANNOT EDIT AND SAVE ON gitHub, FUTURE PROJECT ON DIFFERENT SERVICE WITH SERVER-SIDE Database
+		/*
 		let totalEditAnnotation = "";
+		*/
+		
 		for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
 			thisAnnotation[paraNum] = thisAnnotation[paraNum].toString().replace(/[\r\n]/g,"<br>");
 			totalAnnotation = totalAnnotation + thisAnnotation[paraNum] + "<br><br>";
+
+			//NOTE: CANNOT EDIT AND SAVE ON gitHub, FUTURE PROJECT ON DIFFERENT SERVICE WITH SERVER-SIDE Database
+			/*
 			totalEditAnnotation=totalEditAnnotation+thisAnnotation[paraNum] + '\r\n\r\n';
+			*/
+			
 		}
 		let docAnnot = document.getElementById("docAnnotation");
 		docAnnot.innerHTML=totalAnnotation;
+
+		//NOTE: CANNOT EDIT AND SAVE ON gitHub, FUTURE PROJECT ON DIFFERENT SERVICE WITH SERVER-SIDE Database
+		/*
 		let docAnnotEdited = document.getElementById("docAnnotationEdited");
 		docAnnotEdited.value = totalEditAnnotation;
+		*/
 		
 		//update the page number input box
 		let pgNumInput = document.getElementById("docPageNumInput");
