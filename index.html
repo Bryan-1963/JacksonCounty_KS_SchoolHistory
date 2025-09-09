@@ -190,8 +190,10 @@
 			
 			<!-- edit -->
 			<div class='searchHolder'>
-				<button style='font-size:12px;display:inline-block' onclick="toggleDocDisplayMode()"><i class='fa fa-edit'></i></button>
-				<button style='font-size:12px;display:inline-block' onclick=""><i class='fa fa-save'></i></button>
+				<div class="searchBtnHldr">
+					<button style='font-size:12px;display:inline-block' onclick="toggleDocDisplayMode()"><i class='fa fa-edit'></i></button>
+					<button style='font-size:12px;display:inline-block' onclick=""><i class='fa fa-save'></i></button>
+				</div>
 			</div>		
 			
 		</span>
@@ -235,7 +237,7 @@
 				
 				<!-- caption editor -->
 				<div id="figCaptionEditor" class='unNumberedFig' style='display:none'>
-					<textarea id='figCaptionEdited' rows='1' cols='100'class='unNumberedFig'>
+					<textarea id='figCaptionEdited' rows='2' cols='65'class='unNumberedFig'>
 						<!-- content filled by javascript in loadDocPgNum() -->
 					</textarea>
 				</div>
