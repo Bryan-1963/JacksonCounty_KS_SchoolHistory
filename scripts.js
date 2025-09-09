@@ -91,22 +91,156 @@
 	//==========================================================================================
 	// toggleDocDisplayMode
 	//==========================================================================================
+	//NOTE: CANNOT EDIT AND SAVE ON gitHub, FUTURE PROJECT ON DIFFERENT SERVICE WITH SERVER-SIDE Database
+	/*
 	function toggleDocDisplayMode(){
 		if (docDisplayMode==='display'){
+			toggleRslt = setDocDisplayMode('edit');
+		}
+		else {
+			setDocDisplayMode('display');
+		}
+	}
+	*/
+	
+	//==========================================================================================
+	// setDocDisplayMode
+	//==========================================================================================
+	//NOTE: CANNOT EDIT AND SAVE ON gitHub, FUTURE PROJECT ON DIFFERENT SERVICE WITH SERVER-SIDE Database
+	/*	
+	function setDocDisplayMode(mode){
+		// returns 'success' or 'cancel'
+		
+		let result = "";
+		
+		if (mode==='display') {
+
+			//if went from edit to display, see if there are any edits made
+			if (currDocPageEdited()){
+				//see if user wants to cancel and save the changes
+				if (confirm("Edits have been made. They will be lost if you proceed without saving first. Proceed?")){
+					docDisplayMode='display'
+					document.getElementById('docAnnotation').style.display = 'block';
+					document.getElementById('docAnnotationEdited').style.display = 'none';
+					document.getElementById('figCaption').style.display = 'block';
+					document.getElementById('figCaptionEditor').style.display = 'none';		
+				result='success';
+				}
+				else {
+					result='cancel';
+				}
+			}
+			else {
+				docDisplayMode='display'
+				document.getElementById('docAnnotation').style.display = 'block';
+				document.getElementById('docAnnotationEdited').style.display = 'none';
+				document.getElementById('figCaption').style.display = 'block';
+				document.getElementById('figCaptionEditor').style.display = 'none';		
+				result='success';
+			}
+	
+		}
+		else if (mode==='edit'){
 			docDisplayMode='edit'
 			document.getElementById('docAnnotation').style.display = 'none';
 			document.getElementById('docAnnotationEdited').style.display = 'block';
 			document.getElementById('figCaption').style.display = 'none';
 			document.getElementById('figCaptionEditor').style.display = 'block';
+			result='success';
+		}
+		return result;
+	}
+	*/
+	
+	//==========================================================================================
+	// currDocPageEdited
+	//==========================================================================================
+	//NOTE: CANNOT EDIT AND SAVE ON gitHub, FUTURE PROJECT ON DIFFERENT SERVICE WITH SERVER-SIDE Database
+	/*
+	function currDocPageEdited(){
+		
+		// docPages[docPgNum]!=current values then it is edited
+		let result=false;
+		
+		// get the caption and compare
+		let newCaption=document.getElementById('figCaptionEdited').value;
+		if (newCaption != docPages[docPgNum]['caption']){
+			console.log("return true, caption has been edited");
+			result=true;
+			return true;
+		}
+		
+		//get paragraphs from annotation and compare
+		let newAnnotation = getEditedDocAnnotationParas();
+		
+		console.log("newParas=" + JSON.stringify(newParas));
+		
+		let storedParas=docPages[pgNum]['description'];
+		
+		console.log("storedParas=" + JSON.stringify(storedParas));
+		
+		for (let paraNum=0; paraNum<=storedParas.length-1; paraNum++){
+			
+			if (storedParas[paraNum].toString().trim() != newParas[paraNum].toString().trim()){
+				result=true;
+				console.log("return true, annotation has been edited");
+				return true;
+				break;
+			}
+		} //end of of (let paraNum) loop
+		console.log("return false, no edits made");
+		return false;
+	}
+	*/
+	
+	//==========================================================================================
+	// getEditedDocAnnotationParas
+	//==========================================================================================
+	//NOTE: CANNOT EDIT AND SAVE ON gitHub, FUTURE PROJECT ON DIFFERENT SERVICE WITH SERVER-SIDE Database
+	/*
+	function getEditedDocAnnotationParas(){
+		let newAnnotation = document.getElementById('docAnnotationEdited').value;
+		let newPieces = newAnnotation.split("\n\r");
+		let newParas = [];
+		for (let i=0;i<=newPieces.length-1;i++){
+			if (newPieces[i] != ''){
+				newParas.push(newPieces[i]);
+			}
+		}
+		return newParas;
+	}
+	*/
+	
+	//==========================================================================================
+	// saveDocDisplayEdits
+	//==========================================================================================
+	//NOTE: CANNOT EDIT AND SAVE ON gitHub, FUTURE PROJECT ON DIFFERENT SERVICE WITH SERVER-SIDE Database
+	/*
+	async function saveDocDisplayEdits(){
+		if (!currDocPageEdited()){
+			alert("No changes have been made.");
 		}
 		else {
-			docDisplayMode='display'
-			document.getElementById('docAnnotation').style.display = 'block';
-			document.getElementById('docAnnotationEdited').style.display = 'none';
-			document.getElementById('figCaption').style.display = 'block';
-			document.getElementById('figCaptionEditor').style.display = 'none';		
+			if (confirm("Save your edits?")){
+				
+				//build newDocPage
+				let newCaption=document.getElementById('figCaptionEdited').value;
+				let newAnnotation = getEditedDocAnnotationParas();
+				let isObject = {photoFilePath: docPages[pgNum]['photoFilePath'], caption: newCaption, description: newAnnotation};
+
+				//store record of changes made in file "OnlineEditHistory.json"
+				let chgRecord = {type:'document edit', timeStamp: Date.now(), wasObject:docPages[pgNum], isObject: newDocPage}
+				
+				//update docPages
+				docPages[pgNum] = JSON.parse(JSON.stringify(isObject));
+				
+				//store updated docPages
+				TO-DO!!!
+				
+			}
 		}
 	}
+	*/
 	
 	//==========================================================================================
 	// clearSearchInput
@@ -160,6 +294,16 @@
 		//initialize variables
 		let foundSomeMatches = false;
 		docSearchPrecision = precisionRqd; //save to global variable
+		
+		// make sure we are in display mode 
+		//NOTE: CANNOT EDIT AND SAVE ON gitHub, FUTURE PROJECT ON DIFFERENT SERVICE WITH SERVER-SIDE Database
+		/*
+		let chgDisplayMode = setDocDisplayMode('display');
+		if (chgDisplayMode === 'cancel'){
+			//if user cancelled changing to display mode, do not perform search
+			return;
+		}
+		*/
 		
 		//clear out any existing search 
 		clearDocumentSearch();
@@ -289,6 +433,12 @@
 			if (docSearchResultCurrPg<0){
 				docSearchResultCurrPg=docSearchResultPages.length-1;
 			};
+			
+			// make sure we are in display mode
+			//NOTE: CANNOT EDIT AND SAVE ON gitHub, FUTURE PROJECT ON DIFFERENT SERVICE WITH SERVER-SIDE Database
+			/*
+			setDocDisplayMode('display');
+			*/
 			
 			//update results quantity curr page number and load the page
 			document.getElementById("docSearchResultsQty").innerHTML= (docSearchResultCurrPg +1) + '/' + docSearchResultPages.length;
@@ -446,7 +596,13 @@
 				docPgNum=docPgNum+1;
 			}		
 		}
-				
+
+		// make sure we are in display mode
+		//NOTE: CANNOT EDIT AND SAVE ON gitHub, FUTURE PROJECT ON DIFFERENT SERVICE WITH SERVER-SIDE Database
+		/*
+		setDocDisplayMode('display');
+		*/
+		
 		//update the page number input box to account for limiting
 		let pgNumInput = document.getElementById("docPageNumInput");
 		pgNumInput.setAttribute("value",Number(docPgNum)+1); //NOTE: pgNum is zero based, people like 1 based

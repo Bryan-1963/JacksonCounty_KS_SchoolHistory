@@ -519,12 +519,13 @@
 			font-style: italic;
 			font-size: 14px;
 			margin-left: 20px;
-			padding-bottom: 12px;		
+			padding-bottom: 12px;
+			border: 1px solid black;
 		}
 		
 		.figCaptionEdited{
 			border: 1px solid black;
-			min-width:600px;
+			min-width:95%;
 			height: 25px;
 		}
 		
