@@ -443,6 +443,7 @@
 		//keep anything between quotes as an individual item, otherwise split them up
 		let startQuote = false;
 		let word = "";
+		docSearchPatterns.length = 0;
 		for (let i=0;i<=docSearchTermInput.length-1;i++){
 			let char = docSearchTermInput[i];
 			let charIsQuote = /^[“"']/.test(char);
@@ -992,6 +993,7 @@
 		let docNavBar = document.getElementById("docNavBar");
 		let schoolNavBar = document.getElementById("schoolNavBar");
 		let docPgImg = document.getElementById("docPageImg");
+		let searchRsltsHolder = document.getElementById("searchResultsHolder");
 			
 		subMenuName = '';
 		subMenuCat = '';
@@ -1023,6 +1025,9 @@
 			docFigCapt.innerHTML="";
 			docPgImg.src='';
 			
+			//hide search results
+			searchRsltsHolder.style.display="none";
+			
 			//load the document pages
 			loadDocPages("Test/Test_Files/AnnotatedPhotos_LloydCopeland.json");
 			break;
@@ -1039,6 +1044,10 @@
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "none"
+						
+			//hide search results
+			searchRsltsHolder.style.display="none";
+			
 			docAnnot.innerHTML="";
 			docFigCapt.innerHTML="";
 			docPgImg.src='';
@@ -1060,6 +1069,9 @@
 			docPgImg.src='';
 			contentTitleBar.className = "titleBar3";
 			iFrameHldr.style.display = "block";
+						
+			//hide search results
+			searchRsltsHolder.style.display="none";
 			
 			if (subCat==='Overview'){
 				contentSource="Overview/CountyOverview.html";
@@ -1114,6 +1126,9 @@
 			docAnnot.innerHTML="";
 			docFigCapt.innerHTML="";
 			docPgImg.src='';
+						
+			//hide search results
+			searchRsltsHolder.style.display="none";
 			
 			if (subCat==='1878 Jackson Co.'){
 				contentSource="Maps/1878_JacksonCo.html";
@@ -1219,6 +1234,9 @@
 			docAnnot.innerHTML="";
 			docFigCapt.innerHTML="";
 			docPgImg.src='';
+						
+			//hide search results
+			searchRsltsHolder.style.display="none";
 			
 			if (subCat==='Frontier'){
 				contentSource="Pre-Org/Frontier.html";
@@ -1247,6 +1265,9 @@
 				docAnnot.innerHTML="";
 				docFigCapt.innerHTML="";
 				docPgImg.src='';
+								
+				//hide search results
+				searchRsltsHolder.style.display="none";
 
 				// LOAD SUBMENU click parameters
 				subMenuName = catFolderName;
@@ -1269,6 +1290,9 @@
 			docAnnot.innerHTML="";
 			docFigCapt.innerHTML="";
 			docPgImg.src='';
+						
+			//hide search results
+			searchRsltsHolder.style.display="none";
 			
 			// LOAD SUBMENU click parameters
 			subMenuName = "PottawatomieMission";
@@ -1320,6 +1344,9 @@
 			docAnnot.innerHTML="";
 			docFigCapt.innerHTML="";
 			docPgImg.src='';
+						
+			//hide search results
+			searchRsltsHolder.style.display="none";
 									
 			// LOAD SUBMENU click parameters
 			subMenuName = "UnifiedSchoolDistricts";
@@ -1344,6 +1371,9 @@
 			docAnnot.innerHTML="";
 			docFigCapt.innerHTML="";
 			docPgImg.src='';
+						
+			//hide search results
+			searchRsltsHolder.style.display="none";
 
 			// LOAD SUBMENU click parameters
 			subMenuName = "Colleges";
@@ -1370,6 +1400,9 @@
 			docFigCapt.innerHTML="";
 			docPgImg.src='';
 			contentSource="References/References.html";
+						
+			//hide search results
+			searchRsltsHolder.style.display="none";
 			break;
 			
 		  //---------------------------	
@@ -1388,6 +1421,9 @@
 			docFigCapt.innerHTML="";
 			docPgImg.src='';
 			contentSource="SourceMatls/SourceMatls.html";
+						
+			//hide search results
+			searchRsltsHolder.style.display="none";
 			break;
 
 		  //---------------------------	
@@ -1403,6 +1439,9 @@
 			iFrameHldr.style.display = "block";
 			contentSource="Contact/Contact.html";
 			documentContentHolder.display = "none";
+						
+			//hide search results
+			searchRsltsHolder.style.display="none";
 			docAnnot.innerHTML="";
 			docFigCapt.innerHTML="";
 			docPgImg.src='';
@@ -1451,7 +1490,11 @@
 		//		sortByChoice='weight' returns arryay sorted by matching weight descending
 		
 		let foundMatches= [];
-
+		console.log("==================================================");
+		console.log("textIn=" + textIn);
+		console.log("docSearchPatterns=" + JSON.stringify(docSearchPatterns));
+		console.log("docSearchPrecision=" + docSearchPrecision);
+		console.log("==================================================");
 		for (let termNum=0; termNum<=docSearchPatterns.length-1; termNum++){
 			let thisTerm = docSearchPatterns[termNum];
 			if (docSearchPrecision>=1){
