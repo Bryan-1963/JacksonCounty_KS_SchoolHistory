@@ -1566,6 +1566,7 @@
 				filteredMatches.push(foundMatches[i]);
 			}
 		} //end of for i
+		console.log("filteredMatches="+JSON.stringify(filteredMatches));
 		
 		
 		//sort as requested
@@ -1575,7 +1576,7 @@
 		else if (sortByChoice==='weight'){
 			filteredMatches.sort((a, b) => b['wt'] - a['wt']);
 		}
-		
+		console.log("sorted filteredMatches="+JSON.stringify(filteredMatches));		
 		return filteredMatches;
 	}
 
