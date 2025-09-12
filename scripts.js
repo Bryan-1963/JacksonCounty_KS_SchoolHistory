@@ -323,6 +323,7 @@
 		siteSearchResults.length=0;
 		siteSearchPrecision = precisionRqd; //save to global variable
 		let siteSearchTermInput = document.getElementById("siteSearchInput").value;
+		document.getElementById("siteSearchResultsList").innerHTML ="";
 		
 		if (siteSearchTermInput != null && siteSearchTermInput!=""){
 			
@@ -710,11 +711,15 @@
 			
 			for (let term=0; term<=docSearchPatterns.length-1; term++){
 				console.log("term#=" + term + ", docSearchPatterns[term]="+ docSearchPatterns[term]);
-				console.log("----------------------------------------------------------");
+				
 				//..................................
 				//highlight instances in caption
 				//..................................
 				let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML),"length");
+				
+				console.log("matchSubStrings =" + JSON.stringify(matchSubStrings));
+				console.log("----------------------------------------------------------");
+				
 				for (let i=0;i<=matchSubStrings.length-1;i++){
 					
 					let re = new RegExp(matchSubStrings[i]['text'],"gi");

@@ -419,7 +419,7 @@
 		.docPageAnnotation{
 			padding: 6px;
 			min-height:600px;
-			min-width: 75%;
+			min-width: 50%;
 			border: 1px solid black;
 		}
 				
