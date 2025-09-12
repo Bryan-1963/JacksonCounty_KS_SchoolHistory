@@ -394,7 +394,7 @@
 				subMenuCat = '';
 				subTitle.innerHTML = "Site Search Results";
 				iFrameHldr.style.display = "none";
-				documentContentHolder.display = "none";
+				documentContentHolder.style.display = "none";
 				subMenu.style.display = "block";
 				searchRsltsHolder.style.display = "block";
 				docNavBar.style.display = "none";
@@ -711,31 +711,32 @@
 		if (docPagesAreSearched){	
 			
 			for (let term=0; term<=docSearchPatterns.length-1; term++){
-				console.log("term#=" + term + ", docSearchPatterns[term]="+ docSearchPatterns[term]);
 				
-				//..................................
-				//highlight instances in caption
-				//..................................
-				let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML),"length");
-				
-				console.log("matchSubStrings =" + JSON.stringify(matchSubStrings));
-				console.log("----------------------------------------------------------");
-				
-				for (let i=0;i<=matchSubStrings.length-1;i++){
-					
-					let re = new RegExp(matchSubStrings[i]['text'],"gi");
-					figCapt.innerHTML = figCapt.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
-				}
-						
 				//..................................						
 				//highlight instances in annotation
 				//..................................
 				matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(docAnnot.innerHTML),"length");	
+				
+				console.log("term#=" + term + ", docSearchPatterns[term]="+ docSearchPatterns[term]);				
+				console.log("matchSubStrings =" + JSON.stringify(matchSubStrings));
+				console.log("----------------------------------------------------------");
+				
 				for (let i=0;i<=matchSubStrings.length-1;i++){
 					console.log(i, JSON.stringify(matchSubStrings[i]));
 					let re = new RegExp(matchSubStrings[i]['text'],"gi");
 					console.log("    re=" + re + "matchSubStrings[i]['text']=" + matchSubStrings[i]['text'])
 					docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
+				}
+
+				
+				//..................................
+				//highlight instances in caption
+				//..................................
+				let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML),"length");
+				for (let i=0;i<=matchSubStrings.length-1;i++){
+					
+					let re = new RegExp(matchSubStrings[i]['text'],"gi");
+					figCapt.innerHTML = figCapt.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
 				}
 				
 			}
@@ -1040,7 +1041,7 @@
 			contentSource="Welcome/Welcome.html"
 			subTitle.innerHTML = "Welcome";
 			iFrameHldr.style.display = "block";
-			documentContentHolder.display = "none";
+			documentContentHolder.style.display = "none";
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "none"
@@ -1060,7 +1061,7 @@
 			subMenuName = '';
 			subMenuCat = '';		  
 			subTitle.innerHTML = "Overview";
-			documentContentHolder.display = "none";
+			documentContentHolder.style.display = "none";
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "none"
@@ -1122,7 +1123,7 @@
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "none"
 			iFrameHldr.style.display = "block";
-			documentContentHolder.display = "none";
+			documentContentHolder.style.display = "none";
 			docAnnot.innerHTML="";
 			docFigCapt.innerHTML="";
 			docPgImg.src='';
@@ -1227,7 +1228,7 @@
 			subTitle.innerHTML = "Territorial Kansas";
 			contentTitleBar.className = "titleBar3Empty";
 			iFrameHldr.style.display = "block";
-			documentContentHolder.display = "none";
+			documentContentHolder.style.display = "none";
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "none"
@@ -1258,7 +1259,7 @@
 				var subTitleHTML = category + " " + title;
 				subTitle.innerHTML = subTitleHTML;
 				iFrameHldr.style.display = "block";
-				documentContentHolder.display = "none";
+				documentContentHolder.style.display = "none";
 				subMenu.style.display = "block";
 				docNavBar.style.display = "none";
 				schoolNavBar.style.display = "block"
@@ -1283,7 +1284,7 @@
 		  //---------------------------		
 			subTitle.innerHTML = "Pottawatomie Mission";
 			iFrameHldr.style.display = "block";
-			documentContentHolder.display = "none";
+			documentContentHolder.style.display = "none";
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "block"
@@ -1310,7 +1311,7 @@
 			var subTitleHTML = "County High Schools - " + title;
 			subTitle.innerHTML = subTitleHTML;
 			iFrameHldr.style.display = "block";
-			documentContentHolder.display = "none";
+			documentContentHolder.style.display = "none";
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "block"
@@ -1337,7 +1338,7 @@
 			var subTitleHTML = title;
 			subTitle.innerHTML = subTitleHTML;
 			iFrameHldr.style.display = "block";
-			documentContentHolder.display = "none";
+			documentContentHolder.style.display = "none";
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "block"
@@ -1364,7 +1365,7 @@
 			var subTitleHTML = title;	
 			subTitle.innerHTML = subTitleHTML;
 			iFrameHldr.style.display = "block";
-			documentContentHolder.display = "none";
+			documentContentHolder.style.display = "none";
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "block"
@@ -1392,7 +1393,7 @@
 			subTitle.innerHTML = "References";	
 			contentTitleBar.className = "titleBar3Empty";
 			iFrameHldr.style.display = "block";
-			documentContentHolder.display = "none";
+			documentContentHolder.style.display = "none";
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "none"
@@ -1413,7 +1414,7 @@
 			subTitle.innerHTML = "Source Materials";	
 			contentTitleBar.className = "titleBar3Empty";
 			iFrameHldr.style.display = "block";
-			documentContentHolder.display = "none";
+			documentContentHolder.style.display = "none";
 			subMenu.style.display = "block";
 			docNavBar.style.display = "none";
 			schoolNavBar.style.display = "none"
@@ -1438,7 +1439,7 @@
 			schoolNavBar.style.display = "none"
 			iFrameHldr.style.display = "block";
 			contentSource="Contact/Contact.html";
-			documentContentHolder.display = "none";
+			documentContentHolder.style.display = "none";
 						
 			//hide search results
 			searchRsltsHolder.style.display="none";
