@@ -709,12 +709,14 @@
 		if (docPagesAreSearched){	
 			
 			for (let term=0; term<=docSearchPatterns.length-1; term++){
-
+				console.log("term#=" + term + ", docSearchPatterns[term]="+ docSearchPatterns[term]);
+				console.log("----------------------------------------------------------");
 				//..................................
 				//highlight instances in caption
 				//..................................
 				let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML),"length");
 				for (let i=0;i<=matchSubStrings.length-1;i++){
+					
 					let re = new RegExp(matchSubStrings[i]['text'],"gi");
 					figCapt.innerHTML = figCapt.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
 				}
@@ -724,7 +726,9 @@
 				//..................................
 				matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(docAnnot.innerHTML),"length");	
 				for (let i=0;i<=matchSubStrings.length-1;i++){
+					console.log(i, JSON.stringify(matchSubStrings[i]));
 					let re = new RegExp(matchSubStrings[i]['text'],"gi");
+					console.log("    re=" + re + "matchSubStrings[i]['text']=" + matchSubStrings[i]['text'])
 					docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
 				}
 				
@@ -1228,7 +1232,7 @@
 			//---------------------------	
 				// LOAD SUB TITLE
 				let catFolderName = category.replace(/\s/g,"");
-				var subTitleHTML = catFolderName + title;
+				var subTitleHTML = category + " " + title;
 				subTitle.innerHTML = subTitleHTML;
 				iFrameHldr.style.display = "block";
 				documentContentHolder.display = "none";

@@ -418,6 +418,8 @@
 		
 		.docPageAnnotation{
 			padding: 6px;
+			min-height:600px;
+			min-width: 75%;
 			border: 1px solid black;
 		}
 				
@@ -468,6 +470,11 @@
 			background-color:gray;
 			color: black;
 			font-weight: bold;
+		}
+		
+		.searchResultsTble {
+			width: 75%;
+			font-size: 12px;
 		}
 		
 		/* --------------------------------------------- */
