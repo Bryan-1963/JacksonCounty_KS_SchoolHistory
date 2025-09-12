@@ -18,25 +18,31 @@
 		/* --------------------------------------------- */
 		.titleBar{
 		  float: none;
-		  font-size: 20px;
-		  font-family: Sans-serif;
-		  color: white;
 		  text-align: left;
 		  padding: 14px 16px;
 		  margin: 0;
 		  text-decoration: none;
 		  background-color: blue;
 		  display: inline-block;
-		  width: 100vw;
-		  overflow:hidden;
+		  width: 99vw;
+		  overflow:visible;
 		  position: fixed;
 		  top: 0px;
-		  z-index:690;
+		  z-index:697;
+		}
+		
+		.titleBarTitle{
+		  font-size: 20px;
+		  font-family: Sans-serif;
+		  color: white;
+		  text-align: left;
+		  display:inline-block;
+		  float:left;
 		}
 		
 		.titleBar2{
 		  float: none;
-		  margin: 0px 0px 0px 16px;
+		  margin-left: 1vw;
 		  font-size: 18px;
 		  font-family: Sans-serif;
 		  color: white;
@@ -45,7 +51,7 @@
 		  text-decoration: none;
 		  background-color: green;
 		  display: inline-block;
-		  width: 100vw;
+		  width: 98vw;
 		  overflow:hidden;
 		  position: fixed;
 		  z-index:690;
@@ -53,7 +59,7 @@
 		
 		.titleBar3{
 		  float: none;
-		  margin: 0px 0px 0px 24px;
+		  margin-left:2vw;
 		  font-size: 16px;
 		  font-family: Sans-serif;
 		  color: white;
@@ -62,7 +68,7 @@
 		  text-decoration: none;
 		  background-color: gray;
 		  display: inline-block;
-		  width: 100vw;
+		  width: 97vw;
 		  position: fixed;
 		  overflow:hidden;
 		  z-index:690;
@@ -70,7 +76,7 @@
 		
 		.titleBar3Empty{
 		  float: none;
-		  margin: 0px 0px 0px 24px;
+		  margin-left:2vw;
 		  font-size: 1px;
 		  font-family: Sans-serif;
 		  color: white;
@@ -79,7 +85,7 @@
 		  text-decoration: none;
 		  background-color: gray;
 		  display: inline-block;
-		  width: 100vw;
+		  width: 97vw;
 		  position: fixed;
 		  overflow:hidden;
 		  z-index:690;
@@ -92,7 +98,7 @@
 		  overflow: visible;
 		  background-color:rgb(153, 204, 255);
 		  position: fixed;
-		  width: 100vw;
+		  width: 99vw;
 		  z-index:695;
 		}
 		
@@ -100,8 +106,8 @@
 		  overflow: visible;
 		  background-color: rgb(153, 255, 204);
 		  position: fixed;
-		  margin: 0px 0px 0px 16px;
-		  width: 100vw;
+		  margin-left:1vw;
+		  width: 98vw;
 		  z-index:692;
 		}
 		
@@ -209,7 +215,7 @@
 		/* --------------------------------------------- */		
 		.searchBtnHldr {
 			display: inline-block;
-			z-index:695;
+			z-index:699;
 			position: relative;
 		}
 
@@ -235,6 +241,11 @@
 		  column-gap: none;
 		  column-rule-style: solid;
 		  column-rule-width: 1px;
+		  font-color: black;
+		}
+		
+		.searchBtn-content a{
+		  font-color: black;
 		}
 		
 		.searchBtn-content a:hover {
@@ -253,8 +264,10 @@
 			margin-bottom: 4px;
 			margin-left: 4px;
 			font-size: 12px;
+			font-color: black;
 			padding-left: 2px;
 			padding-right: 2px;
+			overflow: visible;
 		}
 
 		.input-wrapper {
@@ -345,8 +358,8 @@
 		  display: block;
 		  min-height: 80vh;
 		  min-width: 95vw;
-		  max-width: 100vw;
-		  margin: 0px 0px 0px 24px;
+		  max-width: 97vw;
+		  margin-left:2vw;
 		  padding: 0px 14px 0px 14px;
 		  overflow: hidden;
 		  white-space: normal;

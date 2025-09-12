@@ -8,10 +8,23 @@
 	var subTitleHeight=46;
 	var subMenuHeight=51;	
 	var contentTitleHeight=46;
+	var webRootLocation = "https://bryan-1963.github.io/JacksonCounty_KS_SchoolHistory/";
+	var subMenuName = '';
+	var subMenuCat = '';
+
+	// pageObject arrays
 	var maps = []; //array of PageObjects for maps
 	var countySchoolDistricts = []; //array of PageObjects for elementary schools
 	var countyHighSchools = []; //array of PageObjects for high schools
 	var usdSchools = []; //array of PageObjects for USDs
+	
+	//siteSearch variables
+	var siteSearchInput = document.getElementById("siteSearchInput");
+	var siteSearchPrecision = 1.00;
+	var searchFiles = []; //array of PageObjects for searching the site
+	var siteSearchResults = []; //subset of searchFiles that have matches
+	
+	//variables for displaying documents
 	var docPages = []; //array of AnnotatedPhotoObject, loaded by loadDocPages
 	var docSearchPrecision = 1.00;
 	var docPagesAreSearched = false;
@@ -21,11 +34,10 @@
 	var docSearchTerm = "";
 	var docDisplayMode='display'; //'display'=show from file, 'edit'=edit enabled
 	var docPgNum = 0;
-	var webRootLocation = "https://bryan-1963.github.io/JacksonCounty_KS_SchoolHistory/";
-	var subMenuName = '';
-	var subMenuCat = '';
 	var docPageNumInput = document.getElementById("docPageNumInput");
 	var docPageSearchInput = document.getElementById("docPageSearchInput");
+
+	
 		
 	//=======================================================================================================================================================
 	// EVENT LISTENERS
@@ -79,7 +91,20 @@
 		{  
 			let searchTerm = docPageSearchInput.value;
 			if (searchTerm != null && searchTerm!=""){
-				searchDocument(1);
+				searchDocument(1.00);
+			}
+		}
+	});	
+	
+	//-----------------------------------------
+	// Site search input listener 
+	//-----------------------------------------
+	siteSearchInput.addEventListener("keydown", function (e) {
+		if (e.code === "Enter" || e.code === "NumpadEnter") //checks whether the pressed key is "Enter"
+		{  
+			let searchTerm = siteSearchInput.value;
+			if (searchTerm != null && searchTerm!=""){
+				searchSite(1.00);
 			}
 		}
 	});	
@@ -257,13 +282,15 @@
 		thisSearchBox.focus();
 		thisSearchBox.dispatchEvent(new Event('input'));
 		
-		//reset the search results counter
-		document.getElementById("docSearchResultsQty").innerHTML='0/0';
-		docSearchResultCurrPg=0;
 		
-		//clear out the search results
-		clearDocumentSearch();
-		
+		if (inputBoxName==="docPageSearchInput"){
+			//reset the search results counter
+			document.getElementById("docSearchResultsQty").innerHTML='0/0';
+			docSearchResultCurrPg=0;
+			
+			//clear out the search results
+			clearDocumentSearch();
+		}
 	};
 	
 	//==========================================================================================
@@ -285,6 +312,174 @@
 
 	};
 
+	//==========================================================================================
+	// searchSite
+	//==========================================================================================
+	async function searchSite(precisionRqd=1.00){  
+		//0.82 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
+	
+		//initialize variables
+		let foundSomeMatches = false;
+		siteSearchResults.length=0;
+		siteSearchPrecision = precisionRqd; //save to global variable
+		let siteSearchTermInput = document.getElementById("siteSearchInput").value;
+		
+		if (siteSearchTermInput != null && siteSearchTermInput!=""){
+			
+			getDocSearchPatterns(siteSearchTermInput);  //this loads the array docSearchPatterns
+		
+		
+			// TEST only
+			let xxx = "<HTML><HEAD><TITLE>Jackson County, KS Schools History | References</TITLE><link rel=\"stylesheet\" href=\"..\Styles.css\"></HEAD><BODY>some stuff about Cedar, cdar, sidar, cedr Township and Jackson county.</BODY></HTML>";
+			console.log("xxx=" + xxx);
+			let bodyLoc = xxx.indexOf("<BODY");
+			let clnStr = xxx.substring(bodyLoc);
+			console.log("1) clnStr=" + clnStr);
+			clnStr = removeTagsFromString(clnStr);
+			console.log("2) clnStr=" + clnStr);
+			if (TextHasSearchTerm(clnStr, precisionRqd)){
+					foundSomeMatches=true;
+					//get matching substrings and scores
+					let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(clnStr),"weight");
+					console.log("matchSubStrings=" + JSON.stringify(matchSubStrings));
+					siteSearchResults.push({title:"testOnly", matches: matchSubStrings});
+					console.log("foundSomeMatches="+foundSomeMatches);
+			}
+			console.log("siteSearchResults=" + JSON.stringify(siteSearchResults));
+			//END TEST ONLY 
+			
+			
+			
+			//search through all the files with data for a match 
+			/*
+			
+			for (let i=0;i<searchFiles.length-1;i++){
+				//loop throught the elements of docSearchPatterns
+				for (let term=0;term<=docSearchPatterns.length-1;term++){
+					let myObject = await fetch(webRootLocation+searchFiles[i]['path']);
+					let myText = await myObject.text();
+					
+					//remove tags from String
+					let clnStr = removeTagsFromString(myText);
+					clnStr = cleanStringOfPunctuation(clnStr);
+					
+					//search the string for a match. if match, add it to siteSearchResults
+					if (TextHasSearchTerm(clnStr, precisionRqd)){
+						foundSomeMatches=true;
+						siteSearchResults.push(searchFiles[i]);
+					}
+				}
+			}
+			*/
+		
+			if (foundSomeMatches){
+				
+				//show the search results page
+				var contentSource = '';
+				var subTitle = document.getElementById("SubTitle");
+				var subMenu = document.getElementById("SubMenu");
+				var contentHolder = document.getElementById("ContentHolder");
+				var contentTitleBar = document.getElementById("ContentTitle");
+				let iFrameHldr = document.getElementById("iFrameHolder");
+				let documentContentHolder = document.getElementById("documentContentHolder");
+				let docAnnot = document.getElementById("docAnnotation");
+				let docFigCapt = document.getElementById("figCaption");
+				let docNavBar = document.getElementById("docNavBar");
+				let schoolNavBar = document.getElementById("schoolNavBar");
+				let docPgImg = document.getElementById("docPageImg");
+				let searchRsltsHolder = document.getElementById("searchResultsHolder");
+				
+				subMenuName = '';
+				subMenuCat = '';
+				subTitle.innerHTML = "Site Search Results";
+				iFrameHldr.style.display = "none";
+				documentContentHolder.display = "none";
+				subMenu.style.display = "block";
+				searchRsltsHolder.style.display = "block";
+				docNavBar.style.display = "none";
+				schoolNavBar.style.display = "none"
+				docAnnot.innerHTML="";
+				docFigCapt.innerHTML="";
+				docPgImg.src='';
+				contentTitleBar.className = "titleBar3Empty";
+
+				//fill in the contents of the results page
+				let rsltStr = "<colgroup><col style='width:25%'><col style='width:75%'></colgroup>";
+				rsltStr = rsltStr + "<tr><th>Page</th><th>Matches</th></tr>";
+				
+				for (let i=0;i<=siteSearchResults.length-1;i++){
+					//TO-DO: add code to take you to the page!!!!
+					console.log("siteSearchResults=" + JSON.stringify(siteSearchResults));
+					console.log(siteSearchResults[i]['matches'].length);
+					let matchingTexts = "";
+					for (let j=0;j<=siteSearchResults[i]['matches'].length-1;j++){
+						console.log(j, JSON.stringify(siteSearchResults[i]['matches'][j]));
+						matchingTexts = matchingTexts + siteSearchResults[i]['matches'][j]['text'] + ", ";
+					}
+					rsltStr = rsltStr + "<tr><td>" + siteSearchResults[i]['title'] + "</td><td>" + matchingTexts + "</td></tr>";
+				}
+				console.log("rsltStr="+rsltStr);
+				document.getElementById("siteSearchResultsList").innerHTML = rsltStr;
+				
+				// ADJUST LOCATIONS OF BARS
+				sizeBars()
+			}
+			else {
+				alert("No matches found.");
+			}
+			
+		} //end of if (docSearchTermInput != null && docSearchTermInput!="")
+		
+	}
+	
+	//==========================================================================================
+	// getDocSearchPatterns
+	//==========================================================================================	
+	function getDocSearchPatterns(docSearchTermInput){
+		//.................................................
+		// load docSearchPatterns
+		//.................................................
+		//keep anything between quotes as an individual item, otherwise split them up
+		let startQuote = false;
+		let word = "";
+		for (let i=0;i<=docSearchTermInput.length-1;i++){
+			let char = docSearchTermInput[i];
+			let charIsQuote = /^[“"']/.test(char);
+			
+			if (charIsQuote && !startQuote) {
+				startQuote=true;
+			}
+			else if (charIsQuote && startQuote) {
+				//found end of words in quotes
+				startQuote=false;
+				if (word !=""){
+					docSearchPatterns.push(word);
+				}
+				word = "";
+			}
+			else if (char === " " && !startQuote) {
+				//found end of word
+				if (word !=""){
+					docSearchPatterns.push(word);
+				}
+				word = "";
+			}
+			else if (i===docSearchTermInput.length-1){
+				//reached end of input String
+				if (!charIsQuote){
+					word = word + char;
+				}
+				if (word !=""){
+					docSearchPatterns.push(word);
+				}
+			}
+			else if (!charIsQuote){
+				word = word + char;
+			}
+		}
+		
+	}
+	
 	//==========================================================================================
 	// searchDocument
 	//==========================================================================================
@@ -312,49 +507,8 @@
 		
 		if (docSearchTermInput != null && docSearchTermInput!=""){
 			
-			//.................................................
-			// load docSearchPatterns
-			//.................................................
-			//keep anything between quotes as an individual item, otherwise split them up
-			let startQuote = false;
-			let word = "";
-			for (let i=0;i<=docSearchTermInput.length-1;i++){
-				let char = docSearchTermInput[i];
-				let charIsQuote = /^[“"']/.test(char);
-				
-				if (charIsQuote && !startQuote) {
-					startQuote=true;
-				}
-				else if (charIsQuote && startQuote) {
-					//found end of words in quotes
-					startQuote=false;
-					if (word !=""){
-						docSearchPatterns.push(word);
-					}
-					word = "";
-				}
-				else if (char === " " && !startQuote) {
-					//found end of word
-					if (word !=""){
-						docSearchPatterns.push(word);
-					}
-					word = "";
-				}
-				else if (i===docSearchTermInput.length-1){
-					//reached end of input String
-					if (!charIsQuote){
-						word = word + char;
-					}
-					if (word !=""){
-						docSearchPatterns.push(word);
-					}
-				}
-				else if (!charIsQuote){
-					word = word + char;
-				}
-			}
+			getDocSearchPatterns(docSearchTermInput)
 
-			
 			//.................................................
 			// search document text fields for matches
 			//.................................................				
@@ -369,7 +523,7 @@
 				for (let paraNum=0; paraNum<=thisAnnotation.length-1; paraNum++){
 					
 					let thisTxt = thisAnnotation[paraNum].toString();
-					thisPageHasIt = TextHasSearchTerm(thisTxt);
+					thisPageHasIt = TextHasSearchTerm(thisTxt,precisionRqd);
 					
 					if (thisPageHasIt){
 						break; //out of (let paraNum) loop
@@ -380,7 +534,7 @@
 				//check the caption
 				if (!thisPageHasIt){
 					thisTxt = docPages[pgNum]['caption'].toString();
-					thisPageHasIt = TextHasSearchTerm(thisTxt);
+					thisPageHasIt = TextHasSearchTerm(thisTxt,precisionRqd);
 				}
 
 				
@@ -559,19 +713,19 @@
 				//..................................
 				//highlight instances in caption
 				//..................................
-				let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML));
+				let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML),"length");
 				for (let i=0;i<=matchSubStrings.length-1;i++){
-					let re = new RegExp(matchSubStrings[i],"gi");
-					figCapt.innerHTML = figCapt.innerHTML.replace(re,'<mark>' + matchSubStrings[i] + '</mark>');
+					let re = new RegExp(matchSubStrings[i]['text'],"gi");
+					figCapt.innerHTML = figCapt.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
 				}
 						
 				//..................................						
 				//highlight instances in annotation
 				//..................................
-				matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(docAnnot.innerHTML));	
+				matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(docAnnot.innerHTML),"length");	
 				for (let i=0;i<=matchSubStrings.length-1;i++){
-					let re = new RegExp(matchSubStrings[i],"gi");
-					docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>' + matchSubStrings[i] + '</mark>');
+					let re = new RegExp(matchSubStrings[i]['text'],"gi");
+					docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
 				}
 				
 			}
@@ -585,6 +739,33 @@
 		var punctuationless = inString.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
 		var finalString = punctuationless.replace(/\s{2,}/g," ");
 		return finalString;
+	}
+
+	//==========================================================================================
+	// removeTagsFromString
+	//==========================================================================================		
+	function removeTagsFromString(myText){
+			let clnStr = "";
+			let inTag = false;
+			console.log("rcd myText=" + myText);
+			
+			
+			
+			for (let j=0;j<=myText.length-1;j++){
+				
+				if (myText[j]==="<"){
+					inTag=true;
+				}
+				else if (myText[j]===">"){
+					inTag=false;
+				}
+				else if (!inTag){
+					clnStr = clnStr + myText[j];
+				}
+				//console.log(j, myText[j],inTag, clnStr);
+			}
+
+			return clnStr;
 	}
 	
 	//==========================================================================================
@@ -1251,22 +1432,32 @@
 	//==========================================================================================
 	// FindMatchSubStrings
 	//==========================================================================================	
-	function FindMatchSubStrings(textIn){
+	function FindMatchSubStrings(textIn, sortByChoice){
 		//==========================================================================================
 		//find unique substrings within textIn that match items in array docSearchPatterns 
 		//		with precision docSearchPrecision
 		//==========================================================================================
+		// INPUTS
+		//		sortByChoice='length' returns array sorted by length of 'text' descending
+		//		sortByChoice='weight' returns arryay sorted by matching weight descending
 		
 		let foundMatches= [];
 
 		for (let termNum=0; termNum<=docSearchPatterns.length-1; termNum++){
 			let thisTerm = docSearchPatterns[termNum];
-			
 			if (docSearchPrecision>=1){
-				let re=new RegExp(thisTerm,"gi");
+				let re=new RegExp(thisTerm,"gi");  //do this to get case insensitive search
 				let result = textIn.match(re);  //returns array of all matching subtexts
-				if (result !=null){
-					foundMatches = foundMatches.concat(result);
+				if (result!=null){
+					let foundPos = 0;
+					if (textIn.indexOf(thisTerm)>0){
+						foundPos =textIn.indexOf(thisTerm);
+					}
+					else if (textIn.indexOf(thisTerm.toLowerCase())>0){
+						foundPos =textIn.indexOf(thisTerm.toLowerCase());
+					}
+					rsltObj = {text: thisTerm, score: 1, position:foundPos};
+					foundMatches.push(rsltObj);
 				}
 			}
 			else {	
@@ -1281,7 +1472,9 @@
 						let wt = JaroWinklerDistance(thisTerm,subStr);
 						
 						if (wt>=docSearchPrecision){
-							foundMatches.push(subStr.trim());
+							rsltObj = {text: subStr.trim(), score: wt, position:startPos};
+							foundMatches.push(rsltObj);
+							console.log("rsltObj="+JSON.stringify(rsltObj));
 						}
 					} //end of (let startPos) loop
 
@@ -1291,28 +1484,58 @@
 			} //end of else docSearchPrecision<1
 		} //end of (let termNum)
 		
-		//reduce foundMatches to unique values only, then sort longest to shortest values
-		foundMatches = foundMatches.filter(onlyUniqueArrayVals);
-		foundMatches.sort((a, b) => b.length - a.length);
-		return foundMatches;
+		console.log("foundMatches="+JSON.stringify(foundMatches));
+		//sort by length descending so can eliminate matching substrings for unique values (e.g. keep "Cedar" and don't keep "Ceda" if they have the same startPos)
+		foundMatches.sort((a, b) => b['text'].length - a['text'].length);  
+		console.log("sorted foundMatches="+JSON.stringify(foundMatches));
+		
+		//reduce foundMatches to unique values only
+		let filteredMatches = [];
+		filteredMatches.push(foundMatches[0]);
+		for (let i=1;i<=foundMatches.length-1;i++){
+			let foundMatch = false;
+			
+			for (let j=0;j<=filteredMatches.length-1;j++){
+
+				if (foundMatches[i]['text']===filteredMatches[j]['text']){
+					foundMatch = true;
+					if (foundMatches[i]['wt']>filteredMatches[j]['wt']){
+						filteredMatches[j]['wt']=foundMatches[i]['wt'];
+					}
+				}
+				//keep "Cedar" and don't keep "Ceda" if they have the same starting position
+				else if (filteredMatches[j]['text'].indexOf(foundMatches[i]['text'])>=0 && filteredMatches[j]['position']===foundMatches[i]['position']){
+					foundMatch=true;
+					
+				}
+			} //end of for j
+			if (!foundMatch){
+				filteredMatches.push(foundMatches[i]);
+			}
+		} //end of for i
+		
+		
+		//sort as requested
+		if (sortByChoice==='length'){
+			filteredMatches.sort((a, b) => b['text'].length - a['text'].length);
+		}
+		else if (sortByChoice==='weight'){
+			filteredMatches.sort((a, b) => b['wt'] - a['wt']);
+		}
+		
+		return filteredMatches;
 	}
-	
-	//==========================================================================================
-	// onlyUniqueArrayVals
-	//==========================================================================================	
-	function onlyUniqueArrayVals(value, index, array) {
-	  return array.indexOf(value) === index;
-	}
+
 
 	//==========================================================================================
 	// TextHasSearchTerm
 	//==========================================================================================	
-	function TextHasSearchTerm(textIn) {
+	function TextHasSearchTerm(textIn,precisionRqd) {
 		//==========================================================================================
 		// Returns true if any term in array docSearchPatterns matches any part of 
 		//		textIn with precisionRqd
 		//==========================================================================================
-
+		docSearchPrecision = precisionRqd;
 		
 		let thisPageHasIt=false;
 		for (let termNum=0; termNum<=docSearchPatterns.length-1; termNum++){
