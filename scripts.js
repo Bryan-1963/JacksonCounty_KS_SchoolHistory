@@ -323,7 +323,9 @@
 		siteSearchResults.length=0;
 		siteSearchPrecision = precisionRqd; //save to global variable
 		let siteSearchTermInput = document.getElementById("siteSearchInput").value;
-		document.getElementById("siteSearchResultsList").innerHTML ="";
+		let startStr = "<colgroup><col style='width:25%'><col style='width:75%'></colgroup>";
+		startStr = startStr + "<tr><th>Page</th><th>Matches</th></tr>";
+		document.getElementById("siteSearchResultsList").innerHTML =startStr;
 		
 		if (siteSearchTermInput != null && siteSearchTermInput!=""){
 			
