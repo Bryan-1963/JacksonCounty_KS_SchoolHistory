@@ -413,7 +413,7 @@
 		.docPageAnnotationHolder{
 			flex: 50%
 			min-height:600px;
-			min-width: 50vh;
+			width: 48vw;
 			text-align: left;
 		}
 		
