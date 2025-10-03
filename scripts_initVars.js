@@ -1104,7 +1104,7 @@
 		
 		var thisDist = new PageObject();
 		thisDist.number = "USD337";
-		thisDist.title = "USD337 Holton";
+		thisDist.title = "USD337 Royal Valley";
 		thisDist.path = "UnifiedSchoolDistricts/USD337/USD337_Overview.html";
 		thisDist.category = ""
 		usdSchools.push(thisDist)
