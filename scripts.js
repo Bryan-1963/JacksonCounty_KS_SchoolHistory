@@ -732,7 +732,7 @@
 					for (let i=0;i<=matchSubStrings.length-1;i++){
 						console.log(i, JSON.stringify(matchSubStrings[i]));
 						let re = new RegExp(matchSubStrings[i]['text'],"gi");
-						console.log("    re=" + re + "matchSubStrings[i]['text']=" + matchSubStrings[i]['text'])
+						console.log("    re=" + re + ", matchSubStrings[i]['text']=" + matchSubStrings[i]['text'])
 						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
 					}
 				}
@@ -1520,30 +1520,14 @@
 			let thisTerm = docSearchPatterns[termNum];
 			if (docSearchPrecision>=1){
 				let re=new RegExp(thisTerm,"gi");  //do this to get case insensitive search
-				//let result = textIn.match(re);  //returns array of all matching subtexts
-				//console.log("result=" + JSON.stringify(result));
-				let allRslts = textIn.matchAll(re);
+				let allRslts = textIn.matchAll(re); //returns iterable object with all matches and their indices
+				
 				for (const match of allRslts) {
-					console.log(match);
+					//console.log(match);
 					rsltObj = {text: match[0], score: 1, position:match.index};
 					foundMatches.push(rsltObj);	
 				}
-				/*
-				if (result!={} && result !=null){
-					for (let rslt=0;rslt<=result.length-1;rslt++){
-						let foundPos = 0;
-						if (textIn.indexOf(thisTerm)>0){
-							foundPos =textIn.indexOf(thisTerm);
-						}
-						else if (textIn.indexOf(thisTerm.toLowerCase())>0){
-							foundPos =textIn.indexOf(thisTerm.toLowerCase());
-						}
-						rsltObj = {text: thisTerm, score: 1, position:foundPos};
-						foundMatches.push(rsltObj);					
-					}
-
-				}
-				*/
+				
 			}
 			else {	
 				//check substrings with lengths between docSearchPrecision*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
@@ -1574,7 +1558,7 @@
 		foundMatches.sort((a, b) => b['text'].length - a['text'].length);  
 		console.log("sorted foundMatches="+JSON.stringify(foundMatches));
 		
-		//reduce foundMatches to unique values only
+		//reduce foundMatches to unique values (text and position) only
 		let filteredMatches = [];
 		filteredMatches.push(foundMatches[0]);
 		for (let i=1;i<=foundMatches.length-1;i++){
@@ -1582,7 +1566,7 @@
 			
 			for (let j=0;j<=filteredMatches.length-1;j++){
 
-				if (foundMatches[i]['text']===filteredMatches[j]['text']){
+				if (foundMatches[i]['text']===filteredMatches[j]['text'] && foundMatches[i]['position']===filteredMatches[j]['position']){
 					foundMatch = true;
 					if (foundMatches[i]['wt']>filteredMatches[j]['wt']){
 						filteredMatches[j]['wt']=foundMatches[i]['wt'];
