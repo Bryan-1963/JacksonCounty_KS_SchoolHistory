@@ -646,6 +646,9 @@
 		let totDocPgs = document.getElementById("totalDocPages");
 		totalDocPages.innerHTML = " of " + docPages.length;
 		
+		//reset current page number within document
+		docPgNum=0;
+		
 		//load the first page
 		loadDocPageNum(0);
 	};
@@ -654,8 +657,7 @@
 	// loadDocPageNum
 	//==========================================================================================	
 	function loadDocPageNum(pgNum){
-		//reset current page number within document
-		docPgNum=0;
+		docPgNum = pgNum;
 		
 		// update image source path
 		let docImg = document.getElementById('docPageImg');
