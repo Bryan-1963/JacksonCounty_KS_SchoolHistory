@@ -726,25 +726,27 @@
 				console.log("term#=" + term + ", docSearchPatterns[term]="+ docSearchPatterns[term]);				
 				console.log("matchSubStrings =" + JSON.stringify(matchSubStrings));
 				console.log("----------------------------------------------------------");
-				
-				for (let i=0;i<=matchSubStrings.length-1;i++){
-					console.log(i, JSON.stringify(matchSubStrings[i]));
-					let re = new RegExp(matchSubStrings[i]['text'],"gi");
-					console.log("    re=" + re + "matchSubStrings[i]['text']=" + matchSubStrings[i]['text'])
-					docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
+				if (matchSubStrings){
+					for (let i=0;i<=matchSubStrings.length-1;i++){
+						console.log(i, JSON.stringify(matchSubStrings[i]));
+						let re = new RegExp(matchSubStrings[i]['text'],"gi");
+						console.log("    re=" + re + "matchSubStrings[i]['text']=" + matchSubStrings[i]['text'])
+						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
+					}
 				}
 
-				
 				//..................................
 				//highlight instances in caption
 				//..................................
 				matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML),"length");
 				console.log("caption matchSubStrings.length=" + matchSubStrings.length);
 				console.log("caption matchSubStrings="+JSON.stringify(matchSubStrings));
-				for (let i=0;i<=matchSubStrings.length-1;i++){
-					
-					let re = new RegExp(matchSubStrings[i]['text'],"gi");
-					figCapt.innerHTML = figCapt.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
+				if (matchSubStrings){
+					for (let i=0;i<=matchSubStrings.length-1;i++){
+						
+						let re = new RegExp(matchSubStrings[i]['text'],"gi");
+						figCapt.innerHTML = figCapt.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
+					}
 				}
 				
 			}
