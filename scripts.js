@@ -1511,6 +1511,7 @@
 		//==========================================================================================
 		
 		let foundMatches= [];
+		textIn = removeTagsFromString(textIn);
 		console.log("==================================================");
 		console.log("textIn=" + textIn);
 		console.log("docSearchPatterns=" + JSON.stringify(docSearchPatterns));
