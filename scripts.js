@@ -1519,7 +1519,7 @@
 			if (docSearchPrecision>=1){
 				let re=new RegExp(thisTerm,"gi");  //do this to get case insensitive search
 				let result = textIn.match(re);  //returns array of all matching subtexts
-				console.log("result=" + JSON.stringify(result);
+				console.log("result=" + JSON.stringify(result));
 				if (result!=null){
 					let foundPos = 0;
 					if (textIn.indexOf(thisTerm)>0){
