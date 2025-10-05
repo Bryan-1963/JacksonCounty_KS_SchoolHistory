@@ -1521,8 +1521,11 @@
 				let result = textIn.match(re);  //returns array of all matching subtexts
 				console.log("result=" + JSON.stringify(result));
 				let allRslts = textIn.matchAll(re);
-				console.log("result=" + JSON.stringify(allRslts));
-				if (result[0]!=null){
+				for (const match of allRslts) {
+				  console.log(match)
+				}
+				//console.log("allRslts=" + JSON.stringify(allRslts));
+				if (result!={} && result !=null){
 					for (let rslt=0;rslt<=result.length-1;rslt++){
 						let foundPos = 0;
 						if (textIn.indexOf(thisTerm)>0){
