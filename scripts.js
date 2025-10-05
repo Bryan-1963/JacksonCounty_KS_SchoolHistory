@@ -726,7 +726,7 @@
 				console.log("term#=" + term + ", docSearchPatterns[term]="+ docSearchPatterns[term]);				
 				console.log("matchSubStrings =" + JSON.stringify(matchSubStrings));
 				console.log("----------------------------------------------------------");
-				if (matchSubStrings){
+				if (matchSubStrings!=[null]){
 					for (let i=0;i<=matchSubStrings.length-1;i++){
 						console.log(i, JSON.stringify(matchSubStrings[i]));
 						let re = new RegExp(matchSubStrings[i]['text'],"gi");
@@ -741,7 +741,7 @@
 				matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML),"length");
 				console.log("caption matchSubStrings.length=" + matchSubStrings.length);
 				console.log("caption matchSubStrings="+JSON.stringify(matchSubStrings));
-				if (matchSubStrings){
+				if (matchSubStrings!=[null]){
 					for (let i=0;i<=matchSubStrings.length-1;i++){
 						
 						let re = new RegExp(matchSubStrings[i]['text'],"gi");
@@ -1497,8 +1497,16 @@
 		//		with precision docSearchPrecision
 		//==========================================================================================
 		// INPUTS
+		//		docSearchPatterns = a GLOBAL array of search patterns
+		//		textIn = text to be searched for matching substrings
 		//		sortByChoice='length' returns array sorted by length of 'text' descending
 		//		sortByChoice='weight' returns arryay sorted by matching weight descending
+		//
+		//==========================================================================================
+		// RETURNS
+		// 		filteredMatches = an array of objects of form {text, wt, position} for each matching substring
+		//						  in textIn
+		//==========================================================================================
 		
 		let foundMatches= [];
 		console.log("==================================================");
@@ -1511,6 +1519,7 @@
 			if (docSearchPrecision>=1){
 				let re=new RegExp(thisTerm,"gi");  //do this to get case insensitive search
 				let result = textIn.match(re);  //returns array of all matching subtexts
+				console.log("result=" + JSON.stringify(result);
 				if (result!=null){
 					let foundPos = 0;
 					if (textIn.indexOf(thisTerm)>0){
