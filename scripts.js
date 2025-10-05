@@ -736,7 +736,7 @@
 				//..................................
 				//highlight instances in caption
 				//..................................
-				let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML),"length");
+				matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML),"length");
 				for (let i=0;i<=matchSubStrings.length-1;i++){
 					
 					let re = new RegExp(matchSubStrings[i]['text'],"gi");
