@@ -2,12 +2,73 @@
 	{
 		"photoFilePath":"SourceMatls/LloydCopeland/Vol1/171_001.JPEG",
 		"caption":"",
-		"description":["Alphabetical listing of school names with their district numbers, page 1."]
+		"description":
+		[
+		"NOTE: some of these are out of order and some are missing.",
+		"Adrian .....................65     Drake ......................49     Moore (Cedar Center)........58",
+		"Anderson ...................70     Eureka .....................18     Mulinax ....................10",
+		"Aurora......................72     Excelsior ..................89     Netawaka....................34",
+		"Avoca ......................51     Fairview ...................21     New Century ...............100",
+		"Banner ......................5     Glenwood ...................86     Nieve ......................91",
+		"Bateman ....................68     Goldenrod ..................87     North Star .................12",
+		"Banks ......................44     Grand Prairie ..............99     Oak Grove ..................31",
+		"Beauty Heights .............52     Gray .......................71     Oak Hill (Pleasant Grove)...15",
+		"Bell .......................57     Harrison ...................39     Olive Hill .................62",
+		"Blandin ....................96     Hazel Grove ................56     Parallel ...................38",
+		"Brightside .................48     Hazel Row ..................55     Pea Ridge ..................63",
+		"Brick .......................1     High Prairie ...............84     Pleasant Grove (Oak Hill)...15",
+		"Brewer .....................94     Holligan ...................50     Pleasant Valley .............8",
+		"Browne .....................46     Holton (City)................2     Pleasant View ..............75",
+		"Bucks Grove ................41     Holton View ................61     Philo .......................7",
+		"Birmingham .................88     Hoyt .......................40     Point Pleasant .............13",
+		"Capital View ...............53     Kelly.......................67     Prairie View ...............73",
+		"Carmel .....................28     Kewanka ....................98     Ray ........................25",
+		"Carbon .....................33     Lawndale ...................64     Renwood ....................82",
+		"Carwood ...................103     Lawn Ridge ..................9     Rising Sun .................66",
+		"Cedar Hill .................11     Liberty .....................6     Rock .......................24",
+		"Cedar Vale .................14     Little Cross Creek .........45     Rock Brook .................90",
+		"Center ......................4     Lone Star ..................80     Rose Bud ...................19",
+		"Circleville.................16     Lower Banner ...............29     Slattery ...................32",
+		"Christenson ................77     Maple Grove ................36     Soldier ....................26",
+		"Clover Hill ................78     Mayetta ....................79     Soldier Valley .............23",
+		"Columbia ...................83     Miller .....................92     South Hoyt .................69",
+		"Delia ......................54                                        South Star .................76",
+		"Denison .....................3",
+		"Dodson Hill ................30"
+		]
 	},
 	{
 		"photoFilePath":"SourceMatls/LloydCopeland/Vol1/171_002.JPEG",
 		"caption":"",
-		"description":["Alphabetical listing of school names with their district numbers, page 1."]
+		"description":[
+		"NOTE: some of these are out of order and some are missing.",
+		"South Cedar.................35        South Holton ..............104",
+		"Stach ......................59",
+		"Sunny Brook ................93",
+		"Sunny Slope ................95",
+		"Sunflower ..................85",
+		"Sunrise ....................60",
+		"Stoney Point ...............81",
+		"Sylvian Grove ..............22",
+		"Tutt (Cedar Grove)..........17",
+		"Walnut .....................43",
+		"Whiting ....................47",
+		"Winding Vale ...............20",
+		"Woburn .....................37",
+		"Wigwam .....................74",
+		"Witchewah ..................97",
+		"Woodworth ..................27",
+		"",
+		"#101 & 102 missing",
+		"",
+		"Campbell pictured",
+		"Pottawattomi Reserve Mission School pictured",
+		"Body Book(?)",
+		"Joint Dist. Larkinburg",
+		"Ontario",
+		"Buckeye Ridge Jt. 3",
+		"America City Jt. 1"
+		]
 	},
 	{
 		"photoFilePath":"SourceMatls/LloydCopeland/Vol1/171_003.JPEG",
@@ -2058,14 +2119,6 @@
 		[
 		"\t 104 South Holton",
 		"\t South Holton was organized in 1957.  It was a consolidation of districts 29 Lower Banner, 60 Sunrise, 74 Wigwam, 90 Rock Brook and #100 New Century.  Later unified into 336. The building now houses the South Holton Garden Store. It was 4 miles south of Holton on new 75 and ¼ east."
-		]
-	},
-	{
-		"photoFilePath":"SourceMatls/LloydCopeland/Vol1/IMG_2821.JPEG",
-		"caption":"",
-		"description":
-		[
-		"NEEDS TRANSCRIPTION HERE"
 		]
 	}
 ]
