@@ -654,6 +654,8 @@
 	// loadDocPageNum
 	//==========================================================================================	
 	function loadDocPageNum(pgNum){
+		//reset current page number within document
+		docPgNum=0;
 		
 		// update image source path
 		let docImg = document.getElementById('docPageImg');
@@ -717,7 +719,7 @@
 				//..................................						
 				//highlight instances in annotation
 				//..................................
-				matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(docAnnot.innerHTML),"length");	
+				let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(docAnnot.innerHTML),"length");	
 				
 				console.log("term#=" + term + ", docSearchPatterns[term]="+ docSearchPatterns[term]);				
 				console.log("matchSubStrings =" + JSON.stringify(matchSubStrings));
