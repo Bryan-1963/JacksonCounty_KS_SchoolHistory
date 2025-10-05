@@ -1520,13 +1520,15 @@
 			let thisTerm = docSearchPatterns[termNum];
 			if (docSearchPrecision>=1){
 				let re=new RegExp(thisTerm,"gi");  //do this to get case insensitive search
-				let result = textIn.match(re);  //returns array of all matching subtexts
-				console.log("result=" + JSON.stringify(result));
+				//let result = textIn.match(re);  //returns array of all matching subtexts
+				//console.log("result=" + JSON.stringify(result));
 				let allRslts = textIn.matchAll(re);
 				for (const match of allRslts) {
-				  console.log(match)
+					console.log(match);
+					rsltObj = {text: match[0], score: 1, position:match.index};
+					foundMatches.push(rsltObj);	
 				}
-				//console.log("allRslts=" + JSON.stringify(allRslts));
+				/*
 				if (result!={} && result !=null){
 					for (let rslt=0;rslt<=result.length-1;rslt++){
 						let foundPos = 0;
@@ -1541,6 +1543,7 @@
 					}
 
 				}
+				*/
 			}
 			else {	
 				//check substrings with lengths between docSearchPrecision*thisTerm.length and 1.precisionRequired*thisTerm.length (e.g. between 0.75 and 1.25)
