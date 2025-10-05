@@ -726,7 +726,7 @@
 				console.log("term#=" + term + ", docSearchPatterns[term]="+ docSearchPatterns[term]);				
 				console.log("matchSubStrings =" + JSON.stringify(matchSubStrings));
 				console.log("----------------------------------------------------------");
-				if (matchSubStrings!=[null]){
+				if (matchSubStrings[0]!=null){
 					for (let i=0;i<=matchSubStrings.length-1;i++){
 						console.log(i, JSON.stringify(matchSubStrings[i]));
 						let re = new RegExp(matchSubStrings[i]['text'],"gi");
@@ -741,7 +741,7 @@
 				matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML),"length");
 				console.log("caption matchSubStrings.length=" + matchSubStrings.length);
 				console.log("caption matchSubStrings="+JSON.stringify(matchSubStrings));
-				if (matchSubStrings!=[null]){
+				if (matchSubStrings[0]!=null){
 					for (let i=0;i<=matchSubStrings.length-1;i++){
 						
 						let re = new RegExp(matchSubStrings[i]['text'],"gi");
@@ -1520,16 +1520,21 @@
 				let re=new RegExp(thisTerm,"gi");  //do this to get case insensitive search
 				let result = textIn.match(re);  //returns array of all matching subtexts
 				console.log("result=" + JSON.stringify(result));
-				if (result!=null){
-					let foundPos = 0;
-					if (textIn.indexOf(thisTerm)>0){
-						foundPos =textIn.indexOf(thisTerm);
+				let allRslts = textIn.matchAll(re);
+				console.log("result=" + JSON.stringify(allRslts));
+				if (result[0]!=null){
+					for (let rslt=0;rslt<=result.length-1;rslt++){
+						let foundPos = 0;
+						if (textIn.indexOf(thisTerm)>0){
+							foundPos =textIn.indexOf(thisTerm);
+						}
+						else if (textIn.indexOf(thisTerm.toLowerCase())>0){
+							foundPos =textIn.indexOf(thisTerm.toLowerCase());
+						}
+						rsltObj = {text: thisTerm, score: 1, position:foundPos};
+						foundMatches.push(rsltObj);					
 					}
-					else if (textIn.indexOf(thisTerm.toLowerCase())>0){
-						foundPos =textIn.indexOf(thisTerm.toLowerCase());
-					}
-					rsltObj = {text: thisTerm, score: 1, position:foundPos};
-					foundMatches.push(rsltObj);
+
 				}
 			}
 			else {	
