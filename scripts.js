@@ -333,6 +333,7 @@
 		
 		
 			// TEST only
+			/*
 			let xxx = "<HTML><HEAD><TITLE>Jackson County, KS Schools History | References</TITLE><link rel=\"stylesheet\" href=\"..\Styles.css\"></HEAD><BODY>some stuff about Cedar, cdar, sidar, cedr Township and Jackson county.</BODY></HTML>";
 			console.log("xxx=" + xxx);
 			let bodyLoc = xxx.indexOf("<BODY");
@@ -349,6 +350,7 @@
 					console.log("foundSomeMatches="+foundSomeMatches);
 			}
 			console.log("siteSearchResults=" + JSON.stringify(siteSearchResults));
+			*/
 			//END TEST ONLY 
 			
 			
