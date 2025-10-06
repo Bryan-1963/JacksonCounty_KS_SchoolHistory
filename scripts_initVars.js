@@ -997,84 +997,84 @@
 		var thisDist = new PageObject();
 		thisDist.number = "RHS1";
 		thisDist.title = "RHS 1 Soldier";
-		thisDist.path = "CountyHighSchools/RHA1/RHA1_Overview.html";
+		thisDist.path = "CountyHighSchools/RHS1/RHS1_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
 		thisDist.number = "RHS2";
 		thisDist.title = "RHS 2 Denison";
-		thisDist.path = "CountyHighSchools/RHA2/RHA2_Overview.html";
+		thisDist.path = "CountyHighSchools/RHS2/RHS2_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
 		thisDist.number = "RHS3";
 		thisDist.title = "RHS 3 Whiting";
-		thisDist.path = "CountyHighSchools/RHA3/RHA3_Overview.html";
+		thisDist.path = "CountyHighSchools/RHS3/RHS3_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
 		thisDist.number = "RHS4";
 		thisDist.title = "RHS 4 Hoyt";
-		thisDist.path = "CountyHighSchools/RHA4/RHA4_Overview.html";
+		thisDist.path = "CountyHighSchools/RHS4/RHS4_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
 		thisDist.number = "RHS5";
 		thisDist.title = "RHS 5 Mayetta";
-		thisDist.path = "CountyHighSchools/RHA5/RHA5_Overview.html";
+		thisDist.path = "CountyHighSchools/RHS5/RHS5_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
 		thisDist.number = "RHS6";
 		thisDist.title = "RHS 6 Circleville";
-		thisDist.path = "CountyHighSchools/RHA6/RHA6_Overview.html";
+		thisDist.path = "CountyHighSchools/RHS6/RHS6_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
 		thisDist.number = "RHS7";
 		thisDist.title = "RHS 7 Delia";
-		thisDist.path = "CountyHighSchools/RHA7/RHA7_Overview.html";
+		thisDist.path = "CountyHighSchools/RHS7/RHS7_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
 		thisDist.number = "RHS8";
 		thisDist.title = "RHS 8 Netawaka";
-		thisDist.path = "CountyHighSchools/RHA8/RHA8_Overview.html";
+		thisDist.path = "CountyHighSchools/RHS8/RHS8_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
 		thisDist.number = "RHSJt2";
 		thisDist.title = "RHS Jt2 Havensville";
-		thisDist.path = "CountyHighSchools/RHAJt2/RHAJt2_Overview.html";
+		thisDist.path = "CountyHighSchools/RHSJt2/RHSJt2_Overview.html";
 		thisDist.category = "Joint"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
 		thisDist.number = "RHSJt3";
 		thisDist.title = "RHS Jt3 Emmett";
-		thisDist.path = "CountyHighSchools/RHAJt3/RHAJt3_Overview.html";
+		thisDist.path = "CountyHighSchools/RHSJt3/RHSJt3_Overview.html";
 		thisDist.category = "Joint"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
 		thisDist.number = "RHSJt4";
 		thisDist.title = "RHS Jt4 Wetmore";
-		thisDist.path = "CountyHighSchools/RHAJt4/RHAJt4_Overview.html";
+		thisDist.path = "CountyHighSchools/RHSJt4/RHSJt4_Overview.html";
 		thisDist.category = "Joint"
 		countyHighSchools.push(thisDist);
 
 		var thisDist = new PageObject();
 		thisDist.number = "RHSJt93";
 		thisDist.title = "RHS Jt93 Meriden";
-		thisDist.path = "CountyHighSchools/RHAJt93/RHAJt93_Overview.html";
+		thisDist.path = "CountyHighSchools/RHSJt93/RHSJt93_Overview.html";
 		thisDist.category = "Joint"
 		countyHighSchools.push(thisDist);
 

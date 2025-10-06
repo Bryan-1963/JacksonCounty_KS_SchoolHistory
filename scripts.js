@@ -359,16 +359,18 @@
 			
 			for (let i=0;i<searchFiles.length-1;i++){
 				//loop throught the elements of docSearchPatterns
+				console.log("loading file number " + i ". PATH=" + searchFiles[i]['path']);
+				let myObject = await fetch(webRootLocation+searchFiles[i]['path']);
+				let myText = await myObject.text();
+				//remove tags from String
+				let clnStr = removeTagsFromString(myText);
+				clnStr = cleanStringOfPunctuation(clnStr);
+				console.log("  checking string=" + clnStr);
 				for (let term=0;term<=docSearchPatterns.length-1;term++){
-					let myObject = await fetch(webRootLocation+searchFiles[i]['path']);
-					let myText = await myObject.text();
-					
-					//remove tags from String
-					let clnStr = removeTagsFromString(myText);
-					clnStr = cleanStringOfPunctuation(clnStr);
-					
+
 					//search the string for a match. if match, add it to siteSearchResults
 					if (TextHasSearchTerm(clnStr, precisionRqd)){
+						console.log("  found match!!!!);
 						foundSomeMatches=true;
 						siteSearchResults.push(searchFiles[i]);
 					}
