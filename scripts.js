@@ -333,7 +333,7 @@
 		
 		
 			// TEST only
-			
+			/*
 			let xxx = "<HTML><HEAD><TITLE>Jackson County, KS Schools History | References</TITLE><link rel=\"stylesheet\" href=\"..\Styles.css\"></HEAD><BODY>some stuff about Cedar, cdar, sidar, cedr Township and Jackson county.</BODY></HTML>";
 			console.log("xxx=" + xxx);
 			let bodyLoc = xxx.indexOf("<BODY");
@@ -350,7 +350,7 @@
 					console.log("foundSomeMatches="+foundSomeMatches);
 			}
 			console.log("siteSearchResults=" + JSON.stringify(siteSearchResults));
-			
+			*/
 			//END TEST ONLY 
 			
 			
@@ -365,14 +365,16 @@
 				//remove tags from String
 				let clnStr = removeTagsFromString(myText);
 				clnStr = cleanStringOfPunctuation(clnStr);
-				console.log("  checking string=" + clnStr);
+				//console.log("  checking string=" + clnStr);
 				for (let term=0;term<=docSearchPatterns.length-1;term++){
 
 					//search the string for a match. if match, add it to siteSearchResults
 					if (TextHasSearchTerm(clnStr, precisionRqd)){
-						console.log("  found match!!!!);
+						console.log("  found match!!!! ADDING searchFiles[i]=" + JSON.stringify(searchFiles[i]));
 						foundSomeMatches=true;
-						siteSearchResults.push(searchFiles[i]);
+						let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(clnStr),"weight");
+						console.log("matchSubStrings=" + JSON.stringify(matchSubStrings));
+						siteSearchResults.push({title:searchFiles[i]['title'], matches: matchSubStrings});
 					}
 				}
 			}

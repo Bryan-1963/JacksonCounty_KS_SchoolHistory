@@ -1147,21 +1147,21 @@
 			var thisFile = new PageObject();
 			thisFile.number=countyHighSchools[i]['number'];
 			thisFile.title=countyHighSchools['number'] + " Locations";
-			thisFile.path="CountyDistricts/"+thisFile.number+"/"+thisFile.number+"_Locations.html";
+			thisFile.path="CountyHighSchools/"+thisFile.number+"/"+thisFile.number+"_Locations.html";
 			thisFile.category=countyHighSchools[i]['category'];
 			searchFiles.push(thisFile);
 
 			var thisFile = new PageObject();
 			thisFile.number=countyHighSchools[i]['number'];
 			thisFile.title=countyHighSchools['number'] + " Events";
-			thisFile.path="CountyDistricts/"+thisFile.number+"/"+thisFile.number+"_Events.html";
+			thisFile.path="CountyHighSchools/"+thisFile.number+"/"+thisFile.number+"_Events.html";
 			thisFile.category=countyHighSchools[i]['category'];
 			searchFiles.push(thisFile);
 
 			var thisFile = new PageObject();
 			thisFile.number=countyHighSchools[i]['number'];
 			thisFile.title=countyHighSchools['number'] + " People";
-			thisFile.path="CountyDistricts/"+thisFile.number+"/"+thisFile.number+"_People.html";
+			thisFile.path="CountyHighSchools/"+thisFile.number+"/"+thisFile.number+"_People.html";
 			thisFile.category=countyHighSchools[i]['category'];
 			searchFiles.push(thisFile);
 		}		
@@ -1169,21 +1169,21 @@
 			var thisFile = new PageObject();
 			thisFile.number=usdSchools[i]['number'];
 			thisFile.title=usdSchools['number'] + " Locations";
-			thisFile.path="CountyDistricts/"+thisFile.number+"/"+thisFile.number+"_Locations.html";
+			thisFile.path="UnifiedSchoolDistricts/"+thisFile.number+"/"+thisFile.number+"_Locations.html";
 			thisFile.category=usdSchools[i]['category'];
 			searchFiles.push(thisFile);
 
 			var thisFile = new PageObject();
 			thisFile.number=usdSchools[i]['number'];
 			thisFile.title=usdSchools['number'] + " Events";
-			thisFile.path="CountyDistricts/"+thisFile.number+"/"+thisFile.number+"_Events.html";
+			thisFile.path="UnifiedSchoolDistricts/"+thisFile.number+"/"+thisFile.number+"_Events.html";
 			thisFile.category=usdSchools[i]['category'];
 			searchFiles.push(thisFile);
 
 			var thisFile = new PageObject();
 			thisFile.number=usdSchools[i]['number'];
 			thisFile.title=usdSchools['number'] + " People";
-			thisFile.path="CountyDistricts/"+thisFile.number+"/"+thisFile.number+"_People.html";
+			thisFile.path="UnifiedSchoolDistricts/"+thisFile.number+"/"+thisFile.number+"_People.html";
 			thisFile.category=usdSchools[i]['category'];
 			searchFiles.push(thisFile);
 		}		
@@ -1354,98 +1354,98 @@
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1944 School Directory";
-		thisFile.path="SchoolDirectories/1944/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1944/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)
 		
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1945 School Directory";
-		thisFile.path="SchoolDirectories/1945/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1945/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 		
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1947 School Directory";
-		thisFile.path="SchoolDirectories/1947/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1947/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 		
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1949 School Directory";
-		thisFile.path="SchoolDirectories/1949/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1949/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 		
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1952 School Directory";
-		thisFile.path="SchoolDirectories/1952/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1952/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1953 School Directory";
-		thisFile.path="SchoolDirectories/1953/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1953/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1954 School Directory";
-		thisFile.path="SchoolDirectories/1954/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1954/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1955 School Directory";
-		thisFile.path="SchoolDirectories/1955/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1955/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="6 School Directory";
-		thisFile.path="SchoolDirectories/1956/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1956/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1957 School Directory";
-		thisFile.path="SchoolDirectories/1957/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1957/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1959 School Directory";
-		thisFile.path="SchoolDirectories/1959/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1959/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 		
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1961 School Directory";
-		thisFile.path="SchoolDirectories/1961/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1961/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 		
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1962 School Directory";
-		thisFile.path="SchoolDirectories/1962/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1962/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 		
 		var thisFile = new PageObject();
 		thisFile.number="";
 		thisFile.title="1964 School Directory";
-		thisFile.path="SchoolDirectories/1964/000PageData.json";
+		thisFile.path="SourceMatls/SchoolDirectories/1964/000PageData.json";
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 		
