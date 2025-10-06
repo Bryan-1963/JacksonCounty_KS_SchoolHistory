@@ -359,7 +359,7 @@
 			
 			for (let i=0;i<searchFiles.length-1;i++){
 				//loop throught the elements of docSearchPatterns
-				console.log("loading file number " + i ". PATH=" + searchFiles[i]['path']);
+				console.log("loading file number " + i + ". PATH=" + searchFiles[i]['path']);
 				let myObject = await fetch(webRootLocation+searchFiles[i]['path']);
 				let myText = await myObject.text();
 				//remove tags from String
