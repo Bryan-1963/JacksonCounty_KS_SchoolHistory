@@ -333,7 +333,7 @@
 		
 		
 			// TEST only
-			/*
+			
 			let xxx = "<HTML><HEAD><TITLE>Jackson County, KS Schools History | References</TITLE><link rel=\"stylesheet\" href=\"..\Styles.css\"></HEAD><BODY>some stuff about Cedar, cdar, sidar, cedr Township and Jackson county.</BODY></HTML>";
 			console.log("xxx=" + xxx);
 			let bodyLoc = xxx.indexOf("<BODY");
@@ -350,7 +350,7 @@
 					console.log("foundSomeMatches="+foundSomeMatches);
 			}
 			console.log("siteSearchResults=" + JSON.stringify(siteSearchResults));
-			*/
+			
 			//END TEST ONLY 
 			
 			
@@ -725,14 +725,16 @@
 				//..................................
 				let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(docAnnot.innerHTML),"length");	
 				
+				/*
 				console.log("term#=" + term + ", docSearchPatterns[term]="+ docSearchPatterns[term]);				
 				console.log("matchSubStrings =" + JSON.stringify(matchSubStrings));
 				console.log("----------------------------------------------------------");
+				*/
 				if (matchSubStrings[0]!=null){
 					for (let i=0;i<=matchSubStrings.length-1;i++){
-						console.log(i, JSON.stringify(matchSubStrings[i]));
+						//console.log(i, JSON.stringify(matchSubStrings[i]));
 						let re = new RegExp(matchSubStrings[i]['text'],"gi");
-						console.log("    re=" + re + ", matchSubStrings[i]['text']=" + matchSubStrings[i]['text'])
+						//console.log("    re=" + re + ", matchSubStrings[i]['text']=" + matchSubStrings[i]['text'])
 						docAnnot.innerHTML = docAnnot.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
 					}
 				}
@@ -741,11 +743,10 @@
 				//highlight instances in caption
 				//..................................
 				matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(figCapt.innerHTML),"length");
-				console.log("caption matchSubStrings.length=" + matchSubStrings.length);
-				console.log("caption matchSubStrings="+JSON.stringify(matchSubStrings));
+				//console.log("caption matchSubStrings.length=" + matchSubStrings.length);
+				//console.log("caption matchSubStrings="+JSON.stringify(matchSubStrings));
 				if (matchSubStrings[0]!=null){
 					for (let i=0;i<=matchSubStrings.length-1;i++){
-						
 						let re = new RegExp(matchSubStrings[i]['text'],"gi");
 						figCapt.innerHTML = figCapt.innerHTML.replace(re,'<mark>' + matchSubStrings[i]['text'] + '</mark>');
 					}
@@ -1511,12 +1512,15 @@
 		//==========================================================================================
 		
 		let foundMatches= [];
-		textIn = removeTagsFromString(textIn);
+		textIn = removeTagsFromString(textIn); //remove HTML tags from the string so we don't match "Cedar" to ">Ceda"
+		
+		/*
 		console.log("==================================================");
 		console.log("textIn=" + textIn);
 		console.log("docSearchPatterns=" + JSON.stringify(docSearchPatterns));
 		console.log("docSearchPrecision=" + docSearchPrecision);
 		console.log("==================================================");
+		*/
 		for (let termNum=0; termNum<=docSearchPatterns.length-1; termNum++){
 			let thisTerm = docSearchPatterns[termNum];
 			if (docSearchPrecision>=1){
@@ -1554,10 +1558,12 @@
 			} //end of else docSearchPrecision<1
 		} //end of (let termNum)
 		
-		console.log("foundMatches="+JSON.stringify(foundMatches));
+		//console.log("foundMatches="+JSON.stringify(foundMatches));
+		
 		//sort by length descending so can eliminate matching substrings for unique values (e.g. keep "Cedar" and don't keep "Ceda" if they have the same startPos)
-		foundMatches.sort((a, b) => b['text'].length - a['text'].length);  
-		console.log("sorted foundMatches="+JSON.stringify(foundMatches));
+		foundMatches.sort((a, b) => b['text'].length - a['text'].length); 
+		
+		//console.log("sorted foundMatches="+JSON.stringify(foundMatches));
 		
 		//reduce foundMatches to unique values (text and position) only
 		let filteredMatches = [];
