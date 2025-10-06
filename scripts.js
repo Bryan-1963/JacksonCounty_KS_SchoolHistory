@@ -356,7 +356,6 @@
 			
 			
 			//search through all the files with data for a match 
-			/*
 			
 			for (let i=0;i<searchFiles.length-1;i++){
 				//loop throught the elements of docSearchPatterns
@@ -375,7 +374,6 @@
 					}
 				}
 			}
-			*/
 		
 			if (foundSomeMatches){
 				
@@ -771,10 +769,8 @@
 	function removeTagsFromString(myText){
 			let clnStr = "";
 			let inTag = false;
-			console.log("rcd myText=" + myText);
-			
-			
-			
+			//console.log("rcd myText=" + myText);
+
 			for (let j=0;j<=myText.length-1;j++){
 				
 				if (myText[j]==="<"){
@@ -1589,8 +1585,7 @@
 				filteredMatches.push(foundMatches[i]);
 			}
 		} //end of for i
-		console.log("filteredMatches="+JSON.stringify(filteredMatches));
-		
+		//console.log("filteredMatches="+JSON.stringify(filteredMatches));
 		
 		//sort as requested
 		if (sortByChoice==='length'){
@@ -1599,7 +1594,7 @@
 		else if (sortByChoice==='weight'){
 			filteredMatches.sort((a, b) => b['wt'] - a['wt']);
 		}
-		console.log("sorted filteredMatches="+JSON.stringify(filteredMatches));		
+		//console.log("sorted filteredMatches="+JSON.stringify(filteredMatches));		
 		return filteredMatches;
 	}
 
