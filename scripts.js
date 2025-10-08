@@ -318,6 +318,10 @@
 	async function searchSite(precisionRqd=1.00){  
 		//0.82 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
 	
+		// stop user input
+		document.getElementById("pauseUserInputContent").innerHTML="Searching entire site....";
+		document.getElementById("pauseUserInput").style.display="block";
+		
 		//initialize variables
 		let foundSomeMatches = false;
 		siteSearchResults.length=0;
@@ -329,52 +333,30 @@
 		
 		if (siteSearchTermInput != null && siteSearchTermInput!=""){
 			
-			getDocSearchPatterns(siteSearchTermInput);  //this loads the array docSearchPatterns
-		
-		
-			// TEST only
-			/*
-			let xxx = "<HTML><HEAD><TITLE>Jackson County, KS Schools History | References</TITLE><link rel=\"stylesheet\" href=\"..\Styles.css\"></HEAD><BODY>some stuff about Cedar, cdar, sidar, cedr Township and Jackson county.</BODY></HTML>";
-			console.log("xxx=" + xxx);
-			let bodyLoc = xxx.indexOf("<BODY");
-			let clnStr = xxx.substring(bodyLoc);
-			console.log("1) clnStr=" + clnStr);
-			clnStr = removeTagsFromString(clnStr);
-			console.log("2) clnStr=" + clnStr);
-			if (TextHasSearchTerm(clnStr, precisionRqd)){
-					foundSomeMatches=true;
-					//get matching substrings and scores
-					let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(clnStr),"weight");
-					console.log("matchSubStrings=" + JSON.stringify(matchSubStrings));
-					siteSearchResults.push({title:"testOnly", matches: matchSubStrings});
-					console.log("foundSomeMatches="+foundSomeMatches);
-			}
-			console.log("siteSearchResults=" + JSON.stringify(siteSearchResults));
-			*/
-			//END TEST ONLY 
-			
-			
-			
+			getDocSearchPatterns(siteSearchTermInput);  //this loads the array docSearchPatterns	
+					
 			//search through all the files with data for a match 
-			
 			for (let i=0;i<searchFiles.length-1;i++){
 				//loop throught the elements of docSearchPatterns
-				console.log("loading file number " + i + ". PATH=" + searchFiles[i]['path']);
 				let myObject = await fetch(webRootLocation+searchFiles[i]['path']);
 				let myText = await myObject.text();
+				
 				//remove tags from String
 				let clnStr = removeTagsFromString(myText);
 				clnStr = cleanStringOfPunctuation(clnStr);
-				//console.log("  checking string=" + clnStr);
+				
+				//search for each search term
 				for (let term=0;term<=docSearchPatterns.length-1;term++){
 
 					//search the string for a match. if match, add it to siteSearchResults
 					if (TextHasSearchTerm(clnStr, precisionRqd)){
-						console.log("  found match!!!! ADDING searchFiles[i]=" + JSON.stringify(searchFiles[i]));
+						
 						foundSomeMatches=true;
 						let matchSubStrings = FindMatchSubStrings(cleanStringOfPunctuation(clnStr),"weight");
-						console.log("matchSubStrings=" + JSON.stringify(matchSubStrings));
-						siteSearchResults.push({title:searchFiles[i]['title'], matches: matchSubStrings});
+						
+						//find matching phrases in the original text
+						let matchPhrases = getMatchPhrases(matchSubStrings,myText);
+						siteSearchResults.push({title:searchFiles[i]['title'], matches: matchSubStrings, phrases: matchPhrases});
 					}
 				}
 			}
@@ -416,16 +398,16 @@
 				
 				for (let i=0;i<=siteSearchResults.length-1;i++){
 					//TO-DO: add code to take you to the page!!!!
-					console.log("siteSearchResults=" + JSON.stringify(siteSearchResults));
-					console.log(siteSearchResults[i]['matches'].length);
+					//console.log("siteSearchResults=" + JSON.stringify(siteSearchResults));
+					//console.log(siteSearchResults[i]['matches'].length);
 					let matchingTexts = "";
-					for (let j=0;j<=siteSearchResults[i]['matches'].length-1;j++){
-						console.log(j, JSON.stringify(siteSearchResults[i]['matches'][j]));
-						matchingTexts = matchingTexts + siteSearchResults[i]['matches'][j]['text'] + ", ";
+					for (let j=0;j<=siteSearchResults[i]['phrases'].length-1;j++){
+						//console.log(j, JSON.stringify(siteSearchResults[i]['matches'][j]));
+						matchingTexts = matchingTexts + siteSearchResults[i]['phrases'][j];
 					}
 					rsltStr = rsltStr + "<tr><td>" + siteSearchResults[i]['title'] + "</td><td>" + matchingTexts + "</td></tr>";
 				}
-				console.log("rsltStr="+rsltStr);
+				//console.log("rsltStr="+rsltStr);
 				document.getElementById("siteSearchResultsList").innerHTML = rsltStr;
 				
 				// ADJUST LOCATIONS OF BARS
@@ -436,7 +418,198 @@
 			}
 			
 		} //end of if (docSearchTermInput != null && docSearchTermInput!="")
+			
+		// renew user input
+		document.getElementById("pauseUserInputContent").innerHTML="Calculating....";
+		document.getElementById("pauseUserInput").style.display="none";
+	}
+	
+	//==========================================================================================
+	// getMatchPhrases
+	//==========================================================================================
+	function getMatchPhrases(inArr,strIn){
 		
+		//build matchArr to with unique values of inArr
+		let matchArr = [];
+		matchArr.push(inArr[0]);
+		for (let i=1;i<=inArr.length-1;i++){
+			let foundMatch=false;
+			for (let j=0;j<=matchArr.length-1;j++){
+				if (inArr[i]['text']===matchArr[j]['text']){
+					foundMatch=true;
+				}
+			}
+			if (!foundMatch){
+				matchArr.push(inArr[i]);
+			}
+		}
+
+		//remove escaped characters from strIn
+		strIn = strIn.replace(/\\n/g, " ");
+		strIn = strIn.replace(/\\t/g, " ");
+		strIn = strIn.replace(/\\'/g, "'");
+		strIn = strIn.replace(/\\"/g, '"');
+		strIn = strIn.replace(/\\/g, " ");
+		
+		//console.log("strIn.length="+strIn.length);
+		//console.log("matchArr.length="+matchArr.length);
+		
+		let result = [];
+		for (let matchNum=0;matchNum<=matchArr.length-1;matchNum++){
+			let len = matchArr[matchNum]['text'].length;
+			for (let startChar=0; startChar<=strIn.length-len-1; startChar++){
+				let subStr = strIn.substring(startChar,startChar+len);
+				//console.log("len=" + len + ", startChar="+startChar);
+				if (subStr===matchArr[matchNum]['text']){
+					//search forwards to start of previous word or punctuation, whichever comes first
+					let rtPart = "";
+					if (startChar+len<=strIn.length-1){
+						let endsFound = 0;
+						for (let i=startChar+len-1;i<=strIn.length-1;i++){
+
+							if (charIsPhraseEnder(strIn[i,i+1])){
+								endsFound = endsFound+1;
+							}
+							if (strIn[i,i+1]==="<" || strIn[i,i+1]===">"){
+								endsFound=2;
+							}
+							
+							//keep the first phrase ender but not the second  (unless its an HTML tag, then only keep the first)
+							if (endsFound<2) {
+								rtPart = rtPart + strIn[i,i+1];
+							}
+							else {
+								break;
+							};
+						}
+					}
+					
+					//search backwards to start of previous word or punctuation, whichever comes first
+					let lftPart = "";
+					if (startChar>=1){
+						endsFound = 0;
+						for (let i=startChar-2;i>=0;i--){
+							//console.log("AFT",strIn.length,startChar,len,i, "|"+strIn[i,i+1]+"|",strIn[i,i+1].charCodeAt(0),charIsPhraseEnder(strIn[i,i+1]));
+							if (charIsPhraseEnder(strIn[i,i+1])){
+								endsFound = endsFound+1;
+							}
+							if (strIn[i,i+1]==="<" || strIn[i,i+1]===">"){
+								endsFound=2;
+							}
+
+							//keep the first phrase ender but not the second (unless its an HTML tag, then only keep the first)
+							if (endsFound<2) {
+								lftPart = strIn[i,i+1] + lftPart;
+								//console.log("     endsFound="+endsFound+", lftPart=|" + lftPart + "|");
+							}
+							else if (endsFound>=2) {
+								//console.log("     endsFound="+endsFound+", lftPart=|" + lftPart + "| BREAK" );
+								break;
+							};
+						}
+					};
+					
+					//remove any leading or trailing phrase enders
+					let needToCheckForRemoval=true;
+					if (rtPart.length<=1 && lftPart.length<=1){
+						needToCheckForRemoval=false;
+					}
+					while (needToCheckForRemoval){
+						if (rtPart.length>0){
+							if (charIsPhraseEnder(rtPart[rtPart.length-1])){
+								rtPart = rtPart.substring(0,rtPart.length-1);
+								needToCheckForRemoval=true; //cause they could be doubled up
+							}
+							else {
+								needToCheckForRemoval=false;
+							}
+						}
+						if (lftPart.length>0){
+							if (charIsPhraseEnder(lftPart[0])){
+								lftPart = lftPart.substring(1);
+								needToCheckForRemoval=true; //cause they could be doubled up
+							}
+							else {
+								needToCheckForRemoval=false;
+							}	
+						}
+					}
+					
+					//if (charIsPhraseEnder(rtPart[0])){
+					//	rtPart = rtPart.substring(1);
+					//}
+					if (charIsPhraseEnder(lftPart[0])){
+						lftPart = lftPart.substring(1);
+					}
+					if (charIsPhraseEnder(rtPart[rtPart.length-1])){
+						rtPart = rtPart.substring(0,rtPart.length-2);
+					}		
+					//if (charIsPhraseEnder(lftPart[lftPart.length-1])){
+					//	lftPart = lftPart.substring(0,lftPart.length-2);
+					//}	
+					
+					//add phrase to result array
+					//console.log("PHRASE FOUND=|" +lftPart+matchArr[matchNum]['text']+rtPart+ "|");
+					let finalPhrase = lftPart + "<MARK>" + matchArr[matchNum]['text'] + "</MARK>" + rtPart;
+					finalPhrase = finalPhrase.trim();
+					result.push(finalPhrase);
+					
+				} //end of if (subStr===matchArr[matchNum]['text'])
+				
+			} //end of for (let startChar
+			
+		} //end of for (let matchNum
+		//console.log("result="+JSON.stringify(result));
+		
+		//eliminate duplicates and show qty of each duplicate
+		let wkgRslt=[];
+		let rsltCountPair= new Object();
+		rsltCountPair = {count:1, rslt:result[0]};
+		wkgRslt.push(rsltCountPair);
+
+		for (let i=1;i<=result.length-1;i++){
+			let foundMatch = false;
+			for (let j=0;j<=wkgRslt.length-1;j++){
+				//console.log("|"+result[i]+"|","|"+wkgRslt[j]['rslt']+"|");
+				if (result[i]===wkgRslt[j]['rslt']){
+					wkgRslt[j]['count']=wkgRslt[j]['count']+1;
+					foundMatch = true;
+				}
+			}
+			if (!foundMatch){
+				rsltCountPair = new Object();
+				rsltCountPair={count:1, rslt:result[i]};
+				wkgRslt.push(rsltCountPair);
+			}
+			//console.log("     wkgRslt="+JSON.stringify(wkgRslt));
+		}
+		
+		let finalRslt=[];
+		for (let j=0;j<=wkgRslt.length-1;j++){
+			//console.log(j,wkgRslt.length,wkgRslt[j]['rslt'],wkgRslt[j]['count']);
+			finalRslt.push("..." + wkgRslt[j]['rslt'] + "(" + wkgRslt[j]['count'] + ")...");
+		}
+		//console.log("finalRslt="+JSON.stringify(finalRslt));
+
+		return finalRslt;
+	}
+	
+	//==========================================================================================
+	// charIsPhraseEnder
+	//==========================================================================================	
+	function charIsPhraseEnder(inChar){
+		let rslt=true;
+		if (inChar === undefined || inChar ===""){
+			rslt=true;
+		}
+		if (inChar != undefined && inChar !=""){
+			let val = inChar.charCodeAt(0);
+			if (val >=48 && val <=57) {rslt= false}  //inChar is a digit
+			if (val >=65 && val <=90) {rslt= false}  //inChar is a capital letter
+			if (val >=97 && val <=122) {rslt= false}  //inChar is a lower case letter
+			//console.log("inChar=|" + inChar + "|, val=" + val + " rslt=" + rslt);
+		}
+		return rslt;
 	}
 	
 	//==========================================================================================
@@ -1507,7 +1680,7 @@
 		//
 		//==========================================================================================
 		// RETURNS
-		// 		filteredMatches = an array of objects of form {text, wt, position} for each matching substring
+		// 		filteredMatches = an array of objects of form {text, score, position} for each matching substring
 		//						  in textIn
 		//==========================================================================================
 		
@@ -1548,7 +1721,7 @@
 						if (wt>=docSearchPrecision){
 							rsltObj = {text: subStr.trim(), score: wt, position:startPos};
 							foundMatches.push(rsltObj);
-							console.log("rsltObj="+JSON.stringify(rsltObj));
+							//console.log("rsltObj="+JSON.stringify(rsltObj));
 						}
 					} //end of (let startPos) loop
 
