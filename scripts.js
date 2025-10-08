@@ -19,6 +19,7 @@
 	var usdSchools = []; //array of PageObjects for USDs
 	var pottawatomieMissionSchool = {};
 	var colleges = [];
+	var overviews = [];
 	
 	//siteSearch variables
 	var siteSearchInput = document.getElementById("siteSearchInput");
@@ -39,8 +40,6 @@
 	var docPageNumInput = document.getElementById("docPageNumInput");
 	var docPageSearchInput = document.getElementById("docPageSearchInput");
 
-	
-		
 	//=======================================================================================================================================================
 	// EVENT LISTENERS
 	//=======================================================================================================================================================	
@@ -449,7 +448,6 @@
 			schoolNavBar.style.display = "none"
 		}
 	}
-
 
 	//==========================================================================================
 	// showSiteSearchResults
@@ -1343,8 +1341,26 @@
 		schoolNavBar.innerHTML = navHTML;
 
 	}
+	
+	//==========================================================================================
+	// showOverview
+	//==========================================================================================
+	function showOverview(params){
+		console.log("params=" + JSON.stringify(params));
+		console.log("params.title=" + params.title);
+		let contentTitleBar = document.getElementById("ContentTitle");
+		let subTitle = document.getElementById("SubTitle");
+		let contentHolder = document.getElementById("ContentHolder");
+		
+		//show the correct configuration and update titles
+		configurePage('subPage', true, false);	
+		subTitle.innerHTML = "Overview";
+		contentTitleBar.innerHTML = params['title'];
+		
+		//load the requested page
+		contentHolder.src = params['path'];
+	}
 
- 	
 	//==========================================================================================
 	// menuClick
 	//==========================================================================================
@@ -1373,6 +1389,7 @@
 		let subSelectorContentHolder = document.getElementById("subSelectorContents");	
 		subMenuName = '';
 		subMenuCat = '';
+		let subSelectorContents = "";
 		
 		// SWITCH ON CATEGORY
 		switch(category){
@@ -1393,64 +1410,37 @@
 				configurePage('subPage',false, false);
 				subTitle.innerHTML = "Welcome";
 				contentHolder.src ="Welcome/Welcome.html";
-				
 			break;
 
 			//---------------------------
 			case 'Overview':
 			//---------------------------	
-				configurePage('subPage', true, false);		  
+				configurePage('subSelector', false, false);		  
 				subTitle.innerHTML = "Overview";
+				let param = "";
 				
-				if (subCat==='Overview'){
-					contentSource="Overview/CountyOverview.html";
-					contentTitleBar.innerHTML="County Overview";
-				}
-				if (subCat==='CoDistrictSumm'){
-					contentSource="Overview/CountyDistrictsSummary.html";
-					contentTitleBar.innerHTML="County Districts Summary";
-				}
-				if (subCat==='CoHSSumm'){
-					contentSource="Overview/CountyHighSchoolSummary.html";
-					contentTitleBar.innerHTML="County High School Summary";
-				}
-				if (subCat==='TeachersInst'){
-					contentSource="Overview/TeachersInstitute.html";
-					contentTitleBar.innerHTML="County Teachers Institute";
-				}
-				if (subCat==='DeedsLists'){
-					contentSource="Overview/RegisterOfDeedLists.html";
-					contentTitleBar.innerHTML="County Register of Deeds List";
-				}
-				if (subCat==='TreasurerAndTaxRpts'){
-					contentSource="Overview/CountyTreasurerAndTaxReports.html";
-					contentTitleBar.innerHTML="County Treasurer and Tax Reports";
-				}
-				if (subCat==='GradRpts'){
-					contentSource="Overview/CommonSchoolGraduateReports.html";
-					contentTitleBar.innerHTML="County Common School Graduate Reports";
-				}
-				if (subCat==='TeachersRpts'){
-					contentSource="Overview/TeachersReports.html";
-					contentTitleBar.innerHTML="County Teachers Reports";
-				}
-				if (subCat==='OtherRpts'){
-					contentSource="Overview/OtherReports.html";
-					contentTitleBar.innerHTML="Other County Reports";
+				//build contents of subSelectorContents
+				subSelectorContents = "";
+				for (var i = 0; i<=overviews.length-1;i++){
+					param = JSON.stringify(overviews[i]);
+					param = param.replace(/"/g,"'");
+					subSelectorContents = subSelectorContents + String.fromCharCode(13) + "<a class='link-like'"
+					subSelectorContents = subSelectorContents + "onclick=\"showOverview(" + param + ");\">";
+					subSelectorContents = subSelectorContents + overviews[i].title + "</a><br><br>";
 				}		
-				contentHolder.src =	contentSource;	
-				
+				subSelectorContentHolder.style.columnCount=1;
+				subSelectorContentHolder.innerHTML=subSelectorContents;		
+
 			break;
 			
 			//---------------------------
 			case 'Maps':
-			//---------------------------
-				
+			//---------------------------				
 				configurePage('subSelector', false, false);		  
 				subTitle.innerHTML = "Maps";
 				
 				//build contents of subSelectorContents
-				let subSelectorContents = "";
+				subSelectorContents = "";
 				for (var i = 0; i<=maps.length-1;i++){
 					// Example:
 					//<a onclick="showMap({"category":"Maps","subCat":"1878 Jackson Co.","path":"Maps/1878_JacksonCo.html","title":"1878 Jackson Co."})">1878 Jackson Co.</a>
@@ -1461,8 +1451,8 @@
 					subSelectorContents = subSelectorContents + "path:'" + maps[i].path + "', ";
 					subSelectorContents = subSelectorContents + "title:'" + maps[i].title + "'})\">";
 					subSelectorContents = subSelectorContents + maps[i].title + "</a><br><br>";
-
 				}		
+				subSelectorContentHolder.style.columnCount=3;
 				subSelectorContentHolder.innerHTML=subSelectorContents;		
 
 			break;
@@ -1472,27 +1462,20 @@
 			//---------------------------	
 				configurePage('subPage', false, false);		  
 				subTitle.innerHTML = "Territorial Kansas";
-
-				if (subCat==='Frontier'){
-					contentSource="Pre-Org/Frontier.html";
-				}
-				if (subCat==='Territorial'){
-					contentSource="Pre-Org/Territorial.html";
-				}
-				contentHolder.src =	contentSource;
+				contentHolder.src =	"Pre-Org/Territorial.html";
 				
 			break;
 
 			//---------------------------		
 			case 'Schools':
 			//---------------------------
-				
 				configurePage('subSelector', false, false);		  
 				subTitle.innerHTML = "Schools";
-				subSelectorContentHolder.innerHTML=buildSchoolLinks();
-				
+				subSelectorContentHolder.style.columnCount=4;
+				subSelectorContentHolder.innerHTML=buildSchoolLinks(); //call subroutine to load the links
 			break;
 			
+/*			
 			//---------------------------	
 			// SCHOOLS		  
 			case 'County Districts':
@@ -1518,7 +1501,8 @@
 			
 			//---------------------------		
 			case 'Pottawatomie Mission':
-			//---------------------------		
+			//---------------------------	
+			
 				configurePage('subPage', true, true);	
 				contentTitleBar.innerHTML="Overview";
 				subTitle.innerHTML = "Pottawatomie Mission";
@@ -1528,10 +1512,10 @@
 				subMenuCat = "";
 
 				contentHolder.src="PottawatomieMission/PottawatomieMission_Overview.html";
-			break;
+			//break;
 
 			//---------------------------				
-			case 'High Schools':
+//			case 'High Schools':
 			//---------------------------	
 
 				configurePage('subPage', true, true);
@@ -1576,7 +1560,7 @@
 
 				contentTitleBar.innerHTML="Overview";
 			break;
-
+*/
 			//---------------------------	
 			case 'References':
 			//---------------------------	
@@ -1589,11 +1573,8 @@
 			case 'SourceMatl':
 			//---------------------------	
 				configurePage('document', false, false);			  
-
 				subTitle.innerHTML = "Source Materials";	
-
-				contentHolder.src="SourceMatls/SourceMatls.html";
-						
+				contentHolder.src="SourceMatls/SourceMatls.html";					
 			break;
 
 			//---------------------------	
@@ -1602,20 +1583,16 @@
 				configurePage('subPage', false, false);	
 				subTitle.innerHTML = "Contact";	
 				contentHolder.src="Contact/Contact.html";
-
 			break;
 
 		} 
 	
-
 		window.top.scrollTo(0,0);
 		
 		// ADJUST LOCATIONS OF BARS
 		sizeBars()
 		
 	};
-	
-
 	
 	//==========================================================================================
 	// FindMatchSubStrings
@@ -1727,7 +1704,6 @@
 		//console.log("sorted filteredMatches="+JSON.stringify(filteredMatches));		
 		return filteredMatches;
 	}
-
 
 	//==========================================================================================
 	// TextHasSearchTerm
@@ -1868,8 +1844,6 @@
         return weight;
     };
 
-	
-	
 	//======================================================================================================================================================================================
 	// CLASSES
 	//======================================================================================================================================================================================

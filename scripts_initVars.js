@@ -153,6 +153,45 @@
 		thisMap.path = "Maps/1963_JacksonCoRuralDir.html";
 		thisMap.category = ""
 		maps.push(thisMap);		
+
+		
+		//-----------------------------
+		// load overviews array
+		//-----------------------------	
+		var thisFile = new PageObject();
+		thisFile.number="CommonSchoolGraduateReports";
+		thisFile.title="Common School Graduate Reports";
+		thisFile.path="Overview/CommonSchoolGraduateReports.html";
+		thisFile.category="Overview";
+		overviews.push(thisFile);
+		
+		var thisFile = new PageObject();
+		thisFile.number="CountyDistrictsSummary";
+		thisFile.title="County Districts Summary";
+		thisFile.path="Overview/CountyDistrictsSummary.html";
+		thisFile.category="Overview"
+		overviews.push(thisFile);
+
+		var thisFile = new PageObject();
+		thisFile.number="CountyHighSchoolSummary";
+		thisFile.title="County High School Summary";
+		thisFile.path="Overview/CountyHighSchoolSummary.html";
+		thisFile.category="Overview"
+		overviews.push(thisFile);
+
+		var thisFile = new PageObject();
+		thisFile.number="CountyOverview";
+		thisFile.title="County Overview";
+		thisFile.path="Overview/CountyOverview.html";
+		thisFile.category="Overview"
+		overviews.push(thisFile);
+
+		var thisFile = new PageObject();
+		thisFile.number="TeachersInstitute";
+		thisFile.title="Teachers Institute";
+		thisFile.path="Overview/TeachersInstitute.html";
+		thisFile.category="Overview"
+		overviews.push(thisFile);
 		
 		//-----------------------------
 		// load countySchoolDistricts array
@@ -1137,6 +1176,7 @@
 		searchFiles.concat(countyHighSchools);
 		searchFiles.concat(usdSchools);
 		searchFiles.concat(colleges);
+		searchFiles.concat(overviews);
 		
 		//add People, Events, Locations for the schools
 		for (let i=0;i<=countySchoolDistricts.length-1;i++){
@@ -1235,41 +1275,7 @@
 		thisFile.category="Welcome";
 		searchFiles.push(thisFile);
 
-		//Overview files	
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Common School Graduate Reports";
-		thisFile.path="Overview/CommonSchoolGraduateReports.html";
-		thisFile.category="Overview";
-		searchFiles.push(thisFile);
 
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="County Districts Summary";
-		thisFile.path="Overview/CountyDistrictsSummary.html";
-		thisFile.category="Overview"
-		searchFiles.push(thisFile);
-
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="County High School Summary";
-		thisFile.path="Overview/CountyHighSchoolSummary.html";
-		thisFile.category="Overview"
-		searchFiles.push(thisFile);	
-
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="County Overview";
-		thisFile.path="Overview/CountyOverview.html";
-		thisFile.category="Overview"
-		searchFiles.push(thisFile);
-
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Teachers Institute";
-		thisFile.path="Overview/TeachersInstitute.html";
-		thisFile.category="Overview"
-		searchFiles.push(thisFile);
 		
 		//Territorial
 		var thisFile = new PageObject();
