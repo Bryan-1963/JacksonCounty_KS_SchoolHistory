@@ -488,7 +488,7 @@
 		//0.82 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
 	
 		// stop user input
-		document.getElementById("pauseUserInputContent").innerHTML="Searching entire site....";
+		document.getElementById("pauseUserInputContent").innerHTML="Searching entire site....0/" + (searchFiles.length-1);
 		document.getElementById("pauseUserInput").style.display="block";
 		
 		//initialize variables
@@ -528,6 +528,7 @@
 						siteSearchResults.push({title:searchFiles[i]['title'], matches: matchSubStrings, phrases: matchPhrases});
 					}
 				}
+				document.getElementById("pauseUserInputContent").innerHTML="Searching entire site...." + i + "/" + (searchFiles.length-1);
 			}
 		
 			if (foundSomeMatches){

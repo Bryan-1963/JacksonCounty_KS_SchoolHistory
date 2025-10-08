@@ -1113,7 +1113,7 @@
 		//-----------------------------------------				
 		//Campbell College
 		var thisFile = new PageObject();
-		thisFile.number="";
+		thisFile.number="CampbellCollege";
 		thisFile.title="Campbell College";
 		thisFile.path="Colleges/CampbellCollege/CampbellCollege_Overview.html";
 		thisFile.category="College"
@@ -1121,7 +1121,7 @@
 		
 		//Circlevile Seminary
 		var thisFile = new PageObject();
-		thisFile.number="";
+		thisFile.number="CirclevilleSeminary";
 		thisFile.title="Circleville Seminary";
 		thisFile.path="Colleges/CirclevilleSeminary/CirclevilleSeminary_Overview.html";
 		thisFile.category="College"
