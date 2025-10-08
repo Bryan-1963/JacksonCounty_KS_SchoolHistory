@@ -152,8 +152,7 @@
 		thisMap.title = "1963 Jackson Co. Rural Dir.";
 		thisMap.path = "Maps/1963_JacksonCoRuralDir.html";
 		thisMap.category = ""
-		maps.push(thisMap);	
-
+		maps.push(thisMap);		
 		
 		//-----------------------------
 		// load countySchoolDistricts array
@@ -1109,6 +1108,25 @@
 		thisDist.category = ""
 		usdSchools.push(thisDist)
 		
+		//------------------------------------------
+		// load Colleges array
+		//-----------------------------------------				
+		//Campbell College
+		var thisFile = new PageObject();
+		thisFile.number="";
+		thisFile.title="Campbell College";
+		thisFile.path="Colleges/CampbellCollege/CampbellCollege_Overview.html";
+		thisFile.category="College"
+		colleges.push(thisFile)
+		
+		//Circlevile Seminary
+		var thisFile = new PageObject();
+		thisFile.number="";
+		thisFile.title="Circleville Seminary";
+		thisFile.path="Colleges/CirclevilleSeminary/CirclevilleSeminary_Overview.html";
+		thisFile.category="College"
+		colleges.push(thisFile)
+		
 				
 		//------------------------------------------
 		// load array of files with data to search
@@ -1118,9 +1136,9 @@
 		searchFiles.concat(countySchoolDistricts);
 		searchFiles.concat(countyHighSchools);
 		searchFiles.concat(usdSchools);
+		searchFiles.concat(colleges);
 		
 		//add People, Events, Locations for the schools
-
 		for (let i=0;i<=countySchoolDistricts.length-1;i++){
 			var thisFile = new PageObject();
 			thisFile.number = countySchoolDistricts[i]['number'];
@@ -1187,7 +1205,28 @@
 			thisFile.category=usdSchools[i]['category'];
 			searchFiles.push(thisFile);
 		}		
+		for (let i=0;i<=colleges.length-1;i++){
+			var thisFile = new PageObject();
+			thisFile.number=colleges[i]['number'];
+			thisFile.title=colleges[i]['number'] + " Locations";
+			thisFile.path="Colleges/"+thisFile.number+"/"+thisFile.number+"_Locations.html";
+			thisFile.category=colleges[i]['category'];
+			searchFiles.push(thisFile);
 
+			var thisFile = new PageObject();
+			thisFile.number=colleges[i]['number'];
+			thisFile.title=colleges[i]['number'] + " Events";
+			thisFile.path="Colleges/"+thisFile.number+"/"+thisFile.number+"_Events.html";
+			thisFile.category=colleges[i]['category'];
+			searchFiles.push(thisFile);
+
+			var thisFile = new PageObject();
+			thisFile.number=colleges[i]['number'];
+			thisFile.title=colleges[i]['number'] + " People";
+			thisFile.path="Colleges/"+thisFile.number+"/"+thisFile.number+"_People.html";
+			thisFile.category=colleges[i]['category'];
+			searchFiles.push(thisFile);
+		}
 		//Welcome Page
 		var thisFile = new PageObject();
 		thisFile.number="";
@@ -1243,6 +1282,21 @@
 		//Pottawatomie Mission
 		var thisFile = new PageObject();
 		thisFile.number="";
+		thisFile.title="Pottawatomie Mission Overview";
+		thisFile.path="PottawatomieMission/PottawatomieMission_Overview.html";
+		thisFile.category="PottawatomieMission"
+		searchFiles.push(thisFile)
+		pottawatomieMissionSchool = JSON.parse(JSON.stringify(thisFile));
+
+		var thisFile = new PageObject();
+		thisFile.number="";
+		thisFile.title="Pottawatomie Mission People";
+		thisFile.path="PottawatomieMission/PottawatomieMission_People.html";
+		thisFile.category="PottawatomieMission"
+		searchFiles.push(thisFile)
+
+		var thisFile = new PageObject();
+		thisFile.number="";
 		thisFile.title="Pottawatomie Mission Events";
 		thisFile.path="PottawatomieMission/PottawatomieMission_Events.html";
 		thisFile.category="PottawatomieMission"
@@ -1255,77 +1309,6 @@
 		thisFile.category="PottawatomieMission"
 		searchFiles.push(thisFile)
 		
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Pottawatomie Mission Overview";
-		thisFile.path="PottawatomieMission/PottawatomieMission_Overview.html";
-		thisFile.category="PottawatomieMission"
-		searchFiles.push(thisFile)
-
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Pottawatomie Mission People";
-		thisFile.path="PottawatomieMission/PottawatomieMission_People.html";
-		thisFile.category="PottawatomieMission"
-		searchFiles.push(thisFile)
-	
-		//Campbell College
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Campbell College Events";
-		thisFile.path="Colleges/CampbellCollege/CampbellCollege_Events.html";
-		thisFile.category="College"
-		searchFiles.push(thisFile)
-
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Campbell College People";
-		thisFile.path="Colleges/CampbellCollege/CampbellCollege_People.html";
-		thisFile.category="College"
-		searchFiles.push(thisFile)
-
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Campbell College Locations";
-		thisFile.path="Colleges/CampbellCollege/CampbellCollege_Locations.html";
-		thisFile.category="College"
-		searchFiles.push(thisFile)
-
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Campbell College Overview";
-		thisFile.path="Colleges/CampbellCollege/CampbellCollege_Overview.html";
-		thisFile.category="College"
-		searchFiles.push(thisFile)
-
-		//Circlevile Seminary
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Circleville Seminary Events";
-		thisFile.path="Colleges/CirclevilleSeminary/CirclevilleSeminary_Events.html";
-		thisFile.category="College"
-		searchFiles.push(thisFile)
-
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Circleville Seminary People";
-		thisFile.path="Colleges/CirclevilleSeminary/CirclevilleSeminary_People.html";
-		thisFile.category="College"
-		searchFiles.push(thisFile)
-
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Circleville Seminary Locations";
-		thisFile.path="Colleges/CirclevilleSeminary/CirclevilleSeminary_Locations.html";
-		thisFile.category="College"
-		searchFiles.push(thisFile)
-
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Circleville Seminary Overview";
-		thisFile.path="Colleges/CirclevilleSeminary/CirclevilleSeminary_Overview.html";
-		thisFile.category="College"
-		searchFiles.push(thisFile)
 		
 		//References		
 		var thisFile = new PageObject();

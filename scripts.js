@@ -17,6 +17,8 @@
 	var countySchoolDistricts = []; //array of PageObjects for elementary schools
 	var countyHighSchools = []; //array of PageObjects for high schools
 	var usdSchools = []; //array of PageObjects for USDs
+	var pottawatomieMissionSchool = {};
+	var colleges = [];
 	
 	//siteSearch variables
 	var siteSearchInput = document.getElementById("siteSearchInput");
@@ -312,6 +314,173 @@
 
 	};
 
+
+	//==========================================================================================
+	// configurePage
+	//==========================================================================================
+	function configurePage(config,showTitleBar3, showSchoolNavBar){
+		//INPUTS:
+		//	config can be:
+		//		'siteSearchResults' = display the searchResultsHolder div
+		//		'document' = display the documentContentHolder div
+		//		'subPage' = display the iFrameHolder div
+		//		'subSelector' = display the subselector for long lists like schools, maps,....
+		//		'test' = change as required for testing
+		//======================================================================================
+		
+		var subTitle = document.getElementById("SubTitle");
+		var subMenu = document.getElementById("SubMenu");
+		var contentHolder = document.getElementById("ContentHolder");
+		var contentTitleBar = document.getElementById("ContentTitle");
+		let iFrameHldr = document.getElementById("iFrameHolder");
+		let documentContentHolder = document.getElementById("documentContentHolder");
+		let docAnnot = document.getElementById("docAnnotation");
+		let docFigCapt = document.getElementById("figCaption");
+		let docNavBar = document.getElementById("docNavBar");
+		let schoolNavBar = document.getElementById("schoolNavBar");
+		let docPgImg = document.getElementById("docPageImg");
+		let searchRsltsHolder = document.getElementById("searchResultsHolder");	
+		let subSelectorHolder = document.getElementById("subSelector");
+		
+		switch (config){
+			//------------------------
+			case 'siteSearchResults':
+			//------------------------
+				subMenuName = '';
+				subMenuCat = '';
+				subTitle.innerHTML = "Site Search Results";
+				iFrameHldr.style.display = "none";
+				subSelectorHolder.style.display="none";
+				documentContentHolder.style.display = "none";
+				subMenu.style.display = "block";
+				searchRsltsHolder.style.display = "block";
+				docNavBar.style.display = "none";
+				docAnnot.innerHTML="";
+				docFigCapt.innerHTML="";
+				docPgImg.src='';
+				contentTitleBar.className = "titleBar3Empty";
+			break;
+
+			//------------------------
+			case 'document':
+			//------------------------
+				subMenuName = "";
+				subMenuCat = "";
+				iFrameHldr.style.display = "block";
+				documentContentHolder.style.display = "none";
+				subSelectorHolder.style.display="none";
+				subMenu.style.display = "block";
+				docNavBar.style.display = "none";
+				schoolNavBar.style.display = "none"
+				docAnnot.innerHTML="";
+				docFigCapt.innerHTML="";
+				docPgImg.src='';
+			break;
+
+			
+			//------------------------
+			case 'subPage':
+			//------------------------
+				iFrameHldr.style.display = "block";
+				subMenuName = '';
+				subMenuCat = ''
+				documentContentHolder.style.display = "none";
+				subSelectorHolder.style.display="none";
+				subMenu.style.display = "block";
+				docNavBar.style.display = "none";
+				schoolNavBar.style.display = "none"
+				searchRsltsHolder.style.display="none";
+				docAnnot.innerHTML="";
+				docFigCapt.innerHTML="";
+				docPgImg.src='';
+				
+			break;
+
+			//------------------------
+			case 'test':
+			//------------------------
+		  
+				subMenuName = '';
+				subMenuCat = '';
+				subTitle.innerHTML = "Test";
+				subMenu.style.display = "block";
+				docNavBar.style.display = "block";
+				schoolNavBar.style.display = "none"
+				subSelectorHolder.style.display="none";
+				contentTitleBar.className = "titleBar3Empty";
+				iFrameHldr.style.display = "none";
+				documentContentHolder.style.display = "block";
+				docAnnot.innerHTML="";
+				docFigCapt.innerHTML="";
+				docPgImg.src='';
+				searchRsltsHolder.style.display="none";
+
+			break;			
+				
+
+			//------------------------
+			case 'subSelector':
+			//------------------------
+				iFrameHldr.style.display = "none";
+				subMenuName = '';
+				subMenuCat = ''
+				documentContentHolder.style.display = "none";
+				subSelectorHolder.style.display="block";
+				subMenu.style.display = "block";
+				docNavBar.style.display = "none";
+				schoolNavBar.style.display = "none"
+				searchRsltsHolder.style.display="none";
+				docAnnot.innerHTML="";
+				docFigCapt.innerHTML="";
+				docPgImg.src='';
+			break;
+		}
+		
+		if (showTitleBar3){
+			contentTitleBar.className = "titleBar3";
+		}
+		else {
+			contentTitleBar.className = "titleBar3Empty";
+		}
+		if (showSchoolNavBar){
+			schoolNavBar.style.display = "block"
+		}
+		else {
+			schoolNavBar.style.display = "none"
+		}
+	}
+
+
+	//==========================================================================================
+	// showSiteSearchResults
+	//==========================================================================================
+	function showSiteSearchResults(){
+		
+		//show the search results page
+		configurePage('siteSearchResults',false, false);
+
+		//fill in the contents of the results page
+		let rsltStr = "<colgroup><col style='width:25%'><col style='width:75%'></colgroup>";
+		rsltStr = rsltStr + "<tr><th>Page</th><th>Matches</th></tr>";
+		
+		for (let i=0;i<=siteSearchResults.length-1;i++){
+			//TO-DO: add code to take you to the page!!!!
+			//console.log("siteSearchResults=" + JSON.stringify(siteSearchResults));
+			//console.log(siteSearchResults[i]['matches'].length);
+			let matchingTexts = "";
+			for (let j=0;j<=siteSearchResults[i]['phrases'].length-1;j++){
+				//console.log(j, JSON.stringify(siteSearchResults[i]['matches'][j]));
+				matchingTexts = matchingTexts + siteSearchResults[i]['phrases'][j];
+			}
+			rsltStr = rsltStr + "<tr><td>" + siteSearchResults[i]['title'] + "</td><td>" + matchingTexts + "</td></tr>";
+		}
+		//console.log("rsltStr="+rsltStr);
+		document.getElementById("siteSearchResultsList").innerHTML = rsltStr;
+		
+		// ADJUST LOCATIONS OF BARS
+		sizeBars()
+	}
+
 	//==========================================================================================
 	// searchSite
 	//==========================================================================================
@@ -362,56 +531,8 @@
 			}
 		
 			if (foundSomeMatches){
+				showSiteSearchResults();
 				
-				//show the search results page
-				var contentSource = '';
-				var subTitle = document.getElementById("SubTitle");
-				var subMenu = document.getElementById("SubMenu");
-				var contentHolder = document.getElementById("ContentHolder");
-				var contentTitleBar = document.getElementById("ContentTitle");
-				let iFrameHldr = document.getElementById("iFrameHolder");
-				let documentContentHolder = document.getElementById("documentContentHolder");
-				let docAnnot = document.getElementById("docAnnotation");
-				let docFigCapt = document.getElementById("figCaption");
-				let docNavBar = document.getElementById("docNavBar");
-				let schoolNavBar = document.getElementById("schoolNavBar");
-				let docPgImg = document.getElementById("docPageImg");
-				let searchRsltsHolder = document.getElementById("searchResultsHolder");
-				
-				subMenuName = '';
-				subMenuCat = '';
-				subTitle.innerHTML = "Site Search Results";
-				iFrameHldr.style.display = "none";
-				documentContentHolder.style.display = "none";
-				subMenu.style.display = "block";
-				searchRsltsHolder.style.display = "block";
-				docNavBar.style.display = "none";
-				schoolNavBar.style.display = "none"
-				docAnnot.innerHTML="";
-				docFigCapt.innerHTML="";
-				docPgImg.src='';
-				contentTitleBar.className = "titleBar3Empty";
-
-				//fill in the contents of the results page
-				let rsltStr = "<colgroup><col style='width:25%'><col style='width:75%'></colgroup>";
-				rsltStr = rsltStr + "<tr><th>Page</th><th>Matches</th></tr>";
-				
-				for (let i=0;i<=siteSearchResults.length-1;i++){
-					//TO-DO: add code to take you to the page!!!!
-					//console.log("siteSearchResults=" + JSON.stringify(siteSearchResults));
-					//console.log(siteSearchResults[i]['matches'].length);
-					let matchingTexts = "";
-					for (let j=0;j<=siteSearchResults[i]['phrases'].length-1;j++){
-						//console.log(j, JSON.stringify(siteSearchResults[i]['matches'][j]));
-						matchingTexts = matchingTexts + siteSearchResults[i]['phrases'][j];
-					}
-					rsltStr = rsltStr + "<tr><td>" + siteSearchResults[i]['title'] + "</td><td>" + matchingTexts + "</td></tr>";
-				}
-				//console.log("rsltStr="+rsltStr);
-				document.getElementById("siteSearchResultsList").innerHTML = rsltStr;
-				
-				// ADJUST LOCATIONS OF BARS
-				sizeBars()
 			}
 			else {
 				alert("No matches found.");
@@ -451,15 +572,12 @@
 		strIn = strIn.replace(/\\"/g, '"');
 		strIn = strIn.replace(/\\/g, " ");
 		
-		//console.log("strIn.length="+strIn.length);
-		//console.log("matchArr.length="+matchArr.length);
-		
 		let result = [];
 		for (let matchNum=0;matchNum<=matchArr.length-1;matchNum++){
 			let len = matchArr[matchNum]['text'].length;
 			for (let startChar=0; startChar<=strIn.length-len-1; startChar++){
 				let subStr = strIn.substring(startChar,startChar+len);
-				//console.log("len=" + len + ", startChar="+startChar);
+
 				if (subStr===matchArr[matchNum]['text']){
 					//search forwards to start of previous word or punctuation, whichever comes first
 					let rtPart = "";
@@ -489,7 +607,7 @@
 					if (startChar>=1){
 						endsFound = 0;
 						for (let i=startChar-2;i>=0;i--){
-							//console.log("AFT",strIn.length,startChar,len,i, "|"+strIn[i,i+1]+"|",strIn[i,i+1].charCodeAt(0),charIsPhraseEnder(strIn[i,i+1]));
+
 							if (charIsPhraseEnder(strIn[i,i+1])){
 								endsFound = endsFound+1;
 							}
@@ -534,22 +652,15 @@
 							}	
 						}
 					}
-					
-					//if (charIsPhraseEnder(rtPart[0])){
-					//	rtPart = rtPart.substring(1);
-					//}
+
 					if (charIsPhraseEnder(lftPart[0])){
 						lftPart = lftPart.substring(1);
 					}
 					if (charIsPhraseEnder(rtPart[rtPart.length-1])){
 						rtPart = rtPart.substring(0,rtPart.length-2);
 					}		
-					//if (charIsPhraseEnder(lftPart[lftPart.length-1])){
-					//	lftPart = lftPart.substring(0,lftPart.length-2);
-					//}	
 					
 					//add phrase to result array
-					//console.log("PHRASE FOUND=|" +lftPart+matchArr[matchNum]['text']+rtPart+ "|");
 					let finalPhrase = lftPart + "<MARK>" + matchArr[matchNum]['text'] + "</MARK>" + rtPart;
 					finalPhrase = finalPhrase.trim();
 					result.push(finalPhrase);
@@ -559,7 +670,6 @@
 			} //end of for (let startChar
 			
 		} //end of for (let matchNum
-		//console.log("result="+JSON.stringify(result));
 		
 		//eliminate duplicates and show qty of each duplicate
 		let wkgRslt=[];
@@ -581,15 +691,13 @@
 				rsltCountPair={count:1, rslt:result[i]};
 				wkgRslt.push(rsltCountPair);
 			}
-			//console.log("     wkgRslt="+JSON.stringify(wkgRslt));
+
 		}
 		
 		let finalRslt=[];
 		for (let j=0;j<=wkgRslt.length-1;j++){
-			//console.log(j,wkgRslt.length,wkgRslt[j]['rslt'],wkgRslt[j]['count']);
 			finalRslt.push("..." + wkgRslt[j]['rslt'] + "(" + wkgRslt[j]['count'] + ")...");
 		}
-		//console.log("finalRslt="+JSON.stringify(finalRslt));
 
 		return finalRslt;
 	}
@@ -1019,109 +1127,137 @@
 		countyHighSchools.length = 0;
 		usdSchools.length=0;
 		initVars(); //load global variables
-		buildMenus(); //build dropdowns based on contents of school arrays
 		sizeBars(); //size and place the menu bars
 	};
 
 	//==========================================================================================
-	// buildMenus
+	// buildSchoolLinks
 	//==========================================================================================	
-	function buildMenus(){
+	function buildSchoolLinks(){
+		var subSelContents = "";
+		let param = "";
+		//............................
+		// Pottawatomie Mission
+		//............................
+		param = JSON.stringify(pottawatomieMissionSchool);
+		param = param.replace(/"/g,"'");
+		subSelContents = subSelContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><b><u>FEDERAL</u></b></a><BR>";
+		subSelContents = subSelContents + String.fromCharCode(13) + "<a class='link-like' onclick=\"showSchool(";
+		subSelContents = subSelContents + param + ", 'Overview')\">";
+		subSelContents = subSelContents + pottawatomieMissionSchool.title + "</a><BR>";
+		
 		//............................
 		// County Districts
 		//............................
-		var dropDown = document.getElementById("CountyDistrictsDropdown");
-		var dropDownContents = dropDown.innerHTML;
 		var foundJoints = false;
 		var foundAdjacents = false;
-
+		
+		subSelContents = subSelContents + "<BR><BR>"  + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><b><u>COUNTY GRADE SCHOOLS</u></b></a><BR>";
 		for (var i = 0; i<=countySchoolDistricts.length-1;i++){
 
 			if (countySchoolDistricts[i].category === "Joint" && !foundJoints) {
-				dropDownContents = dropDownContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><u>JOINT DISTRICTS</u></a>";
+				subSelContents = subSelContents + String.fromCharCode(13) + "<BR><a></a>" + String.fromCharCode(13) + "<a><u>JOINT DISTRICTS</u></a><BR>";
 				foundJoints = true;
 			}
 			
 			if (countySchoolDistricts[i].category === "Adjacent" && !foundAdjacents) {
-				dropDownContents = dropDownContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><u>ADJACENT DISTRICTS</u></a>";
+				subSelContents = subSelContents + String.fromCharCode(13) + "<BR><a></a>" + String.fromCharCode(13) + "<a><u>ADJACENT DISTRICTS</u></a><BR>";
 				foundAdjacents = true;
 			}
 			// Example:
-			//<a onclick="menuClick({category:'County Districts', subCat:'090', title:'90 Rock Brook'})">090 Rock Brook</a>
-			dropDownContents = dropDownContents + String.fromCharCode(13) + "<a onclick=\"menuClick({category:'County Districts', subCat:'" + countySchoolDistricts[i].number 
-			dropDownContents = dropDownContents + "', title:'" + countySchoolDistricts[i].title + "'})\">"+ countySchoolDistricts[i].title + "</a>";
-				
+			//<a onclick="showSchool({'number':'005','title':'5 Banner','path':'CountyDistricts/005/005_Overview.html','category':'JacksonCounty'})">5 Banner</a>
+			param = JSON.stringify(countySchoolDistricts[i]);
+			param = param.replace(/"/g,"'");
+			subSelContents = subSelContents + String.fromCharCode(13) + "<a class='link-like' onclick=\"showSchool(";
+			subSelContents = subSelContents + param + ", 'Overview')\">";
+			subSelContents = subSelContents + countySchoolDistricts[i].title + "</a><BR>";
 		}
-		dropDown.innerHTML = dropDownContents;
 		
 		//............................
 		// County High Schools
 		//............................
-		dropDown = document.getElementById("CountyHighSchoolsDropdown");
-		dropDownContents = dropDown.innerHTML;
 		foundJoints = false;
 		foundAdjacents = false;
-
+		
+		subSelContents = subSelContents + "<BR><BR>" + String.fromCharCode(13) + "<BR><a></a>" + String.fromCharCode(13) + "<a><b><u>COUNTY HIGH SCHOOLS</u></b></a><BR>";
 		for (var i = 0; i<=countyHighSchools.length-1;i++){
 
 			if (countyHighSchools[i].category === "Joint" && !foundJoints) {
-				dropDownContents = dropDownContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><u>JOINT DISTRICTS</u></a>";
+				subSelContents = subSelContents + String.fromCharCode(13) + "<BR><a></a>" + String.fromCharCode(13) + "<a><u>JOINT DISTRICTS</u></a><BR>";
 				foundJoints = true;
 			}
 
 			if (countyHighSchools[i].category === "Adjacent" && !foundAdjacents) {
-				dropDownContents = dropDownContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><u>ADJACENT DISTRICTS</u></a>";
+				subSelContents = subSelContents + String.fromCharCode(13) + "<BR><a></a>" + String.fromCharCode(13) + "<a><u>ADJACENT DISTRICTS</u></a><BR>";
 				foundAdjacents = true;
 			}
 			// Example:
 			//<a onclick="menuClick({category:'High Schools',subCat:'RHS5', title:'RHS 5 Mayetta'})">RHS 5 Mayetta</a>
-			dropDownContents = dropDownContents + String.fromCharCode(13) + "<a onclick=\"menuClick({category:'County High Schools', subCat:'" + countyHighSchools[i].number 
-			dropDownContents = dropDownContents + "', title:'" + countyHighSchools[i].title + "'})\">"+ countyHighSchools[i].title + "</a>";
+			param = JSON.stringify(countyHighSchools[i]);
+			param = param.replace(/"/g,"'");
+			subSelContents = subSelContents + String.fromCharCode(13) + "<a class='link-like' onclick=\"showSchool(";
+			subSelContents = subSelContents + param + ", 'Overview')\">";
+			subSelContents = subSelContents + countyHighSchools[i].title + "</a><BR>";
 				
 		}
-		dropDown.innerHTML = dropDownContents;		
 		
 		//............................
 		// USDs
 		//............................
-		dropDown = document.getElementById("UsdSchoolsDropdown");
-		dropDownContents = dropDown.innerHTML;
 		foundJoints = false;
 		foundAdjacents = false;
-
+		
+		subSelContents = subSelContents + "<BR><BR>" + String.fromCharCode(13) + "<BR><a></a>" + String.fromCharCode(13) + "<a><b><u>UNIFIED SCHOOL DISTRICTS</u></b></a><BR>";
 		for (var i = 0; i<=usdSchools.length-1;i++){
 
 			if (usdSchools[i].category === "Joint" && !foundJoints) {
-				dropDownContents = dropDownContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><u>JOINT DISTRICTS</u></a>";
+				subSelContents = subSelContents + String.fromCharCode(13) + "<BR><a></a>" + String.fromCharCode(13) + "<a><u>JOINT DISTRICTS</u></a><BR>";
 				foundJoints = true;
 			}
 
 			if (usdSchools[i].category === "Adjacent" && !foundAdjacents) {
-				dropDownContents = dropDownContents + String.fromCharCode(13) + "<a></a>" + String.fromCharCode(13) + "<a><u>ADJACENT DISTRICTS</u></a>";
+				subSelContents = subSelContents + String.fromCharCode(13) + "<BR><a></a>" + String.fromCharCode(13) + "<a><u>ADJACENT DISTRICTS</u></a><BR>";
 				foundAdjacents = true;
 			}
 			// Example:
 			//<a onclick="menuClick({category:'UnifiedSchoolDistricts',subCat:'USD337', title:'USD337 Royal Valley'})">USD337 Royal Valley</a>
-			dropDownContents = dropDownContents + String.fromCharCode(13) + "<a onclick=\"menuClick({category:'Unified School Districts', subCat:'" + usdSchools[i].number 
-			dropDownContents = dropDownContents + "', title:'" + usdSchools[i].title + "'})\">"+ usdSchools[i].title + "</a>";
+			param = JSON.stringify(usdSchools[i]);
+			param = param.replace(/"/g,"'");
+			subSelContents = subSelContents + String.fromCharCode(13) + "<a class='link-like' onclick=\"showSchool(";
+			subSelContents = subSelContents + param + ", 'Overview')\">";
+			subSelContents = subSelContents + usdSchools[i].title + "</a><BR>";
 				
 		}
-		dropDown.innerHTML = dropDownContents;	
 		
-		//............................		
-		// Maps
 		//............................
-		dropDown = document.getElementById("MapsDropdown");
-		dropDownContents = dropDown.innerHTML;
+		// Colleges
+		//............................
+		foundJoints = false;
+		foundAdjacents = false;
+		
+		subSelContents = subSelContents + "<BR><BR>" + String.fromCharCode(13) + "<BR><a></a>" + String.fromCharCode(13) + "<a><b><u>COLLEGES</u></b></a><BR>";
+		for (var i = 0; i<=colleges.length-1;i++){
 
-		for (var i = 0; i<=maps.length-1;i++){
-			// Example:
-			//<a onclick="menuClick({category:'Maps',subCat:'1878 Jackson Co.'})">1878 Jackson Co.</a>
-			dropDownContents = dropDownContents + String.fromCharCode(13) + "<a onclick=\"menuClick({category:'Maps', subCat:'" + maps[i].number 
-			dropDownContents = dropDownContents + "', title:'" + maps[i].title + "'})\">"+ maps[i].title + "</a>";
+			if (colleges[i].category === "Joint" && !foundJoints) {
+				subSelContents = subSelContents + String.fromCharCode(13) + "<BR><a></a>" + String.fromCharCode(13) + "<a><u>JOINT DISTRICTS</u></a><BR>";
+				foundJoints = true;
+			}
+
+			if (colleges[i].category === "Adjacent" && !foundAdjacents) {
+				subSelContents = subSelContents + String.fromCharCode(13) + "<BR><a></a>" + String.fromCharCode(13) + "<a><u>ADJACENT DISTRICTS</u></a><BR>";
+				foundAdjacents = true;
+			}
+			param = JSON.stringify(colleges[i]);
+			param = param.replace(/"/g,"'");
+			subSelContents = subSelContents + String.fromCharCode(13) + "<a class='link-like' onclick=\"showSchool(";
+			subSelContents = subSelContents + param + ", 'Overview')\">";
+			subSelContents = subSelContents + colleges[i].title + "</a><BR>";
 				
-		}
-		dropDown.innerHTML = dropDownContents;	
+		}		
+		
+		return subSelContents;	
+		
+	
 	};
 	
 	//==========================================================================================
@@ -1159,9 +1295,61 @@
 	};
 	
 	//==========================================================================================
+	// showMap
+	//==========================================================================================
+	function showMap(params) {
+		
+		console.log("params="+JSON.stringify(params));
+		
+		var contentTitleBar = document.getElementById("ContentTitle");
+		var subTitle = document.getElementById("SubTitle");
+		var contentHolder = document.getElementById("ContentHolder");
+		configurePage('subPage', true, false);		  
+		subTitle.innerHTML = "Maps";
+		contentTitleBar.innerHTML=params['title'];
+		contentHolder.src = params['path'];
+		
+		
+	}
+	
+	//==========================================================================================
+	// showSchool
+	//==========================================================================================
+	function showSchool(params, subMenuSelection) {
+		console.log("params=" + JSON.stringify(params));
+		console.log("subMenuSelection=" + subMenuSelection);
+		let contentTitleBar = document.getElementById("ContentTitle");
+		let subTitle = document.getElementById("SubTitle");
+		let contentHolder = document.getElementById("ContentHolder");
+		let filePath = params['path'].replace('Overview',subMenuSelection);
+		
+		//show the correct configuration and update titles
+		configurePage('subPage', true, true);		  
+		subTitle.innerHTML = "School: " + params['title'];
+		contentTitleBar.innerHTML = subMenuSelection;
+		
+		//load the requested page
+		contentHolder.src = filePath;
+		
+		//build and fill the school-specific navbar
+		schoolNavBar = document.getElementById("schoolNavBar");
+		strParam = JSON.stringify(params);
+		strParam = strParam.replace(/"/g,"'");
+		let navHTML = "<a onclick=\"showSchool(" + strParam + ",'Overview')\">Overview</a>";
+		navHTML = navHTML + "<a onclick=\"showSchool(" + strParam + ",'Locations')\">Location(s) and Bldg(s)</a>";
+		navHTML = navHTML + "<a onclick=\"showSchool(" + strParam + ",'People')\">People</a>";
+		navHTML = navHTML + "<a onclick=\"showSchool(" + strParam + ",'Events')\">Events</a>";
+		schoolNavBar.innerHTML = navHTML;
+
+	}
+
+ 	
+	//==========================================================================================
 	// menuClick
 	//==========================================================================================
 	function menuClick(params) {
+		console.log("params=" + JSON.stringify(params));
+		
 		var category = params.category;
 		var subCat = params.subCat;
 		var title=``;
@@ -1181,258 +1369,129 @@
 		let schoolNavBar = document.getElementById("schoolNavBar");
 		let docPgImg = document.getElementById("docPageImg");
 		let searchRsltsHolder = document.getElementById("searchResultsHolder");
-			
+		let subSelectorContentHolder = document.getElementById("subSelectorContents");	
 		subMenuName = '';
 		subMenuCat = '';
 		
 		// SWITCH ON CATEGORY
 		switch(category){
 			
-		  //---------------------------
-		  case 'Test':
-		  //---------------------------	
-			subMenuName = '';
-			subMenuCat = '';
-			
-			//set the subTitle
-			subTitle.innerHTML = "Test";
-			
-			//set up submenu with document navigation controls
-			subMenu.style.display = "block";
-			docNavBar.style.display = "block";
-			schoolNavBar.style.display = "none"
-			
-			//hide the iFrame content
-			contentTitleBar.className = "titleBar3Empty";
-			iFrameHldr.style.display = "none";
-			
-			//hide the document content
-			documentContentHolder.style.display = "block";
-			docAnnot.innerHTML="";
-			docFigCapt.innerHTML="";
-			docPgImg.src='';
-			
-			//hide search results
-			searchRsltsHolder.style.display="none";
-			
-			//load the document pages
-			loadDocPages("Test/Test_Files/AnnotatedPhotos_LloydCopeland.json");
+			//---------------------------
+			case 'Test':
+			//---------------------------	
+				configurePage('test',false, false);
+
+				//load the document pages
+				loadDocPages("Test/Test_Files/AnnotatedPhotos_LloydCopeland.json");
+				
 			break;
 			
-		  //---------------------------
-		  case 'Home':
-		  //---------------------------		  
-			subMenuName = '';
-			subMenuCat = '';
-			contentSource="Welcome/Welcome.html"
-			subTitle.innerHTML = "Welcome";
-			iFrameHldr.style.display = "block";
-			documentContentHolder.style.display = "none";
-			subMenu.style.display = "block";
-			docNavBar.style.display = "none";
-			schoolNavBar.style.display = "none"
-						
-			//hide search results
-			searchRsltsHolder.style.display="none";
-			
-			docAnnot.innerHTML="";
-			docFigCapt.innerHTML="";
-			docPgImg.src='';
-			contentTitleBar.className = "titleBar3Empty";
+			//---------------------------
+			case 'Home':
+			//---------------------------		  
+				configurePage('subPage',false, false);
+				subTitle.innerHTML = "Welcome";
+				contentHolder.src ="Welcome/Welcome.html";
+				
 			break;
 
-		  //---------------------------
-		  case 'Overview':
-		  //---------------------------		
-			subMenuName = '';
-			subMenuCat = '';		  
-			subTitle.innerHTML = "Overview";
-			documentContentHolder.style.display = "none";
-			subMenu.style.display = "block";
-			docNavBar.style.display = "none";
-			schoolNavBar.style.display = "none"
-			docAnnot.innerHTML="";
-			docFigCapt.innerHTML="";
-			docPgImg.src='';
-			contentTitleBar.className = "titleBar3";
-			iFrameHldr.style.display = "block";
-						
-			//hide search results
-			searchRsltsHolder.style.display="none";
-			
-			if (subCat==='Overview'){
-				contentSource="Overview/CountyOverview.html";
-				contentTitleBar.innerHTML="County Overview";
-			}
-			if (subCat==='CoDistrictSumm'){
-				contentSource="Overview/CountyDistrictsSummary.html";
-				contentTitleBar.innerHTML="County Districts Summary";
-			}
-			if (subCat==='CoHSSumm'){
-				contentSource="Overview/CountyHighSchoolSummary.html";
-				contentTitleBar.innerHTML="County High School Summary";
-			}
-			if (subCat==='TeachersInst'){
-				contentSource="Overview/TeachersInstitute.html";
-				contentTitleBar.innerHTML="County Teachers Institute";
-			}
-			if (subCat==='DeedsLists'){
-				contentSource="Overview/RegisterOfDeedLists.html";
-				contentTitleBar.innerHTML="County Register of Deeds List";
-			}
-			if (subCat==='TreasurerAndTaxRpts'){
-				contentSource="Overview/CountyTreasurerAndTaxReports.html";
-				contentTitleBar.innerHTML="County Treasurer and Tax Reports";
-			}
-			if (subCat==='GradRpts'){
-				contentSource="Overview/CommonSchoolGraduateReports.html";
-				contentTitleBar.innerHTML="County Common School Graduate Reports";
-			}
-			if (subCat==='TeachersRpts'){
-				contentSource="Overview/TeachersReports.html";
-				contentTitleBar.innerHTML="County Teachers Reports";
-			}
-			if (subCat==='OtherRpts'){
-				contentSource="Overview/OtherReports.html";
-				contentTitleBar.innerHTML="Other County Reports";
-			}					
+			//---------------------------
+			case 'Overview':
+			//---------------------------	
+				configurePage('subPage', true, false);		  
+				subTitle.innerHTML = "Overview";
+				
+				if (subCat==='Overview'){
+					contentSource="Overview/CountyOverview.html";
+					contentTitleBar.innerHTML="County Overview";
+				}
+				if (subCat==='CoDistrictSumm'){
+					contentSource="Overview/CountyDistrictsSummary.html";
+					contentTitleBar.innerHTML="County Districts Summary";
+				}
+				if (subCat==='CoHSSumm'){
+					contentSource="Overview/CountyHighSchoolSummary.html";
+					contentTitleBar.innerHTML="County High School Summary";
+				}
+				if (subCat==='TeachersInst'){
+					contentSource="Overview/TeachersInstitute.html";
+					contentTitleBar.innerHTML="County Teachers Institute";
+				}
+				if (subCat==='DeedsLists'){
+					contentSource="Overview/RegisterOfDeedLists.html";
+					contentTitleBar.innerHTML="County Register of Deeds List";
+				}
+				if (subCat==='TreasurerAndTaxRpts'){
+					contentSource="Overview/CountyTreasurerAndTaxReports.html";
+					contentTitleBar.innerHTML="County Treasurer and Tax Reports";
+				}
+				if (subCat==='GradRpts'){
+					contentSource="Overview/CommonSchoolGraduateReports.html";
+					contentTitleBar.innerHTML="County Common School Graduate Reports";
+				}
+				if (subCat==='TeachersRpts'){
+					contentSource="Overview/TeachersReports.html";
+					contentTitleBar.innerHTML="County Teachers Reports";
+				}
+				if (subCat==='OtherRpts'){
+					contentSource="Overview/OtherReports.html";
+					contentTitleBar.innerHTML="Other County Reports";
+				}		
+				contentHolder.src =	contentSource;	
+				
 			break;
 			
-		  //---------------------------
-		  case 'Maps':
-		  //---------------------------
-			subMenuName = '';
-			subMenuCat = '';
-			subTitle.innerHTML = "Maps";
-			contentTitleBar.className = "titleBar3";
-			subMenu.style.display = "block";
-			docNavBar.style.display = "none";
-			schoolNavBar.style.display = "none"
-			iFrameHldr.style.display = "block";
-			documentContentHolder.style.display = "none";
-			docAnnot.innerHTML="";
-			docFigCapt.innerHTML="";
-			docPgImg.src='';
-						
-			//hide search results
-			searchRsltsHolder.style.display="none";
-			
-			if (subCat==='1878 Jackson Co.'){
-				contentSource="Maps/1878_JacksonCo.html";
-				contentTitleBar.innerHTML="Jackson County 1878";
-			}
-			else if (subCat==='1881 Jackson Co.'){
-				contentSource="Maps/1881_JacksonCo.html";
-				contentTitleBar.innerHTML="Jackson County 1881";
-			}
-			else if (subCat==='1883 Jackson Co.'){
-				contentSource="Maps/1883_JacksonCo.html";
-				contentTitleBar.innerHTML="Jackson County 1883";
-			}
-			else if (subCat==='1885 Holton'){
-				contentSource="Maps/1885_Holton.html";
-				contentTitleBar.innerHTML="Holton 1885";
-			}			
-			else if (subCat==='1887 Jackson Co.'){
-				contentSource="Maps/1887_JacksonCo.html";
-				contentTitleBar.innerHTML="Jackson County 1887";
-			}
-			else if (subCat==='1887 Brown Co.'){
-				contentSource="Maps/1887_BrownCo.html";
-				contentTitleBar.innerHTML="Brown County 1887";
-			}
-			else if (subCat==='1887 Nemaha Co.'){
-				contentSource="Maps/1887_NemahaCo.html";
-				contentTitleBar.innerHTML="Nemaha County 1887";
-			}
-			else if (subCat==='1889 Holton'){
-				contentSource="Maps/1889_Holton.html";
-				contentTitleBar.innerHTML="Holton 1889";
-			}
-			else if (subCat==='1896 Holton'){
-				contentSource="Maps/1896_Holton.html";
-				contentTitleBar.innerHTML="Holton 1896";
-			}						
-			else if (subCat==='1899 Pottawatamie Co.'){
-				contentSource="Maps/1899_PottawatomieCo.html";
-				contentTitleBar.innerHTML="Pottawatomie County 1899";
-			}				
-			else if (subCat==='1903 Jackson Co.'){
-				contentSource="Maps/1903_JacksonCo.html";
-				contentTitleBar.innerHTML="Jackson County 1903";
-			}			
-			else if (subCat==='1905 Holton'){
-				contentSource="Maps/1905_Holton.html";
-				contentTitleBar.innerHTML="Holton 1905";
-			}				
-			else if (subCat==='1908 Nemaha Co.'){
-				contentSource="Maps/1908_NemahaCo.html";
-				contentTitleBar.innerHTML="Nemaha County 1908";
-			}		
-			else if (subCat==='1911 Holton'){
-				contentSource="Maps/1911_Holton.html";
-				contentTitleBar.innerHTML="Holton 1911";
-			}
-			else if (subCat==='1912 Jackson Co. School Dist.'){
-				contentSource="Maps/1912_JacksonCoSchoolDistricts.html";
-				contentTitleBar.innerHTML="Jackson County School Districts 1912";
-			}
-			else if (subCat==='1918 Pottawatamie Reservation'){
-				contentSource="Maps/1918_PottawatomieReservation.html";
-				contentTitleBar.innerHTML="Pottawatomie Reservation 1918";
-			}
-			else if (subCat==='1919 Brown Co.'){
-				contentSource="Maps/1919_BrownCo.html";
-				contentTitleBar.innerHTML="Brown County 1919";
-			}
-			else if (subCat==='1921 Jackson Co.'){
-				contentSource="Maps/1921_JacksonCo.html";
-				contentTitleBar.innerHTML="Jackson County 1921";
-			}	
-			else if (subCat==='1922 Holton'){
-				contentSource="Maps/1922_Holton.html";
-				contentTitleBar.innerHTML="Holton 1922";
-			}	
-			else if (subCat==='1938 Jackson Co. Schl Dir'){
-				contentSource="Maps/1938_JacksonCoSchlDir.html";
-				contentTitleBar.innerHTML="Jackson County School Directory 1938";
-			}	
-			else if (subCat==='1963 Jackson Co. Rural Dir'){
-				contentSource="Maps/1963_JacksonCoRuralDir.html";
-				contentTitleBar.innerHTML="Jackson County Rural Directory 1963";
-			}			
-			else {
-				console.log("NO MENU MATCH FOR " + subCat);
-			}
+			//---------------------------
+			case 'Maps':
+			//---------------------------
+				
+				configurePage('subSelector', false, false);		  
+				subTitle.innerHTML = "Maps";
+				
+				//build contents of subSelectorContents
+				let subSelectorContents = "";
+				for (var i = 0; i<=maps.length-1;i++){
+					// Example:
+					//<a onclick="showMap({"category":"Maps","subCat":"1878 Jackson Co.","path":"Maps/1878_JacksonCo.html","title":"1878 Jackson Co."})">1878 Jackson Co.</a>
+					subSelectorContents = subSelectorContents + String.fromCharCode(13) + "<a class='link-like'"
+					subSelectorContents = subSelectorContents + "onclick=\"showMap({";
+					subSelectorContents = subSelectorContents + "category:'Maps', ";
+					subSelectorContents = subSelectorContents + "subCat:'" + maps[i].number + "', ";
+					subSelectorContents = subSelectorContents + "path:'" + maps[i].path + "', ";
+					subSelectorContents = subSelectorContents + "title:'" + maps[i].title + "'})\">";
+					subSelectorContents = subSelectorContents + maps[i].title + "</a><br><br>";
+
+				}		
+				subSelectorContentHolder.innerHTML=subSelectorContents;		
+
 			break;
 
-		  //---------------------------		  
-		  case 'Pre-Org':
-		  //---------------------------	
-			subMenuName = '';
-			subMenuCat = '';		  
-			subTitle.innerHTML = "Territorial Kansas";
-			contentTitleBar.className = "titleBar3Empty";
-			iFrameHldr.style.display = "block";
-			documentContentHolder.style.display = "none";
-			subMenu.style.display = "block";
-			docNavBar.style.display = "none";
-			schoolNavBar.style.display = "none"
-			docAnnot.innerHTML="";
-			docFigCapt.innerHTML="";
-			docPgImg.src='';
-						
-			//hide search results
-			searchRsltsHolder.style.display="none";
-			
-			if (subCat==='Frontier'){
-				contentSource="Pre-Org/Frontier.html";
-			}
-			if (subCat==='Territorial'){
-				contentSource="Pre-Org/Territorial.html";
-			}
+			//---------------------------		  
+			case 'Pre-Org':
+			//---------------------------	
+				configurePage('subPage', false, false);		  
+				subTitle.innerHTML = "Territorial Kansas";
+
+				if (subCat==='Frontier'){
+					contentSource="Pre-Org/Frontier.html";
+				}
+				if (subCat==='Territorial'){
+					contentSource="Pre-Org/Territorial.html";
+				}
+				contentHolder.src =	contentSource;
+				
 			break;
 
+			//---------------------------		
+			case 'Schools':
+			//---------------------------
+				
+				configurePage('subSelector', false, false);		  
+				subTitle.innerHTML = "Schools";
+				subSelectorContentHolder.innerHTML=buildSchoolLinks();
+				
+			break;
+			
 			//---------------------------	
 			// SCHOOLS		  
 			case 'County Districts':
@@ -1440,204 +1499,114 @@
 			case 'Colleges':
 			case 'Unified School Districts':
 			//---------------------------	
+				configurePage('subPage', true, true);	
+				contentTitleBar.innerHTML="Overview";  //default opening value
+				
 				// LOAD SUB TITLE
-				let catFolderName = category.replace(/\s/g,"");
 				var subTitleHTML = category + " " + title;
 				subTitle.innerHTML = subTitleHTML;
-				iFrameHldr.style.display = "block";
-				documentContentHolder.style.display = "none";
-				subMenu.style.display = "block";
-				docNavBar.style.display = "none";
-				schoolNavBar.style.display = "block"
-				docAnnot.innerHTML="";
-				docFigCapt.innerHTML="";
-				docPgImg.src='';
-								
-				//hide search results
-				searchRsltsHolder.style.display="none";
 
 				// LOAD SUBMENU click parameters
+				let catFolderName = category.replace(/\s/g,"");
 				subMenuName = catFolderName;
 				subMenuCat = subCat;
 
-				contentSource= catFolderName + "/" + subCat + "/" + subCat + "_Overview.html";
-				contentTitleBar.className = "titleBar3";
+				contentHolder.src= catFolderName + "/" + subCat + "/" + subCat + "_Overview.html";
+				
+			break;
+			
+			//---------------------------		
+			case 'Pottawatomie Mission':
+			//---------------------------		
+				configurePage('subPage', true, true);	
 				contentTitleBar.innerHTML="Overview";
-			break;
-			
-		  //---------------------------		
-		  case 'Pottawatomie Mission':
-		  //---------------------------		
-			subTitle.innerHTML = "Pottawatomie Mission";
-			iFrameHldr.style.display = "block";
-			documentContentHolder.style.display = "none";
-			subMenu.style.display = "block";
-			docNavBar.style.display = "none";
-			schoolNavBar.style.display = "block"
-			docAnnot.innerHTML="";
-			docFigCapt.innerHTML="";
-			docPgImg.src='';
-						
-			//hide search results
-			searchRsltsHolder.style.display="none";
-			
-			// LOAD SUBMENU click parameters
-			subMenuName = "PottawatomieMission";
-			subMenuCat = "";
-	
-			contentTitleBar.className = "titleBar3";
-			contentTitleBar.innerHTML="Overview";
-			contentSource="PottawatomieMission/PottawatomieMission_Overview.html";
+				subTitle.innerHTML = "Pottawatomie Mission";
+
+				// LOAD SUBMENU click parameters
+				subMenuName = "PottawatomieMission";
+				subMenuCat = "";
+
+				contentHolder.src="PottawatomieMission/PottawatomieMission_Overview.html";
 			break;
 
-		  //---------------------------				
-		  case 'High Schools':
-		  //---------------------------	
-			// LOAD SUB TITLE
-			var subTitleHTML = "County High Schools - " + title;
-			subTitle.innerHTML = subTitleHTML;
-			iFrameHldr.style.display = "block";
-			documentContentHolder.style.display = "none";
-			subMenu.style.display = "block";
-			docNavBar.style.display = "none";
-			schoolNavBar.style.display = "block"
-			docAnnot.innerHTML="";
-			docFigCapt.innerHTML="";
-			docPgImg.src='';
+			//---------------------------				
+			case 'High Schools':
+			//---------------------------	
+
+				configurePage('subPage', true, true);
+				contentTitleBar.innerHTML="Overview";	
+				subTitle.innerHTML = "County High Schools - " + title;
+										
+				// LOAD SUBMENU click parameters
+				subMenuName = "CountyHighSchools";
+				subMenuCat = subCat;
+
+				contentHolder.src="CountyHighSchools/" + subCat + "/" + subCat + "_Overview.html";
 						
-						
-			// LOAD SUBMENU click parameters
-			subMenuName = "CountyHighSchools";
-			subMenuCat = subCat;
-			
-	
-			contentSource="CountyHighSchools/" + subCat + "/" + subCat + "_Overview.html";
-			contentTitleBar.className = "titleBar3";
-			contentTitleBar.innerHTML="Overview";			
 			break;
 
-		  //---------------------------				
-		  case 'USD':
-		  //---------------------------	
+			//---------------------------				
+			case 'USD':
+			//---------------------------	
+				configurePage('subPage', true, true);
+				contentTitleBar.innerHTML="Overview";	
+				subTitle.innerHTML = title;
+										
+				// LOAD SUBMENU click parameters
+				subMenuName = "UnifiedSchoolDistricts";
+				subMenuCat = subCat;
 
-			// LOAD SUB TITLE
-			var subTitleHTML = title;
-			subTitle.innerHTML = subTitleHTML;
-			iFrameHldr.style.display = "block";
-			documentContentHolder.style.display = "none";
-			subMenu.style.display = "block";
-			docNavBar.style.display = "none";
-			schoolNavBar.style.display = "block"
-			docAnnot.innerHTML="";
-			docFigCapt.innerHTML="";
-			docPgImg.src='';
-						
-			//hide search results
-			searchRsltsHolder.style.display="none";
-									
-			// LOAD SUBMENU click parameters
-			subMenuName = "UnifiedSchoolDistricts";
-			subMenuCat = subCat;
+				contentHolder.src="UnifiedSchoolDistricts/" + subCat + "/" + subCat + "_Overview.html";
 
-			contentSource="UnifiedSchoolDistricts/" + subCat + "/" + subCat + "_Overview.html";
-			contentTitleBar.className = "titleBar3";
-			contentTitleBar.innerHTML="Overview";	
 			break;	  
 
-		  //---------------------------	
-		  case 'Colleges':
-		  //---------------------------	
-			// LOAD SUB TITLE
-			var subTitleHTML = title;	
-			subTitle.innerHTML = subTitleHTML;
-			iFrameHldr.style.display = "block";
-			documentContentHolder.style.display = "none";
-			subMenu.style.display = "block";
-			docNavBar.style.display = "none";
-			schoolNavBar.style.display = "block"
-			docAnnot.innerHTML="";
-			docFigCapt.innerHTML="";
-			docPgImg.src='';
-						
-			//hide search results
-			searchRsltsHolder.style.display="none";
+			//---------------------------	
+			case 'Colleges':
+			//---------------------------	
+				configurePage('subPage', true, true);
+				contentTitleBar.innerHTML="Overview";	
+				subTitle.innerHTML = title;
 
-			// LOAD SUBMENU click parameters
-			subMenuName = "Colleges";
-			subMenuCat = subCat;
+				// LOAD SUBMENU click parameters
+				subMenuName = "Colleges";
+				subMenuCat = subCat;
 
-			contentSource="Colleges/" + subCat + "/" + subCat + "_Overview.html";
-			contentTitleBar.className = "titleBar3";
-			contentTitleBar.innerHTML="Overview";
+				contentHolder.src="Colleges/" + subCat + "/" + subCat + "_Overview.html";
+
+				contentTitleBar.innerHTML="Overview";
 			break;
 
-		  //---------------------------	
-		  case 'References':
-		  //---------------------------		
-			subMenuName = "";
-			subMenuCat = "";		  
-			subTitle.innerHTML = "References";	
-			contentTitleBar.className = "titleBar3Empty";
-			iFrameHldr.style.display = "block";
-			documentContentHolder.style.display = "none";
-			subMenu.style.display = "block";
-			docNavBar.style.display = "none";
-			schoolNavBar.style.display = "none"
-			docAnnot.innerHTML="";
-			docFigCapt.innerHTML="";
-			docPgImg.src='';
-			contentSource="References/References.html";
-						
-			//hide search results
-			searchRsltsHolder.style.display="none";
+			//---------------------------	
+			case 'References':
+			//---------------------------	
+				configurePage('subPage', false, false);		   
+				subTitle.innerHTML = "References";	
+				contentHolder.src="References/References.html";
 			break;
 			
-		  //---------------------------	
-		  case 'SourceMatl':
-		  //---------------------------			  
-			subMenuName = "";
-			subMenuCat = "";
-			subTitle.innerHTML = "Source Materials";	
-			contentTitleBar.className = "titleBar3Empty";
-			iFrameHldr.style.display = "block";
-			documentContentHolder.style.display = "none";
-			subMenu.style.display = "block";
-			docNavBar.style.display = "none";
-			schoolNavBar.style.display = "none"
-			docAnnot.innerHTML="";
-			docFigCapt.innerHTML="";
-			docPgImg.src='';
-			contentSource="SourceMatls/SourceMatls.html";
+			//---------------------------	
+			case 'SourceMatl':
+			//---------------------------	
+				configurePage('document', false, false);			  
+
+				subTitle.innerHTML = "Source Materials";	
+
+				contentHolder.src="SourceMatls/SourceMatls.html";
 						
-			//hide search results
-			searchRsltsHolder.style.display="none";
 			break;
 
-		  //---------------------------	
-		  case 'Contact':
-		  //---------------------------	
-			subMenuName = "";
-			subMenuCat = "";		  
-			subTitle.innerHTML = "Contact";	
-			contentTitleBar.className = "titleBar3Empty";
-			subMenu.style.display = "block";
-			docNavBar.style.display = "none";
-			schoolNavBar.style.display = "none"
-			iFrameHldr.style.display = "block";
-			contentSource="Contact/Contact.html";
-			documentContentHolder.style.display = "none";
-						
-			//hide search results
-			searchRsltsHolder.style.display="none";
-			docAnnot.innerHTML="";
-			docFigCapt.innerHTML="";
-			docPgImg.src='';
+			//---------------------------	
+			case 'Contact':
+			//---------------------------	
+				configurePage('subPage', false, false);	
+				subTitle.innerHTML = "Contact";	
+				contentHolder.src="Contact/Contact.html";
+
 			break;
 
 		} 
 	
-		// CHANGE THE SOURCE FOR THE iFrame
-		contentHolder.src =contentSource;
+
 		window.top.scrollTo(0,0);
 		
 		// ADJUST LOCATIONS OF BARS
@@ -1645,24 +1614,7 @@
 		
 	};
 	
-	//==========================================================================================
-	// schoolSubMenuClick
-	//==========================================================================================
-	function schoolSubMenuClick(category) {
 
-		var contentTitleBar = document.getElementById("ContentTitle");
-		var contentHolder = document.getElementById("ContentHolder");
-
-		// change the content title bar
-		contentTitleBar.innerHTML=category;
-
-		// change the source for the  iFrame
-		contentHolder.src =subMenuName + "/" + subMenuCat + "/" + subMenuCat + "_" + category + ".html";;
-		
-		// adjust locations of bars
-		sizeBars()
-		
-	}; // end of function subMenuClick 
 	
 	//==========================================================================================
 	// FindMatchSubStrings

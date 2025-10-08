@@ -608,3 +608,15 @@
 			margin-left: 20px;
 			font-size: 14px;
 		}
+		
+					
+		/* --------------------------------------------- */
+		/* SUB SELECTOR MENU */
+		/* --------------------------------------------- */	
+		.subSelector{
+			display: block;
+			align-items: top;
+			justify-content: left;
+			column-count:4;
+			font-size=8px;
+		}
