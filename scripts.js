@@ -28,6 +28,7 @@
 	var siteSearchPrecision = 1.00;
 	var searchFiles = []; //array of PageObjects for searching the site
 	var siteSearchResults = []; //subset of searchFiles that have matches
+	var siteSearchTermInput; //user input tot he site search
 	
 	//variables for displaying documents
 	var docPages = []; //array of AnnotatedPhotoObject, loaded by loadDocPages
@@ -132,12 +133,7 @@
 		thisPage.title="Welcome";
 		thisPage.path="Welcome/Welcome.html";
 		thisPage.category="Home";
-		let pageStckEl = new PageStack();
-		pageStckEl.pageParam = thisPage;
-		pageStckEl.siteSearchRslts = [];
-		pageStckEl.docPagesRSrchd=false;
-		pageStckEl.docSrchRsltPgs =[]; 
-		webStack.push(pageStckEl);
+		addToWebStack(thisPage);
 		
 	};
 	
@@ -302,7 +298,9 @@
 		var subTitle = document.getElementById("SubTitle");
 		var contentHolder = document.getElementById("ContentHolder");
 		
+		//...........................
 		//adjust webStackIndex
+		//...........................
 		if (dir==='next'){
 			webStackIndex=webStackIndex+1;
 		}
@@ -317,8 +315,21 @@
 		}
 		//console.log(JSON.stringify(webStack));
 		//console.log(webStackIndex, webStack.length, JSON.stringify(webStack[webStackIndex]));
+		console.log(webStack[webStackIndex].pageParam.category);
 		
+		//......................................
+		// set search variables
+		//......................................
+		siteSearchInput = (' ' + webStack[webStackIndex].siteSrchTrmInpt).slice(1);
+		siteSearchResults = JSON.parse(JSON.stringify(webStack[webStackIndex].siteSearchRslts));
+		
+		docPagesAreSearched = webStack[webStackIndex].docPagesRSrchd;
+		docSearchTerm = (' ' + webStack[webStackIndex].docSrchTrm).slice(1);
+		docSearchResultPages = JSON.parse(JSON.stringify(webStack[webStackIndex].docSrchRsltPgs));
+		
+		//......................................
 		//navigate to page at webStackIndex
+		//......................................
 		switch (webStack[webStackIndex].pageParam.category){
 			//......................
 			// Home
@@ -409,7 +420,14 @@
 			//......................
 			case 'Contact':
 				menuClick({"category":"Contact","subCat":""}, false );
-			break;					
+			break;
+			
+			//......................
+			// SiteSearch
+			//......................
+			case 'SiteSearch':
+				showSiteSearchResults(false);
+			break;				
 		}
 		
 	}
@@ -597,7 +615,7 @@
 	//==========================================================================================
 	// showSiteSearchResults
 	//==========================================================================================
-	function showSiteSearchResults(){
+	function showSiteSearchResults(userClick=true){
 		
 		//show the search results page
 		configurePage('siteSearchResults',false, false);
@@ -620,6 +638,16 @@
 		//console.log("rsltStr="+rsltStr);
 		document.getElementById("siteSearchResultsList").innerHTML = rsltStr;
 		
+		//update webStack by copying the current location and adding search results
+		if (userClick){
+			thisPage = new PageObject();
+			thisPage.number="";
+			thisPage.title="Site Search";
+			thisPage.path="";
+			thisPage.category="SiteSearch";
+			addToWebStack(thisPage)
+		}
+		
 		// ADJUST LOCATIONS OF BARS
 		sizeBars()
 	}
@@ -627,18 +655,19 @@
 	//==========================================================================================
 	// searchSite
 	//==========================================================================================
-	async function searchSite(precisionRqd=1.00){  
+	async function searchSite(precisionRqd=1.00, userClick=true){  
 		//0.82 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
 	
 		// stop user input
-		document.getElementById("pauseUserInputContent").innerHTML="Searching entire site....0/" + (searchFiles.length-1);
+		document.getElementById("pauseUserInputContent").innerHTML="Please wait. Searching entire site....0/" + (searchFiles.length-1);
 		document.getElementById("pauseUserInput").style.display="block";
 		
 		//initialize variables
 		let foundSomeMatches = false;
 		siteSearchResults.length=0;
 		siteSearchPrecision = precisionRqd; //save to global variable
-		let siteSearchTermInput = document.getElementById("siteSearchInput").value;
+		siteSearchTermInput = document.getElementById("siteSearchInput").value;
+		
 		let startStr = "<colgroup><col style='width:25%'><col style='width:75%'></colgroup>";
 		startStr = startStr + "<tr><th>Page</th><th>Matches</th></tr>";
 		document.getElementById("siteSearchResultsList").innerHTML =startStr;
@@ -671,19 +700,18 @@
 						siteSearchResults.push({title:searchFiles[i]['title'], matches: matchSubStrings, phrases: matchPhrases});
 					}
 				}
-				document.getElementById("pauseUserInputContent").innerHTML="Searching entire site...." + i + "/" + (searchFiles.length-1);
+				document.getElementById("pauseUserInputContent").innerHTML="Please wait. Searching entire site...." + i + "/" + (searchFiles.length-1);
 			}
 		
 			if (foundSomeMatches){
 				showSiteSearchResults();
-				
 			}
 			else {
 				alert("No matches found.");
 			}
 			
 		} //end of if (docSearchTermInput != null && docSearchTermInput!="")
-			
+	
 		// renew user input
 		document.getElementById("pauseUserInputContent").innerHTML="Calculating....";
 		document.getElementById("pauseUserInput").style.display="none";
@@ -916,7 +944,7 @@
 	//==========================================================================================
 	// searchDocument
 	//==========================================================================================
-	function searchDocument(precisionRqd=1.00){  
+	function searchDocument(precisionRqd=1.00, userClick=true){  
 		//0.82 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
 	
 		//initialize variables
@@ -993,6 +1021,11 @@
 				document.getElementById("docSearchResultsQty").innerHTML='0/0';
 				docSearchResultCurrPg=0;
 			}
+			
+			//update webStack by copying the current location and adding results
+			if (userClick){
+				addToWebStack(webStack[webStackIndex].pageParam)
+			}		
 			
 		} // end if (docSearchTermInput != null && docSearchTermInput!="")
 			
@@ -1087,18 +1120,33 @@
 			thisPage.title=docTitle;
 			thisPage.path=filePath;
 			thisPage.category="SourceMatl";
-			pageStckEl = new PageStack();
-			pageStckEl.pageParam = thisPage;
-			pageStckEl.siteSearchRslts = siteSearchResults;
-			pageStckEl.docPagesRSrchd=docPagesAreSearched;
-			pageStckEl.docSrchRsltPgs =docSearchResultPages; 
-			webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-			webStack.push(pageStckEl);
-			webStackIndex = webStack.length-1;
-			console.log(webStackIndex,JSON.stringify(webStack[webStackIndex]));
+			addToWebStack(thisPage);
 		}
 
 	};
+
+	//==========================================================================================
+	// addToWebStack
+	//==========================================================================================	
+	function addToWebStack(pgIn){
+		//make sure nothing is stored in the stack "by Reference"
+		let pageStckEl = new PageStack();
+		pageStckEl.pageParam = JSON.parse(JSON.stringify(pgIn));
+		pageStckEl.siteSrchTrmInpt =(' ' + siteSearchTermInput).slice(1);
+		pageStckEl.siteSearchRslts = JSON.parse(JSON.stringify(siteSearchResults));
+		if (docPagesAreSearched) {
+			pageStckEl.docPagesRSrchd=true;
+		}
+		else {
+			pageStckEl.docPagesRSrchd=false;
+		}
+		pageStckEl.docSrchTrm = (' ' + docSearchTerm).slice(1);
+		pageStckEl.docSrchRsltPgs =JSON.parse(JSON.stringify(docSearchResultPages)); 
+		webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+		webStack.push(pageStckEl);
+		webStackIndex = webStack.length-1;	
+		//console.log(webStackIndex,JSON.stringify(webStack[webStackIndex]));
+	}
 	
 	//==========================================================================================
 	// loadDocPageNum
@@ -1458,15 +1506,9 @@
 		contentHolder.src = params['path'];
 			
 		//add to the web page stack if user navigated here
-		if (userClick){
-			let pageStckEl = new PageStack();
-			pageStckEl.pageParam = params;
-			pageStckEl.siteSearchRslts = siteSearchResults;
-			pageStckEl.docPagesRSrchd=docPagesAreSearched;
-			pageStckEl.docSrchRsltPgs =docSearchResultPages; 
-			webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-			webStack.push(pageStckEl);
-			webStackIndex = webStack.length-1;
+		if (userClick){ 
+			let thisPage = JSON.parse(JSON.stringify(params));
+			addToWebStack(thisPage);
 		}	
 		
 	}
@@ -1509,17 +1551,11 @@
 		schoolNavBar.innerHTML = navHTML;
 		
 		//add to the web page stack if user navigated here
-		if (userClick){
-			let pageStckEl = new PageStack();
-			pageStckEl.pageParam = params;
-			pageStckEl.pageParam.path = filePath;
-			pageStckEl.siteSearchRslts = siteSearchResults;
-			pageStckEl.docPagesRSrchd=docPagesAreSearched;
-			pageStckEl.docSrchRsltPgs =docSearchResultPages; 
-			webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-			webStack.push(pageStckEl);
-			webStackIndex = webStack.length-1;
-			console.log(webStackIndex,JSON.stringify(webStack[webStackIndex]));
+		if (userClick){	
+			//make a new object since we may have modified the filePath above
+			let thisPage = JSON.parse(JSON.stringify(params));
+			thisPage.path = filePath;
+			addToWebStack(thisPage);
 		}
 	}
 	
@@ -1541,14 +1577,7 @@
 		
 		//add to the web page stack if user navigated here
 		if (userClick){
-			let pageStckEl = new PageStack();
-			pageStckEl.pageParam = params;
-			pageStckEl.siteSearchRslts = siteSearchResults;
-			pageStckEl.docPagesRSrchd=docPagesAreSearched;
-			pageStckEl.docSrchRsltPgs =docSearchResultPages; 
-			webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-			webStack.push(pageStckEl);
-			webStackIndex = webStack.length-1;
+			addToWebStack(params);
 		}
 	}
 
@@ -1612,14 +1641,7 @@
 					thisPage.title="Welcome";
 					thisPage.path="Welcome/Welcome.html";
 					thisPage.category="Home";
-					pageStckEl = new PageStack();
-					pageStckEl.pageParam = thisPage;
-					pageStckEl.siteSearchRslts = siteSearchResults;
-					pageStckEl.docPagesRSrchd=docPagesAreSearched;
-					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
-					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-					webStack.push(pageStckEl);
-					webStackIndex = webStack.length-1;
+					addToWebStack(thisPage);
 				}
 				
 			break;
@@ -1649,14 +1671,7 @@
 					thisPage.title="Overview";
 					thisPage.path="";
 					thisPage.category="Overview";
-					pageStckEl = new PageStack();
-					pageStckEl.pageParam = thisPage;
-					pageStckEl.siteSearchRslts = siteSearchResults;
-					pageStckEl.docPagesRSrchd=docPagesAreSearched;
-					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
-					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-					webStack.push(pageStckEl);
-					webStackIndex = webStack.length-1;
+					addToWebStack(thisPage);
 				}
 
 			break;
@@ -1689,13 +1704,7 @@
 					thisPage.path="";
 					thisPage.category="Maps";
 					pageStckEl = new PageStack();
-					pageStckEl.pageParam = thisPage;
-					pageStckEl.siteSearchRslts = siteSearchResults;
-					pageStckEl.docPagesRSrchd=docPagesAreSearched;
-					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
-					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-					webStack.push(pageStckEl);
-					webStackIndex = webStack.length-1;
+					addToWebStack(thisPage);
 				}
 
 			break;
@@ -1714,14 +1723,7 @@
 					thisPage.title="Pre-Org";
 					thisPage.path="";
 					thisPage.category="Pre-Org";
-					pageStckEl = new PageStack();
-					pageStckEl.pageParam = thisPage;
-					pageStckEl.siteSearchRslts = siteSearchResults;
-					pageStckEl.docPagesRSrchd=docPagesAreSearched;
-					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
-					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-					webStack.push(pageStckEl);
-					webStackIndex = webStack.length-1;
+					addToWebStack(thisPage);
 				}
 	
 			break;
@@ -1741,14 +1743,7 @@
 					thisPage.title="Schools";
 					thisPage.path="";
 					thisPage.category="Schools";
-					pageStckEl = new PageStack();
-					pageStckEl.pageParam = thisPage;
-					pageStckEl.siteSearchRslts = siteSearchResults;
-					pageStckEl.docPagesRSrchd=docPagesAreSearched;
-					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
-					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-					webStack.push(pageStckEl);
-					webStackIndex = webStack.length-1;
+					addToWebStack(thisPage);
 				}
 
 			break;
@@ -1767,14 +1762,7 @@
 					thisPage.title="References";
 					thisPage.path="";
 					thisPage.category="References";
-					pageStckEl = new PageStack();
-					pageStckEl.pageParam = thisPage;
-					pageStckEl.siteSearchRslts = siteSearchResults;
-					pageStckEl.docPagesRSrchd=docPagesAreSearched;
-					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
-					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-					webStack.push(pageStckEl);
-					webStackIndex = webStack.length-1;
+					addToWebStack(thisPage);
 				}
 
 			break;
@@ -1793,14 +1781,7 @@
 					thisPage.title="SourceMatl";
 					thisPage.path="";
 					thisPage.category="SourceMatl";
-					pageStckEl = new PageStack();
-					pageStckEl.pageParam = thisPage;
-					pageStckEl.siteSearchRslts = siteSearchResults;
-					pageStckEl.docPagesRSrchd=docPagesAreSearched;
-					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
-					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-					webStack.push(pageStckEl);
-					webStackIndex = webStack.length-1;
+					addToWebStack(thisPage);
 				}
 		
 			break;
@@ -1818,14 +1799,7 @@
 					thisPage.title="Contact";
 					thisPage.path="";
 					thisPage.category="Contact";
-					pageStckEl = new PageStack();
-					pageStckEl.pageParam = thisPage;
-					pageStckEl.siteSearchRslts = siteSearchResults;
-					pageStckEl.docPagesRSrchd=docPagesAreSearched;
-					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
-					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-					webStack.push(pageStckEl);
-					webStackIndex = webStack.length-1;
+					addToWebStack(thisPage);;
 				}
 
 			break;
@@ -2116,7 +2090,9 @@
 	//---------------------------
 	class PageStack{
 		pageParam;
+		siteSrchTrmInpt;
 		siteSearchRslts;
 		docPagesRSrchd;
+		docSrchTrm;
 		docSrchRsltPgs; //array of page numbers containing the searched for text
 	};	
