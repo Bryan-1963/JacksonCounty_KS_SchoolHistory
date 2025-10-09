@@ -23,49 +23,57 @@
 		<div class="titleBarTitle">
 		Jackson County, Kansas Schools History
 		</div>
-
 	</div>
 
 	<!-- ---------------------------------------------------------------------------------------------- -->
 	<!-- MAIN MENU -->
 	<!-- ---------------------------------------------------------------------------------------------- -->
 	<div id="MainMenu" class="navbar" >
-		<!-- Home -->
+	
+		<!-- Stack Nav -->
 		<!-- -------------------- -->
-		<a onclick="menuClick({category:'Home',subCat:''})">Home</a>
+		<div class='stackNavHolder'>
+			<button style='font-size:14px;' onclick="navStack('prev')"><i class='fa fa-angle-left'></i></button>
+			<button style='font-size:14px' onclick="navStack('next')"><i class='fa fa-angle-right'></i></button>
+		</div>
 		
-		<!-- Overview -->
-		<!-- -------------------- -->
-		<a onclick="menuClick({category:'Overview',subCat:''})">Overview</a>	
-		
-		<!-- Maps -->
-		<!-- -------------------- -->
-		<a onclick="menuClick({category:'Maps',subCat:''})">Maps</a>	
-		
-		<!-- Territorial -->
-		<!-- -------------------- -->
-		<a onclick="menuClick({category:'Pre-Org',subCat:'Territorial'})">Territorial KS</a>
-		
-		<!-- Schools -->
-		<!-- -------------------- -->
-		<a onclick="menuClick({category:'Schools',subCat:''})">Schools</a>	
-		
-		<!-- References -->
-		<!-- -------------------- -->
-		<a onclick="menuClick({category:'References',subCat:''})">References</a>
-		
-		<!-- Source Materials -->
-		<!-- -------------------- -->
-		<a onclick="menuClick({category:'SourceMatl',subCat:''})">Source Materials</a>
-		
-		<!-- Contact -->
-		<!-- -------------------- -->
-		<a onclick="menuClick({category:'Contact',subCat:''})">Contact</a>
+		<div class='menuHolder'>
+			<!-- Home -->
+			<!-- -------------------- -->
+			<a onclick="menuClick({category:'Home',subCat:''})">Home</a>
 			
-		<!-- TEST ONLY -->
-		<!-- -------------------- -->
-		<a onclick="menuClick({category:'Test',subCat:''})" style="display: none;">TEST ONLY</a>
+			<!-- Overview -->
+			<!-- -------------------- -->
+			<a onclick="menuClick({category:'Overview',subCat:''})">Overview</a>	
 			
+			<!-- Maps -->
+			<!-- -------------------- -->
+			<a onclick="menuClick({category:'Maps',subCat:''})">Maps</a>	
+			
+			<!-- Territorial -->
+			<!-- -------------------- -->
+			<a onclick="menuClick({category:'Pre-Org',subCat:'Territorial'})">Territorial KS</a>
+			
+			<!-- Schools -->
+			<!-- -------------------- -->
+			<a onclick="menuClick({category:'Schools',subCat:''})">Schools</a>	
+			
+			<!-- References -->
+			<!-- -------------------- -->
+			<a onclick="menuClick({category:'References',subCat:''})">References</a>
+			
+			<!-- Source Materials -->
+			<!-- -------------------- -->
+			<a onclick="menuClick({category:'SourceMatl',subCat:''})">Source Materials</a>
+			
+			<!-- Contact -->
+			<!-- -------------------- -->
+			<a onclick="menuClick({category:'Contact',subCat:''})">Contact</a>
+				
+			<!-- TEST ONLY -->
+			<!-- -------------------- -->
+			<a onclick="menuClick({category:'Test',subCat:''})" style="display: none;">TEST ONLY</a>
+		</div>	
 		<!-- Search site -->
 		<div class='searchHolder'>
 		

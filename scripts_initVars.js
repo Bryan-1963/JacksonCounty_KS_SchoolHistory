@@ -11,147 +11,147 @@
 		thisMap.number = "1878 Jackson Co.";
 		thisMap.title = "1878 Jackson Co.";
 		thisMap.path = "Maps/1878_JacksonCo.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);
 		
 		thisMap = new PageObject();
 		thisMap.number = "1881 Jackson Co.";
 		thisMap.title = "1881 Jackson Co.";
 		thisMap.path = "Maps/1881_JacksonCo.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1883 Jackson Co.";
 		thisMap.title = "1883 Jackson Co.";
 		thisMap.path = "Maps/1883_JacksonCo.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1885 Holton";
 		thisMap.title = "1885 Holton";
 		thisMap.path = "Maps/1885_Holton.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1887 Jackson Co.";
 		thisMap.title = "1887 Jackson Co.";
 		thisMap.path = "Maps/1887_JacksonCo.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1887 Brown Co.";
 		thisMap.title = "1887 Brown Co.";
 		thisMap.path = "Maps/1887_BrownCo.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1887 Nemaha Co.";
 		thisMap.title = "1887 Nemaha Co.";
 		thisMap.path = "Maps/1887_NemahaCo.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);
 		
 		thisMap = new PageObject();
 		thisMap.number = "1889 Holton";
 		thisMap.title = "1889 Holton";
 		thisMap.path = "Maps/1889_Holton.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1896 Holton";
 		thisMap.title = "1896 Holton";
 		thisMap.path = "Maps/1896_Holton.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1899 Pottawatamie Co.";
 		thisMap.title = "1899 Pottawatamie Co.";
 		thisMap.path = "Maps/1899_PottawatamieCo.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);
 		
 		thisMap = new PageObject();
 		thisMap.number = "1903 Jackson Co.";
 		thisMap.title = "1903 Jackson Co.";
 		thisMap.path = "Maps/1903_JacksonCo.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1905 Holton";
 		thisMap.title = "1905 Holton";
 		thisMap.path = "Maps/1905_Holton.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1908 Nemaha Co.";
 		thisMap.title = "1908 Nemaha Co.";
 		thisMap.path = "Maps/1908_NemahaCo.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);
 		
 		thisMap = new PageObject();
 		thisMap.number = "1911 Holton";
 		thisMap.title = "1911 Holton";
 		thisMap.path = "Maps/1911_Holton.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1912 Jackson Co. School Dist.";
 		thisMap.title = "1912 Jackson Co. School Dist.";
 		thisMap.path = "Maps/1912_JacksonCoSchoolDistricts.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1918 Pottawatamie Reservation";
 		thisMap.title = "1918 Pottawatamie Reservation";
 		thisMap.path = "Maps/1918_PottawatomieReservation.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1919 Brown Co.";
 		thisMap.title = "1919 Brown Co.";
 		thisMap.path = "Maps/1919_BrownCo.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);
 		
 		thisMap = new PageObject();
 		thisMap.number = "1921 Jackson Co.";
 		thisMap.title = "1921 Jackson Co.";
 		thisMap.path = "Maps/1921_JacksonCo.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1922 Holton";
 		thisMap.title = "1922 Holton";
 		thisMap.path = "Maps/1922_Holton.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1938 Jackson Co. Schl Dir";
 		thisMap.title = "1938 Jackson Co. Schl Dir. (partial)";
 		thisMap.path = "Maps/1938_JacksonCoSchlDir.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
 		thisMap.number = "1963 Jackson Co. Rural Dir";
 		thisMap.title = "1963 Jackson Co. Rural Dir.";
 		thisMap.path = "Maps/1963_JacksonCoRuralDir.html";
-		thisMap.category = ""
+		thisMap.category = "Maps"
 		maps.push(thisMap);		
 
 		
@@ -1123,28 +1123,28 @@
 		thisDist.number = "USD321";
 		thisDist.title = "USD321 Kaw Valley";
 		thisDist.path = "UnifiedSchoolDistricts/USD321/USD321_Overview.html";
-		thisDist.category = ""
+		thisDist.category = "USD"
 		usdSchools.push(thisDist);		
 
 		var thisDist = new PageObject();
 		thisDist.number = "USD335";
 		thisDist.title = "USD335 Jackson Heights";
 		thisDist.path = "UnifiedSchoolDistricts/USD335/USD335_Overview.html";
-		thisDist.category = ""
+		thisDist.category = "USD"
 		usdSchools.push(thisDist);		
 		
 		var thisDist = new PageObject();
 		thisDist.number = "USD336";
 		thisDist.title = "USD336 Holton";
 		thisDist.path = "UnifiedSchoolDistricts/USD336/USD336_Overview.html";
-		thisDist.category = ""
+		thisDist.category = "USD"
 		usdSchools.push(thisDist);	
 		
 		var thisDist = new PageObject();
 		thisDist.number = "USD337";
 		thisDist.title = "USD337 Royal Valley";
 		thisDist.path = "UnifiedSchoolDistricts/USD337/USD337_Overview.html";
-		thisDist.category = ""
+		thisDist.category = "USD"
 		usdSchools.push(thisDist)
 		
 		//------------------------------------------

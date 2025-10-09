@@ -118,11 +118,12 @@
 		/* NAV BARS */
 		/* --------------------------------------------- */
 		.navbar {
-		  overflow: visible;
-		  background-color:rgb(153, 204, 255);
-		  position: fixed;
-		  width: 99vw;
-		  z-index:695;
+			display: flex;
+			overflow: visible;
+			background-color:rgb(153, 204, 255);
+			position: fixed;
+			width: 99vw;
+			z-index:695;
 		}
 		
 		.navbar2 {
@@ -231,6 +232,14 @@
 			font-size: 12px;
 			padding-left: 2px;
 			padding-right: 2px;
+		}
+		.menuHolder{
+			display: inline-block;
+
+		}
+		.stackNavHolder {
+			display: inline-block;
+			padding: 11px 16px;
 		}
 		
 		/* --------------------------------------------- */		
@@ -462,6 +471,12 @@
 		@media (max-width: 1100px) {
 		  .docPage {
 			flex-direction: column;
+		  }
+		  .navbar {
+			 flex-direction: column; 
+		  }
+		  .navbar2 {
+			 flex-direction: column; 
 		  }
 		}
 		

@@ -11,6 +11,8 @@
 	var webRootLocation = "https://bryan-1963.github.io/JacksonCounty_KS_SchoolHistory/";
 	var subMenuName = '';
 	var subMenuCat = '';
+	var webStack = []; //stack of pages loaded so can navigate back and forth
+	var webStackIndex = 0;
 
 	// pageObject arrays
 	var maps = []; //array of PageObjects for maps
@@ -113,6 +115,31 @@
 	//=======================================================================================================================================================
 	// FUNCTIONS
 	//=======================================================================================================================================================
+		
+	//==========================================================================================
+	// startup
+	//==========================================================================================
+	function startup(){
+		countySchoolDistricts.length =0;
+		countyHighSchools.length = 0;
+		usdSchools.length=0;
+		initVars(); //load global variables
+		sizeBars(); //size and place the menu bars
+		
+		//initialize the web page stack
+		var thisPage = new PageObject();
+		thisPage.number="";
+		thisPage.title="Welcome";
+		thisPage.path="Welcome/Welcome.html";
+		thisPage.category="Home";
+		let pageStckEl = new PageStack();
+		pageStckEl.pageParam = thisPage;
+		pageStckEl.siteSearchRslts = [];
+		pageStckEl.docPagesRSrchd=false;
+		pageStckEl.docSrchRsltPgs =[]; 
+		webStack.push(pageStckEl);
+		
+	};
 	
 	//==========================================================================================
 	// toggleDocDisplayMode
@@ -267,6 +294,125 @@
 		}
 	}
 	*/
+
+	//==========================================================================================
+	// navStack
+	//==========================================================================================	
+	function navStack(dir){
+		var subTitle = document.getElementById("SubTitle");
+		var contentHolder = document.getElementById("ContentHolder");
+		
+		//adjust webStackIndex
+		if (dir==='next'){
+			webStackIndex=webStackIndex+1;
+		}
+		if (dir==='prev'){
+			webStackIndex=webStackIndex-1;
+		}
+		if (webStackIndex>webStack.length-1){
+			webStackIndex = webStack.length-1;
+		}
+		if (webStackIndex<0){
+			webStackIndex = 0;
+		}
+		//console.log(JSON.stringify(webStack));
+		//console.log(webStackIndex, webStack.length, JSON.stringify(webStack[webStackIndex]));
+		
+		//navigate to page at webStackIndex
+		switch (webStack[webStackIndex].pageParam.category){
+			//......................
+			// Home
+			//......................
+			case 'Home':
+				menuClick({"category":"Home","subCat":""}, false);
+			break;
+			
+			//......................
+			// Overview
+			//......................
+			case 'Overview':
+				//main menu click to overview:
+				if (webStack[webStackIndex].pageParam.path ===""){
+					menuClick({"category":"Overview","subCat":""}, false );
+				}
+				//sub selector click to overview page
+				else {
+					showOverview(webStack[webStackIndex].pageParam,false);
+				}
+			break;	
+			
+			//......................
+			// maps
+			//......................
+			case 'Maps':
+				//main menu click to maps:
+				if (webStack[webStackIndex].pageParam.path ===""){
+					menuClick({"category":"Maps","subCat":""}, false );
+				}
+				//sub selector click to a maps page
+				else {
+					showMap(webStack[webStackIndex].pageParam,false);
+				}
+			break;	
+
+			//......................
+			// Territorial
+			//......................			
+			case 'Pre-Org':
+				menuClick({"category":"Pre-Org","subCat":""}, false );
+			break;	
+			
+			//......................
+			// Schools
+			//......................
+			case 'Schools':
+			case 'PottawatomieMission':
+			case 'JacksonCounty':
+			case 'Joint':
+			case 'Adjacent':
+			case 'USD':
+			case 'College':
+				//main menu click to overview page
+				if (webStack[webStackIndex].pageParam.path ===""){
+					console.log("path is blank");
+					menuClick({"category":"Schools","subCat":""}, false );
+				}
+				//sub selector click to school page
+				else {
+					console.log("showSchool");
+					showSchool(webStack[webStackIndex].pageParam,"",false);
+				}
+			break;	
+			
+			//......................
+			// References
+			//......................
+			case 'References':
+				menuClick({"category":"References","subCat":""}, false );
+			break;	
+			
+			//......................
+			// Source Material
+			//......................			
+			case 'SourceMatl':
+				//main menu click to the source material link list
+				if (webStack[webStackIndex].pageParam.path ===""){
+					menuClick({"category":"SourceMatl","subCat":""}, false );
+				}
+				else {
+					loadDocPages(webStack[webStackIndex].pageParam.path,webStack[webStackIndex].pageParam.title,false);
+				}
+			break;	
+			
+			//......................
+			// Contact
+			//......................
+			case 'Contact':
+				menuClick({"category":"Contact","subCat":""}, false );
+			break;					
+		}
+		
+	}
 	
 	//==========================================================================================
 	// clearSearchInput
@@ -312,7 +458,6 @@
 		loadDocPageNum(docPgNum);
 
 	};
-
 
 	//==========================================================================================
 	// configurePage
@@ -853,7 +998,6 @@
 			
 	//==========================================================================================		
 	} //END OF FUNCTION searchDocument
-	//==========================================================================================
 	
 	//==========================================================================================
 	// navDocSearchResults
@@ -892,7 +1036,7 @@
 	//==========================================================================================
 	// loadDocPages
 	//==========================================================================================
-	async function loadDocPages(filePath, docTitle){
+	async function loadDocPages(filePath, docTitle, userClick=true){
 
 		subMenuName = '';
 		subMenuCat = '';
@@ -935,6 +1079,25 @@
 		
 		//load the first page
 		loadDocPageNum(0);
+
+		//add to the web page stack if user navigated here
+		if (userClick){
+			thisPage = new PageObject();
+			thisPage.number="";
+			thisPage.title=docTitle;
+			thisPage.path=filePath;
+			thisPage.category="SourceMatl";
+			pageStckEl = new PageStack();
+			pageStckEl.pageParam = thisPage;
+			pageStckEl.siteSearchRslts = siteSearchResults;
+			pageStckEl.docPagesRSrchd=docPagesAreSearched;
+			pageStckEl.docSrchRsltPgs =docSearchResultPages; 
+			webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+			webStack.push(pageStckEl);
+			webStackIndex = webStack.length-1;
+			console.log(webStackIndex,JSON.stringify(webStack[webStackIndex]));
+		}
+
 	};
 	
 	//==========================================================================================
@@ -1117,17 +1280,6 @@
 		//load the requested page	
 		loadDocPageNum(docPgNum);
 	};
-		
-	//==========================================================================================
-	// startup
-	//==========================================================================================
-	function startup(){
-		countySchoolDistricts.length =0;
-		countyHighSchools.length = 0;
-		usdSchools.length=0;
-		initVars(); //load global variables
-		sizeBars(); //size and place the menu bars
-	};
 
 	//==========================================================================================
 	// buildSchoolLinks
@@ -1168,7 +1320,7 @@
 			param = JSON.stringify(countySchoolDistricts[i]);
 			param = param.replace(/"/g,"'");
 			subSelContents = subSelContents + String.fromCharCode(13) + "<a class='link-like' onclick=\"showSchool(";
-			subSelContents = subSelContents + param + ", 'Overview')\">";
+			subSelContents = subSelContents + param + ", 'Overview', true)\">";
 			subSelContents = subSelContents + countySchoolDistricts[i].title + "</a><BR>";
 		}
 		
@@ -1195,7 +1347,7 @@
 			param = JSON.stringify(countyHighSchools[i]);
 			param = param.replace(/"/g,"'");
 			subSelContents = subSelContents + String.fromCharCode(13) + "<a class='link-like' onclick=\"showSchool(";
-			subSelContents = subSelContents + param + ", 'Overview')\">";
+			subSelContents = subSelContents + param + ", 'Overview', true)\">";
 			subSelContents = subSelContents + countyHighSchools[i].title + "</a><BR>";
 				
 		}
@@ -1223,7 +1375,7 @@
 			param = JSON.stringify(usdSchools[i]);
 			param = param.replace(/"/g,"'");
 			subSelContents = subSelContents + String.fromCharCode(13) + "<a class='link-like' onclick=\"showSchool(";
-			subSelContents = subSelContents + param + ", 'Overview')\">";
+			subSelContents = subSelContents + param + ", 'Overview', true)\">";
 			subSelContents = subSelContents + usdSchools[i].title + "</a><BR>";
 				
 		}
@@ -1249,7 +1401,7 @@
 			param = JSON.stringify(colleges[i]);
 			param = param.replace(/"/g,"'");
 			subSelContents = subSelContents + String.fromCharCode(13) + "<a class='link-like' onclick=\"showSchool(";
-			subSelContents = subSelContents + param + ", 'Overview')\">";
+			subSelContents = subSelContents + param + ", 'Overview', true)\">";
 			subSelContents = subSelContents + colleges[i].title + "</a><BR>";
 				
 		}		
@@ -1296,10 +1448,7 @@
 	//==========================================================================================
 	// showMap
 	//==========================================================================================
-	function showMap(params) {
-		
-		console.log("params="+JSON.stringify(params));
-		
+	function showMap(params, userClick=true) {	
 		var contentTitleBar = document.getElementById("ContentTitle");
 		var subTitle = document.getElementById("SubTitle");
 		var contentHolder = document.getElementById("ContentHolder");
@@ -1307,21 +1456,40 @@
 		subTitle.innerHTML = "Maps";
 		contentTitleBar.innerHTML=params['title'];
 		contentHolder.src = params['path'];
-		
+			
+		//add to the web page stack if user navigated here
+		if (userClick){
+			let pageStckEl = new PageStack();
+			pageStckEl.pageParam = params;
+			pageStckEl.siteSearchRslts = siteSearchResults;
+			pageStckEl.docPagesRSrchd=docPagesAreSearched;
+			pageStckEl.docSrchRsltPgs =docSearchResultPages; 
+			webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+			webStack.push(pageStckEl);
+			webStackIndex = webStack.length-1;
+		}	
 		
 	}
 	
 	//==========================================================================================
 	// showSchool
 	//==========================================================================================
-	function showSchool(params, subMenuSelection) {
+	function showSchool(params, subMenuSelection="", userClick=true) {
 		console.log("params=" + JSON.stringify(params));
 		console.log("subMenuSelection=" + subMenuSelection);
 		let contentTitleBar = document.getElementById("ContentTitle");
 		let subTitle = document.getElementById("SubTitle");
 		let contentHolder = document.getElementById("ContentHolder");
-		let filePath = params['path'].replace('Overview',subMenuSelection);
+		let filePath = "";
 		
+		//subMenuSelection is only specified when user changes subMenu for a school (e.g. Overview, Location, People, Event) 
+		if (subMenuSelection!=""){
+			filePath = params['path'].replace('Overview',subMenuSelection);
+		}
+		else {
+			filePath = params['path']
+		}
+
 		//show the correct configuration and update titles
 		configurePage('subPage', true, true);		  
 		subTitle.innerHTML = "School: " + params['title'];
@@ -1339,15 +1507,26 @@
 		navHTML = navHTML + "<a onclick=\"showSchool(" + strParam + ",'People')\">People</a>";
 		navHTML = navHTML + "<a onclick=\"showSchool(" + strParam + ",'Events')\">Events</a>";
 		schoolNavBar.innerHTML = navHTML;
-
+		
+		//add to the web page stack if user navigated here
+		if (userClick){
+			let pageStckEl = new PageStack();
+			pageStckEl.pageParam = params;
+			pageStckEl.pageParam.path = filePath;
+			pageStckEl.siteSearchRslts = siteSearchResults;
+			pageStckEl.docPagesRSrchd=docPagesAreSearched;
+			pageStckEl.docSrchRsltPgs =docSearchResultPages; 
+			webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+			webStack.push(pageStckEl);
+			webStackIndex = webStack.length-1;
+			console.log(webStackIndex,JSON.stringify(webStack[webStackIndex]));
+		}
 	}
 	
 	//==========================================================================================
 	// showOverview
 	//==========================================================================================
-	function showOverview(params){
-		console.log("params=" + JSON.stringify(params));
-		console.log("params.title=" + params.title);
+	function showOverview(params, userClick=true){
 		let contentTitleBar = document.getElementById("ContentTitle");
 		let subTitle = document.getElementById("SubTitle");
 		let contentHolder = document.getElementById("ContentHolder");
@@ -1359,13 +1538,25 @@
 		
 		//load the requested page
 		contentHolder.src = params['path'];
+		
+		//add to the web page stack if user navigated here
+		if (userClick){
+			let pageStckEl = new PageStack();
+			pageStckEl.pageParam = params;
+			pageStckEl.siteSearchRslts = siteSearchResults;
+			pageStckEl.docPagesRSrchd=docPagesAreSearched;
+			pageStckEl.docSrchRsltPgs =docSearchResultPages; 
+			webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+			webStack.push(pageStckEl);
+			webStackIndex = webStack.length-1;
+		}
 	}
 
 	//==========================================================================================
 	// menuClick
 	//==========================================================================================
-	function menuClick(params) {
-		console.log("params=" + JSON.stringify(params));
+	function menuClick(params, userClick=true) {
+		//console.log("params=" + JSON.stringify(params));
 		
 		var category = params.category;
 		var subCat = params.subCat;
@@ -1386,7 +1577,10 @@
 		let schoolNavBar = document.getElementById("schoolNavBar");
 		let docPgImg = document.getElementById("docPageImg");
 		let searchRsltsHolder = document.getElementById("searchResultsHolder");
-		let subSelectorContentHolder = document.getElementById("subSelectorContents");	
+		let subSelectorContentHolder = document.getElementById("subSelectorContents");
+		let thisPage = new PageObject();		
+		let pageStckEl = new PageStack();
+		let param = "";
 		subMenuName = '';
 		subMenuCat = '';
 		let subSelectorContents = "";
@@ -1410,6 +1604,24 @@
 				configurePage('subPage',false, false);
 				subTitle.innerHTML = "Welcome";
 				contentHolder.src ="Welcome/Welcome.html";
+				
+				//add to the web page stack if user navigated here
+				if (userClick){
+					thisPage = new PageObject();
+					thisPage.number="";
+					thisPage.title="Welcome";
+					thisPage.path="Welcome/Welcome.html";
+					thisPage.category="Home";
+					pageStckEl = new PageStack();
+					pageStckEl.pageParam = thisPage;
+					pageStckEl.siteSearchRslts = siteSearchResults;
+					pageStckEl.docPagesRSrchd=docPagesAreSearched;
+					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
+					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+					webStack.push(pageStckEl);
+					webStackIndex = webStack.length-1;
+				}
+				
 			break;
 
 			//---------------------------
@@ -1417,7 +1629,6 @@
 			//---------------------------	
 				configurePage('subSelector', false, false);		  
 				subTitle.innerHTML = "Overview";
-				let param = "";
 				
 				//build contents of subSelectorContents
 				subSelectorContents = "";
@@ -1425,11 +1636,28 @@
 					param = JSON.stringify(overviews[i]);
 					param = param.replace(/"/g,"'");
 					subSelectorContents = subSelectorContents + String.fromCharCode(13) + "<a class='link-like'"
-					subSelectorContents = subSelectorContents + "onclick=\"showOverview(" + param + ");\">";
+					subSelectorContents = subSelectorContents + "onclick=\"showOverview(" + param + ", true);\">";
 					subSelectorContents = subSelectorContents + overviews[i].title + "</a><br><br>";
 				}		
 				subSelectorContentHolder.style.columnCount=1;
 				subSelectorContentHolder.innerHTML=subSelectorContents;		
+				
+				//add to the web page stack if user navigated here
+				if (userClick){
+					thisPage = new PageObject();
+					thisPage.number="";
+					thisPage.title="Overview";
+					thisPage.path="";
+					thisPage.category="Overview";
+					pageStckEl = new PageStack();
+					pageStckEl.pageParam = thisPage;
+					pageStckEl.siteSearchRslts = siteSearchResults;
+					pageStckEl.docPagesRSrchd=docPagesAreSearched;
+					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
+					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+					webStack.push(pageStckEl);
+					webStackIndex = webStack.length-1;
+				}
 
 			break;
 			
@@ -1444,16 +1672,31 @@
 				for (var i = 0; i<=maps.length-1;i++){
 					// Example:
 					//<a onclick="showMap({"category":"Maps","subCat":"1878 Jackson Co.","path":"Maps/1878_JacksonCo.html","title":"1878 Jackson Co."})">1878 Jackson Co.</a>
+					param = JSON.stringify(maps[i]);
+					param = param.replace(/"/g,"'");
 					subSelectorContents = subSelectorContents + String.fromCharCode(13) + "<a class='link-like'"
-					subSelectorContents = subSelectorContents + "onclick=\"showMap({";
-					subSelectorContents = subSelectorContents + "category:'Maps', ";
-					subSelectorContents = subSelectorContents + "subCat:'" + maps[i].number + "', ";
-					subSelectorContents = subSelectorContents + "path:'" + maps[i].path + "', ";
-					subSelectorContents = subSelectorContents + "title:'" + maps[i].title + "'})\">";
+					subSelectorContents = subSelectorContents + "onclick=\"showMap(" + param + ", true)\">";
 					subSelectorContents = subSelectorContents + maps[i].title + "</a><br><br>";
 				}		
 				subSelectorContentHolder.style.columnCount=3;
 				subSelectorContentHolder.innerHTML=subSelectorContents;		
+								
+				//add to the web page stack if user navigated here
+				if (userClick){
+					thisPage = new PageObject();
+					thisPage.number="";
+					thisPage.title="Maps";
+					thisPage.path="";
+					thisPage.category="Maps";
+					pageStckEl = new PageStack();
+					pageStckEl.pageParam = thisPage;
+					pageStckEl.siteSearchRslts = siteSearchResults;
+					pageStckEl.docPagesRSrchd=docPagesAreSearched;
+					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
+					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+					webStack.push(pageStckEl);
+					webStackIndex = webStack.length-1;
+				}
 
 			break;
 
@@ -1463,7 +1706,24 @@
 				configurePage('subPage', false, false);		  
 				subTitle.innerHTML = "Territorial Kansas";
 				contentHolder.src =	"Pre-Org/Territorial.html";
-				
+									
+				//add to the web page stack if user navigated here
+				if (userClick){
+					thisPage = new PageObject();
+					thisPage.number="";
+					thisPage.title="Pre-Org";
+					thisPage.path="";
+					thisPage.category="Pre-Org";
+					pageStckEl = new PageStack();
+					pageStckEl.pageParam = thisPage;
+					pageStckEl.siteSearchRslts = siteSearchResults;
+					pageStckEl.docPagesRSrchd=docPagesAreSearched;
+					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
+					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+					webStack.push(pageStckEl);
+					webStackIndex = webStack.length-1;
+				}
+	
 			break;
 
 			//---------------------------		
@@ -1473,100 +1733,50 @@
 				subTitle.innerHTML = "Schools";
 				subSelectorContentHolder.style.columnCount=4;
 				subSelectorContentHolder.innerHTML=buildSchoolLinks(); //call subroutine to load the links
-			break;
-			
-/*			
-			//---------------------------	
-			// SCHOOLS		  
-			case 'County Districts':
-			case 'County High Schools':
-			case 'Colleges':
-			case 'Unified School Districts':
-			//---------------------------	
-				configurePage('subPage', true, true);	
-				contentTitleBar.innerHTML="Overview";  //default opening value
 				
-				// LOAD SUB TITLE
-				var subTitleHTML = category + " " + title;
-				subTitle.innerHTML = subTitleHTML;
+				//add to the web page stack if user navigated here
+				if (userClick){
+					thisPage = new PageObject();
+					thisPage.number="";
+					thisPage.title="Schools";
+					thisPage.path="";
+					thisPage.category="Schools";
+					pageStckEl = new PageStack();
+					pageStckEl.pageParam = thisPage;
+					pageStckEl.siteSearchRslts = siteSearchResults;
+					pageStckEl.docPagesRSrchd=docPagesAreSearched;
+					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
+					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+					webStack.push(pageStckEl);
+					webStackIndex = webStack.length-1;
+				}
 
-				// LOAD SUBMENU click parameters
-				let catFolderName = category.replace(/\s/g,"");
-				subMenuName = catFolderName;
-				subMenuCat = subCat;
-
-				contentHolder.src= catFolderName + "/" + subCat + "/" + subCat + "_Overview.html";
-				
 			break;
 			
-			//---------------------------		
-			case 'Pottawatomie Mission':
-			//---------------------------	
-			
-				configurePage('subPage', true, true);	
-				contentTitleBar.innerHTML="Overview";
-				subTitle.innerHTML = "Pottawatomie Mission";
-
-				// LOAD SUBMENU click parameters
-				subMenuName = "PottawatomieMission";
-				subMenuCat = "";
-
-				contentHolder.src="PottawatomieMission/PottawatomieMission_Overview.html";
-			//break;
-
-			//---------------------------				
-//			case 'High Schools':
-			//---------------------------	
-
-				configurePage('subPage', true, true);
-				contentTitleBar.innerHTML="Overview";	
-				subTitle.innerHTML = "County High Schools - " + title;
-										
-				// LOAD SUBMENU click parameters
-				subMenuName = "CountyHighSchools";
-				subMenuCat = subCat;
-
-				contentHolder.src="CountyHighSchools/" + subCat + "/" + subCat + "_Overview.html";
-						
-			break;
-
-			//---------------------------				
-			case 'USD':
-			//---------------------------	
-				configurePage('subPage', true, true);
-				contentTitleBar.innerHTML="Overview";	
-				subTitle.innerHTML = title;
-										
-				// LOAD SUBMENU click parameters
-				subMenuName = "UnifiedSchoolDistricts";
-				subMenuCat = subCat;
-
-				contentHolder.src="UnifiedSchoolDistricts/" + subCat + "/" + subCat + "_Overview.html";
-
-			break;	  
-
-			//---------------------------	
-			case 'Colleges':
-			//---------------------------	
-				configurePage('subPage', true, true);
-				contentTitleBar.innerHTML="Overview";	
-				subTitle.innerHTML = title;
-
-				// LOAD SUBMENU click parameters
-				subMenuName = "Colleges";
-				subMenuCat = subCat;
-
-				contentHolder.src="Colleges/" + subCat + "/" + subCat + "_Overview.html";
-
-				contentTitleBar.innerHTML="Overview";
-			break;
-*/
 			//---------------------------	
 			case 'References':
 			//---------------------------	
 				configurePage('subPage', false, false);		   
 				subTitle.innerHTML = "References";	
 				contentHolder.src="References/References.html";
+				
+				//add to the web page stack if user navigated here
+				if (userClick){
+					thisPage = new PageObject();
+					thisPage.number="";
+					thisPage.title="References";
+					thisPage.path="";
+					thisPage.category="References";
+					pageStckEl = new PageStack();
+					pageStckEl.pageParam = thisPage;
+					pageStckEl.siteSearchRslts = siteSearchResults;
+					pageStckEl.docPagesRSrchd=docPagesAreSearched;
+					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
+					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+					webStack.push(pageStckEl);
+					webStackIndex = webStack.length-1;
+				}
+
 			break;
 			
 			//---------------------------	
@@ -1574,7 +1784,25 @@
 			//---------------------------	
 				configurePage('document', false, false);			  
 				subTitle.innerHTML = "Source Materials";	
-				contentHolder.src="SourceMatls/SourceMatls.html";					
+				contentHolder.src="SourceMatls/SourceMatls.html";		
+				
+				//add to the web page stack if user navigated here
+				if (userClick){
+					thisPage = new PageObject();
+					thisPage.number="";
+					thisPage.title="SourceMatl";
+					thisPage.path="";
+					thisPage.category="SourceMatl";
+					pageStckEl = new PageStack();
+					pageStckEl.pageParam = thisPage;
+					pageStckEl.siteSearchRslts = siteSearchResults;
+					pageStckEl.docPagesRSrchd=docPagesAreSearched;
+					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
+					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+					webStack.push(pageStckEl);
+					webStackIndex = webStack.length-1;
+				}
+		
 			break;
 
 			//---------------------------	
@@ -1583,6 +1811,23 @@
 				configurePage('subPage', false, false);	
 				subTitle.innerHTML = "Contact";	
 				contentHolder.src="Contact/Contact.html";
+				//add to the web page stack if user navigated here
+				if (userClick){
+					thisPage = new PageObject();
+					thisPage.number="";
+					thisPage.title="Contact";
+					thisPage.path="";
+					thisPage.category="Contact";
+					pageStckEl = new PageStack();
+					pageStckEl.pageParam = thisPage;
+					pageStckEl.siteSearchRslts = siteSearchResults;
+					pageStckEl.docPagesRSrchd=docPagesAreSearched;
+					pageStckEl.docSrchRsltPgs =docSearchResultPages; 
+					webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+					webStack.push(pageStckEl);
+					webStackIndex = webStack.length-1;
+				}
+
 			break;
 
 		} 
@@ -1866,4 +2111,12 @@
 		annotation;
 	};
 	
-	
+	//---------------------------
+	// PageStack
+	//---------------------------
+	class PageStack{
+		pageParam;
+		siteSearchRslts;
+		docPagesRSrchd;
+		docSrchRsltPgs; //array of page numbers containing the searched for text
+	};	
