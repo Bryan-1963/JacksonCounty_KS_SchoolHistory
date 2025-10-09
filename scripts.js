@@ -322,9 +322,17 @@
 		//......................................
 		siteSearchInput = (' ' + webStack[webStackIndex].siteSrchTrmInpt).slice(1);
 		siteSearchResults = JSON.parse(JSON.stringify(webStack[webStackIndex].siteSearchRslts));
+		if(siteSearchInput===undefined || siteSearchInput==='undefined'){
+			siteSearchInput="";
+		}
+		document.getElementById("siteSearchInput").value=siteSearchInput;
 		
 		docPagesAreSearched = webStack[webStackIndex].docPagesRSrchd;
 		docSearchTerm = (' ' + webStack[webStackIndex].docSrchTrm).slice(1);
+		if(docSearchTerm===undefined || docSearchTerm==='undefined'){
+			docSearchTerm="";
+		}
+		docPageSearchInput.value = docSearchTerm;
 		docSearchResultPages = JSON.parse(JSON.stringify(webStack[webStackIndex].docSrchRsltPgs));
 		
 		//......................................
@@ -431,7 +439,40 @@
 		}
 		
 	}
-	
+
+	//==========================================================================================
+	// addToWebStack
+	//==========================================================================================	
+	function addToWebStack(pgIn){
+		//make sure nothing is stored in the stack "by Reference"
+		let pageStckEl = new PageStack();
+		pageStckEl.pageParam = JSON.parse(JSON.stringify(pgIn));
+		pageStckEl.siteSrchTrmInpt =(' ' + siteSearchTermInput).slice(1);
+		pageStckEl.siteSearchRslts = JSON.parse(JSON.stringify(siteSearchResults));
+		if (docPagesAreSearched) {
+			pageStckEl.docPagesRSrchd=true;
+		}
+		else {
+			pageStckEl.docPagesRSrchd=false;
+		}
+		pageStckEl.docSrchTrm = (' ' + docSearchTerm).slice(1);
+		pageStckEl.docSrchRsltPgs =JSON.parse(JSON.stringify(docSearchResultPages));
+		
+		//get strings to compare current to previous page on the stack
+		let prevElStr = JSON.stringify(webStack[webStack.length-1]);
+		let newElStr = JSON.stringify(pageStckEl);
+		
+		//if its new, add it to the stack
+		if (newElStr != prevElStr){
+			webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
+			webStack.push(pageStckEl);
+			webStackIndex = webStack.length-1;			
+		}
+		
+
+		//console.log(webStackIndex,JSON.stringify(webStack[webStackIndex]));
+	}
+		
 	//==========================================================================================
 	// clearSearchInput
 	//==========================================================================================
@@ -455,6 +496,9 @@
 			
 			//clear out the search results
 			clearDocumentSearch();
+			
+			//update webStack by copying the current location and adding results
+			addToWebStack(webStack[webStackIndex].pageParam)
 		}
 	};
 	
@@ -474,7 +518,9 @@
 		
 		//remove highlights from current page by reloading it without highlights
 		loadDocPageNum(docPgNum);
-
+		
+		//update the webStack
+		addToWebStack(webStack[webStackIndex].pageParam)
 	};
 
 	//==========================================================================================
@@ -1125,29 +1171,6 @@
 
 	};
 
-	//==========================================================================================
-	// addToWebStack
-	//==========================================================================================	
-	function addToWebStack(pgIn){
-		//make sure nothing is stored in the stack "by Reference"
-		let pageStckEl = new PageStack();
-		pageStckEl.pageParam = JSON.parse(JSON.stringify(pgIn));
-		pageStckEl.siteSrchTrmInpt =(' ' + siteSearchTermInput).slice(1);
-		pageStckEl.siteSearchRslts = JSON.parse(JSON.stringify(siteSearchResults));
-		if (docPagesAreSearched) {
-			pageStckEl.docPagesRSrchd=true;
-		}
-		else {
-			pageStckEl.docPagesRSrchd=false;
-		}
-		pageStckEl.docSrchTrm = (' ' + docSearchTerm).slice(1);
-		pageStckEl.docSrchRsltPgs =JSON.parse(JSON.stringify(docSearchResultPages)); 
-		webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
-		webStack.push(pageStckEl);
-		webStackIndex = webStack.length-1;	
-		//console.log(webStackIndex,JSON.stringify(webStack[webStackIndex]));
-	}
-	
 	//==========================================================================================
 	// loadDocPageNum
 	//==========================================================================================	
