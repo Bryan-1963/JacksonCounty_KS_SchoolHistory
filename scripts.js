@@ -1719,6 +1719,7 @@
 			//find the search match for this page
 			for (let i=0;i<=siteSearchResults.length-1;i++){
 				console.log(i, pgPath, siteSearchResults[i]['page']['path']);
+				console.log("....." + JSON.stringify(siteSearchResults[i]));
 				if (siteSearchResults[i]['page']['path'] === pgPath){
 					console.log('found matching path');
 					for (let j=0;j<=siteSearchResults[i]['matches'].length-1;j++){
@@ -1731,9 +1732,9 @@
 						console.log("got iframeDoc");
 						var iframeBody = iframeDoc.getElementsByTagName('body')[0];
 						console.log("got iframeBody");
-						console.log(iframeBody.innerHTML);
+						//console.log(iframeBody.innerHTML);
 						let txt = iframeBody.innerHTML;
-						console.log("txt=" + txt);
+						//console.log("txt=" + txt);
 						iframeBody.innerHTML = txt.replace(re,"<MARK>" + siteSearchResults[i]['matches']['text'] + "</MARK>");
 					}
 				}
