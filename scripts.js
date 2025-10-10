@@ -138,19 +138,21 @@
 		sizeBars(); //size and place the menu bars
 		
 		//initialize the web page stack
-		let thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Welcome";
-		thisFile.path="Welcome/Welcome.html";
-		thisFile.category="Welcome";
-		let thisPage = new PageStack();
-		thisPage.pageParam = JSON.parse(JSON.stringify(thisFile));
-		siteSrchTrmInpt="";
-		siteSearchRslts=[];
-		docPagesRSrchd=false;
-		docSrchTrm="";
-		docSrchRsltPgs=[];
-		addToWebStack(thisPage);
+		let thisPage = new PageObject();
+		thisPage.number="";
+		thisPage.title="Welcome";
+		thisPage.path="Welcome/Welcome.html";
+		thisPage.category="Welcome";
+		let thisStackEl = new PageStack();
+		thisStackEl.pageParam = JSON.parse(JSON.stringify(thisPage));
+		thisStackEl.siteSrchTrmInpt="";
+		thisStackEl.siteSearchRslts=[];
+		thisStackEl.docPagesRSrchd=false;
+		thisStackEl.docSrchTrm="";
+		thisStackEl.docSrchRsltPgs=[];
+		console.log(JSON.stringify(thisStackEl));
+		console.log(JSON.stringify(thisStackEl['pageParam']));
+		addToWebStack(thisStackEl);
 		
 	};
 	
