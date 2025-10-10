@@ -1267,6 +1267,7 @@
 			thisFile.category=colleges[i]['category'];
 			searchFiles.push(thisFile);
 		}
+		
 		//Welcome Page
 		var thisFile = new PageObject();
 		thisFile.number="";

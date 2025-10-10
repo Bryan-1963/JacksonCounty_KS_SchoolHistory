@@ -27,7 +27,7 @@
 	var siteSearchInput = document.getElementById("siteSearchInput");
 	var siteSearchPrecision = 1.00;
 	var searchFiles = []; //array of PageObjects for searching the site
-	var siteSearchResults = []; //subset of searchFiles that have matches
+	var siteSearchResults = []; //matches
 	var siteSearchTermInput; //user input tot he site search
 	
 	//variables for displaying documents
@@ -112,6 +112,16 @@
 			}
 		}
 	});	
+	
+	//-----------------------------------------
+	// subPage load listener
+	//-----------------------------------------
+	var myIframe = document.getElementById('ContentHolder');
+	myIframe.addEventListener("load", function() {
+	  console.log("iFrame loaded");
+	  highlightSearchResultsInSubPage(); //highlight any search results on the page that was loaded
+	});
+	
 	
 	//=======================================================================================================================================================
 	// FUNCTIONS
@@ -469,7 +479,6 @@
 			webStackIndex = webStack.length-1;			
 		}
 		
-
 		//console.log(webStackIndex,JSON.stringify(webStack[webStackIndex]));
 	}
 		
@@ -671,7 +680,6 @@
 		rsltStr = rsltStr + "<tr><th>Page</th><th>Matches</th></tr>";
 		
 		for (let i=0;i<=siteSearchResults.length-1;i++){
-			//TO-DO: add code to take you to the page!!!!
 			//console.log("siteSearchResults=" + JSON.stringify(siteSearchResults));
 			//console.log(siteSearchResults[i]['matches'].length);
 			let matchingTexts = "";
@@ -679,7 +687,90 @@
 				//console.log(j, JSON.stringify(siteSearchResults[i]['matches'][j]));
 				matchingTexts = matchingTexts + siteSearchResults[i]['phrases'][j];
 			}
-			rsltStr = rsltStr + "<tr><td>" + siteSearchResults[i]['title'] + "</td><td>" + matchingTexts + "</td></tr>";
+			console.log(siteSearchResults[i]);
+			
+			//build link with correct type of function call based on category of the page that was found
+			let thisFnCall="";
+			let param = "";
+			//console.log(siteSearchResults[i]['page']['category']);
+			switch (siteSearchResults[i]['page']['category']) {
+				//......................
+				// Home
+				//......................
+				case 'Welcome':
+				case 'Home':
+					thisFnCall = "menuClick({'category':'Home','subCat':''}, true)";
+				break;
+				
+				//......................
+				// Overview
+				//......................
+				case 'Overview':
+					param = JSON.stringify(siteSearchResults[i]['page']);
+					param = param.replace(/"/g,"'");
+					thisFnCall="showOverview(" + param + ",true)";
+				break;	
+				
+				//......................
+				// maps
+				//......................
+				case 'Maps':
+					param = JSON.stringify(siteSearchResults[i]['page']);
+					param = param.replace(/"/g,"'");
+					thisFnCall="showMap(" + param + ",true)";
+				break;	
+
+				//......................
+				// Territorial
+				//......................			
+				case 'Pre-Org':
+					thisFnCall="menuClick({'category':'Pre-Org','subCat':''}, true )";
+				break;	
+				
+				//......................
+				// Schools
+				//......................
+				case 'Schools':
+				case 'PottawatomieMission':
+				case 'JacksonCounty':
+				case 'Joint':
+				case 'Adjacent':
+				case 'USD':
+				case 'College':
+					param = JSON.stringify(siteSearchResults[i]['page']);
+					param = param.replace(/"/g,"'");
+					thisFnCall="showSchool(" + param + ",'',true)";
+
+				break;	
+				
+				//......................
+				// References
+				//......................
+				case 'References':
+					thisFnCall="menuClick({'category':'References','subCat':''}, true )";
+				break;	
+				
+				//......................
+				// Source Material
+				//......................			
+				case 'SourceMatl':
+					param = JSON.stringify(siteSearchResults[i]['page']['path']);
+					param = param + ", " + JSON.stringify(siteSearchResults[i]['page']['title']);
+					param = param.replace(/"/g,"'");
+					thisFnCall="loadDocPages(" + param + ",true)";
+				break;	
+				
+				//......................
+				// Contact
+				//......................
+				case 'Contact':
+					thisFnCall="menuClick({'category':'Contact','subCat':''}, true )";
+				break;				
+			}
+			
+			rsltStr = rsltStr + "<tr><td><a class='link-like' onclick=\"" + thisFnCall + "\">"  ;
+			rsltStr = rsltStr + siteSearchResults[i]['title'] + "</a>"
+			rsltStr = rsltStr +  "</td><td>" + matchingTexts + "</td></tr>";
 		}
 		//console.log("rsltStr="+rsltStr);
 		document.getElementById("siteSearchResultsList").innerHTML = rsltStr;
@@ -743,7 +834,7 @@
 						
 						//find matching phrases in the original text
 						let matchPhrases = getMatchPhrases(matchSubStrings,myText);
-						siteSearchResults.push({title:searchFiles[i]['title'], matches: matchSubStrings, phrases: matchPhrases});
+						siteSearchResults.push({title:searchFiles[i]['title'], matches: matchSubStrings, phrases: matchPhrases, page:searchFiles[i], page:searchFiles[i]});
 					}
 				}
 				document.getElementById("pauseUserInputContent").innerHTML="Please wait. Searching entire site...." + i + "/" + (searchFiles.length-1);
@@ -1605,10 +1696,48 @@
 	}
 
 	//==========================================================================================
+	// highlightSearchResultsInSubPage
+	//==========================================================================================
+	function highlightSearchResultsInSubPage(){
+		//get current page data from stack
+		thisPage = webStack[webStackIndex];
+		console.log("thisPage['pageParam']=" + JSON.stringify(thisPage['pageParam']));
+		pgPath = thisPage['pageParam']['path'];
+
+		console.log("|" + siteSearchTermInput + "|", siteSearchResults.length);
+		//if there was a search, highlight Matches
+		if (siteSearchTermInput !="" && siteSearchResults.length>0){
+			
+			//find the search match for this page
+			for (let i=0;i<=siteSearchResults.length-1;i++){
+				console.log(i, pgPath, siteSearchResults[i]['page']['path']);
+				if (siteSearchResults[i]['page']['path'] === pgPath){
+					console.log('found matching path');
+					for (let j=0;j<=siteSearchResults[i]['matches'].length-1;j++){
+						console.log(siteSearchResults[i]['matches'][j]['text']);
+						let re=RegExp(siteSearchResults[i]['matches'][j]['text'],"ig");
+						console.log("re=" + re);
+						var iframe = document.getElementById('ContentHolder');
+						console.log("got iframe");
+						let iframeDoc=iframe.contentDocument || iframe.contentWindow.document;
+						console.log("got iframeDoc");
+						var iframeBody = iframeDoc.getElementsByTagName('body')[0];
+						console.log("got iframeBody");
+						console.log(iframeBody.innerHTML);
+						let txt = iframeBody.innerHTML;
+						console.log("txt=" + txt);
+						iframeBody.innerHTML = txt.replace(re,"<MARK>" + siteSearchResults[i]['matches']['text'] + "</MARK>");
+					}
+				}
+			}
+		}		
+	}
+
+	//==========================================================================================
 	// menuClick
 	//==========================================================================================
 	function menuClick(params, userClick=true) {
-		//console.log("params=" + JSON.stringify(params));
+		console.log("params=" + JSON.stringify(params));
 		
 		var category = params.category;
 		var subCat = params.subCat;
