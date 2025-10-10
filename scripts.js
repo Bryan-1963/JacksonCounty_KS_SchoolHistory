@@ -1686,11 +1686,7 @@
 		configurePage('subPage', true, true);		  
 		subTitle.innerHTML = "School: " + params['title'];
 		contentTitleBar.innerHTML = subMenuSelection;
-		
-		//load the requested page
-		contentHolder.src = filePath;
-		console.log("contentHolder.src=" + contentHolder.src);
-		
+
 		//build and fill the school-specific navbar
 		schoolNavBar = document.getElementById("schoolNavBar");
 		strParam = JSON.stringify(params);
@@ -1708,6 +1704,10 @@
 			thisPage.path = filePath;
 			addToWebStack(thisPage);
 		}
+				
+		//load the requested page
+		contentHolder.src = filePath;
+		console.log("contentHolder.src=" + contentHolder.src);
 	}
 	
 	//==========================================================================================
