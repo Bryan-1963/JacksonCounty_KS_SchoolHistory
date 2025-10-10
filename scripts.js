@@ -28,7 +28,7 @@
 	var siteSearchPrecision = 1.00;
 	var searchFiles = []; //array of PageObjects for searching the site
 	var siteSearchResults = []; //matches
-	var siteSearchTermInput; //user input tot he site search
+	var siteSearchTermInput=""; //user input tot he site search
 	
 	//variables for displaying documents
 	var docPages = []; //array of AnnotatedPhotoObject, loaded by loadDocPages
@@ -134,10 +134,7 @@
 			thisStackEl.docPagesRSrchd=false;
 			thisStackEl.docSrchTrm="";
 			thisStackEl.docSrchRsltPgs=[];
-			console.log(JSON.stringify(thisStackEl));
-			console.log(JSON.stringify(thisStackEl['pageParam']));
 			addToWebStack(thisStackEl);  
-			console.log("webStack.length="+webStack.length);
 		}
 	  
 		highlightSearchResultsInSubPage(); //highlight any search results on the page that was loaded
@@ -173,10 +170,7 @@
 			thisStackEl.docPagesRSrchd=false;
 			thisStackEl.docSrchTrm="";
 			thisStackEl.docSrchRsltPgs=[];
-			console.log(JSON.stringify(thisStackEl));
-			console.log(JSON.stringify(thisStackEl['pageParam']));
 			addToWebStack(thisStackEl);  
-			console.log("webStack.length="+webStack.length);
 		}	
 
 		console.log("startup complete");
@@ -1736,34 +1730,26 @@
 	function highlightSearchResultsInSubPage(){
 		//get current page data from stack
 		let thisPage = webStack[webStackIndex];
-		console.log("thisPage=" + JSON.stringify(thisPage));
-		console.log("thisPage['pageParam']=" + JSON.stringify(thisPage['pageParam']));
 		let pgPath = thisPage['pageParam']['path'];
 
-		console.log("|" + siteSearchTermInput + "|", siteSearchResults.length);
 		//if there was a search, highlight Matches
 		if (siteSearchTermInput !="" && siteSearchResults.length>0){
 			
 			//find the search match for this page
 			for (let i=0;i<=siteSearchResults.length-1;i++){
-				console.log(i, pgPath, siteSearchResults[i]['page']['path']);
-				console.log("....." + JSON.stringify(siteSearchResults[i]));
+
 				if (siteSearchResults[i]['page']['path'] === pgPath){
 					console.log('found matching path');
 					for (let j=0;j<=siteSearchResults[i]['matches'].length-1;j++){
-						console.log(siteSearchResults[i]['matches'][j]['text']);
+
 						let re=RegExp(siteSearchResults[i]['matches'][j]['text'],"ig");
-						console.log("re=" + re);
 						var iframe = document.getElementById('ContentHolder');
-						console.log("got iframe");
 						let iframeDoc=iframe.contentDocument || iframe.contentWindow.document;
-						console.log("got iframeDoc");
 						var iframeBody = iframeDoc.getElementsByTagName('body')[0];
-						console.log("got iframeBody");
 						//console.log(iframeBody.innerHTML);
 						let txt = iframeBody.innerHTML;
-						//console.log("txt=" + txt);
-						iframeBody.innerHTML = txt.replace(re,"<MARK>" + siteSearchResults[i]['matches']['text'] + "</MARK>");
+						iframeBody.innerHTML = txt.replace(re,"<MARK>" + siteSearchResults[i]['matches'][j]['text'] + "</MARK>");
+						
 					}
 				}
 			}
