@@ -118,9 +118,6 @@
 	//-----------------------------------------
 	var myIframe = document.getElementById('ContentHolder');
 	myIframe.addEventListener("load", function() {
-		console.log("--------------------------------------------------------------------------");
-		console.log("iFrame loaded");
-		console.log("--------------------------------------------------------------------------");
 		
 		//in case iFrame loaded before startup was complete, initialize webStack
 		if (webStack.length===0){ 
@@ -355,9 +352,6 @@
 		if (webStackIndex<0){
 			webStackIndex = 0;
 		}
-		//console.log(JSON.stringify(webStack));
-		//console.log(webStackIndex, webStack.length, JSON.stringify(webStack[webStackIndex]));
-		console.log(webStack[webStackIndex].pageParam.category);
 		
 		//......................................
 		// set search variables
@@ -435,13 +429,25 @@
 			case 'College':
 				//main menu click to overview page
 				if (webStack[webStackIndex].pageParam.path ===""){
-					console.log("path is blank");
 					menuClick({"category":"Schools","subCat":""}, false );
 				}
 				//sub selector click to school page
 				else {
-					console.log("showSchool");
-					showSchool(webStack[webStackIndex].pageParam,"",false);
+					let pgPath = webStack[webStackIndex].pageParam['path'];
+					let subPg="";
+					if (pgPath.indexOf('Overview')>=0){
+						subPg = "Overview";
+					}
+					else if (pgPath.indexOf('People')>=0){
+						subPg = "People";
+					}
+					else if (pgPath.indexOf('Locations')>=0){
+						subPg = "Locations";
+					}
+					else if (pgPath.indexOf('Events')>=0){
+						subPg = "Events";
+					}
+					showSchool(webStack[webStackIndex].pageParam,subPg,false);
 				}
 			break;	
 			
@@ -1669,12 +1675,7 @@
 	// showSchool
 	//==========================================================================================
 	function showSchool(params, subMenuSelection="", userClick=true) {
-		console.log("--------------------------------------------------------------------------");
-		console.log("showSchool");
-		console.log("--------------------------------------------------------------------------");
-		console.log("params=" + JSON.stringify(params));
-		console.log("subMenuSelection=" + subMenuSelection);
-		console.log("params['path']="+params['path']);
+
 		let contentTitleBar = document.getElementById("ContentTitle");
 		let subTitle = document.getElementById("SubTitle");
 		let contentHolder = document.getElementById("ContentHolder");
@@ -1682,21 +1683,15 @@
 		
 		//subMenuSelection is only specified when user changes subMenu for a school (e.g. Overview, Location, People, Event) 
 		if (subMenuSelection!=""){
-			console.log("Replacing");
 			filePath = params['path'].replace('Overview',subMenuSelection);
-			console.log("filePath = |" + filePath + "|");
 			filePath = filePath.replace('Events',subMenuSelection);
-			console.log("filePath = |" + filePath + "|");
 			filePath = filePath.replace('Locations',subMenuSelection);
-			console.log("filePath = |" + filePath + "|");
 			filePath = filePath.replace('People',subMenuSelection);
-			console.log("filePath = |" + filePath + "|");
 		}
 		else {
-			console.log("using as is");
 			filePath = params['path']
 		}
-		console.log("filePath = |" + filePath + "|");
+		
 		
 		//show the correct configuration and update titles
 		configurePage('subPage', true, true);		  
@@ -1714,7 +1709,7 @@
 		schoolNavBar.innerHTML = navHTML;
 		
 		//add to the web page stack if user navigated here
-		console.log("adding to stack if userclick is true, userClick="+userClick);
+
 		if (userClick){	
 			//make a new object since we may have modified the filePath above
 			let thisPage = JSON.parse(JSON.stringify(params));
@@ -1723,9 +1718,7 @@
 		}
 				
 		//load the requested page
-		console.log("changing iframe source now....");
 		contentHolder.src = filePath;
-		console.log("contentHolder.src=" + contentHolder.src);
 	}
 	
 	//==========================================================================================
@@ -1754,13 +1747,10 @@
 	// highlightSearchResultsInSubPage
 	//==========================================================================================
 	function highlightSearchResultsInSubPage(){
-		console.log("--------------------------------------------------------------------------");
-		console.log("highlightSearchResultsInSubPage");
-		console.log("--------------------------------------------------------------------------");
+
 		//get current page data from stack
 		let thisPage = webStack[webStackIndex];
 		let pgPath = thisPage['pageParam']['path'];
-		console.log("pgPath="+pgPath);
 		
 		//if there was a search, highlight Matches
 		if (siteSearchTermInput !="" && siteSearchResults.length>0){
@@ -1790,7 +1780,7 @@
 	// menuClick
 	//==========================================================================================
 	function menuClick(params, userClick=true) {
-		console.log("params=" + JSON.stringify(params));
+		//console.log("params=" + JSON.stringify(params));
 		
 		var category = params.category;
 		var subCat = params.subCat;
