@@ -1680,7 +1680,8 @@
 		else {
 			filePath = params['path']
 		}
-
+		console.log("filePath = |" + filePath + "|");
+		
 		//show the correct configuration and update titles
 		configurePage('subPage', true, true);		  
 		subTitle.innerHTML = "School: " + params['title'];
@@ -1688,6 +1689,7 @@
 		
 		//load the requested page
 		contentHolder.src = filePath;
+		console.log("contentHolder.src=" + contentHolder.src);
 		
 		//build and fill the school-specific navbar
 		schoolNavBar = document.getElementById("schoolNavBar");
