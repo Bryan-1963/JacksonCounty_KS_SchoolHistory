@@ -1682,6 +1682,9 @@
 		//subMenuSelection is only specified when user changes subMenu for a school (e.g. Overview, Location, People, Event) 
 		if (subMenuSelection!=""){
 			filePath = params['path'].replace('Overview',subMenuSelection);
+			filePath = params['path'].replace('Events',subMenuSelection);
+			filePath = params['path'].replace('Locations',subMenuSelection);
+			filePath = params['path'].replace('People',subMenuSelection);
 		}
 		else {
 			filePath = params['path']
