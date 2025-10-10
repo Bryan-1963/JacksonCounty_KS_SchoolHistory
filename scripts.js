@@ -1701,6 +1701,7 @@
 	function highlightSearchResultsInSubPage(){
 		//get current page data from stack
 		thisPage = webStack[webStackIndex];
+		console.log("thisPage=" + JSON.stringify(thisPage));
 		console.log("thisPage['pageParam']=" + JSON.stringify(thisPage['pageParam']));
 		pgPath = thisPage['pageParam']['path'];
 
