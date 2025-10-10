@@ -596,7 +596,7 @@
 		let docPgImg = document.getElementById("docPageImg");
 		let searchRsltsHolder = document.getElementById("searchResultsHolder");	
 		let subSelectorHolder = document.getElementById("subSelector");
-		
+		//console.log("config="+config);
 		switch (config){
 			//------------------------
 			case 'siteSearchResults':
@@ -621,11 +621,12 @@
 			//------------------------
 				subMenuName = "";
 				subMenuCat = "";
-				iFrameHldr.style.display = "block";
-				documentContentHolder.style.display = "none";
+				iFrameHldr.style.display = "none";
+				documentContentHolder.style.display = "block";
+				searchRsltsHolder.style.display = "none";
 				subSelectorHolder.style.display="none";
 				subMenu.style.display = "block";
-				docNavBar.style.display = "none";
+				docNavBar.style.display = "block";
 				schoolNavBar.style.display = "none"
 				docAnnot.innerHTML="";
 				docFigCapt.innerHTML="";
@@ -640,11 +641,11 @@
 				subMenuName = '';
 				subMenuCat = ''
 				documentContentHolder.style.display = "none";
+				searchRsltsHolder.style.display = "none";
 				subSelectorHolder.style.display="none";
 				subMenu.style.display = "block";
 				docNavBar.style.display = "none";
 				schoolNavBar.style.display = "none"
-				searchRsltsHolder.style.display="none";
 				docAnnot.innerHTML="";
 				docFigCapt.innerHTML="";
 				docPgImg.src='';
@@ -730,6 +731,7 @@
 			let thisFnCall="";
 			let param = "";
 			//console.log(siteSearchResults[i]['page']['category']);
+			//console.log("--------------------------------------------------");
 			switch (siteSearchResults[i]['page']['category']) {
 				//......................
 				// Home
@@ -760,7 +762,7 @@
 				//......................
 				// Territorial
 				//......................			
-				case 'Pre-Org':
+				case 'Territorial':
 					thisFnCall="menuClick({'category':'Pre-Org','subCat':''}, true )";
 				break;	
 				
@@ -790,7 +792,7 @@
 				//......................
 				// Source Material
 				//......................			
-				case 'SourceMatl':
+				case 'Document':
 					param = JSON.stringify(siteSearchResults[i]['page']['path']);
 					param = param + ", " + JSON.stringify(siteSearchResults[i]['page']['title']);
 					param = param.replace(/"/g,"'");
@@ -804,10 +806,11 @@
 					thisFnCall="menuClick({'category':'Contact','subCat':''}, true )";
 				break;				
 			}
-			
+			//console.log("thisFnCall=|"+thisFnCall+"|");
 			rsltStr = rsltStr + "<tr><td><a class='link-like' onclick=\"" + thisFnCall + "\">"  ;
 			rsltStr = rsltStr + siteSearchResults[i]['title'] + "</a>"
 			rsltStr = rsltStr +  "</td><td>" + matchingTexts + "</td></tr>";
+			//console.log("rsltStr=|"+rsltStr+"|");
 		}
 		//console.log("rsltStr="+rsltStr);
 		document.getElementById("siteSearchResultsList").innerHTML = rsltStr;
@@ -1244,30 +1247,15 @@
 	// loadDocPages
 	//==========================================================================================
 	async function loadDocPages(filePath, docTitle, userClick=true){
-
-		subMenuName = '';
-		subMenuCat = '';
+		//console.log("in loadDocPages");
+		//console.log("rcd filePath="+filePath+", docTitle="+docTitle+", userClick="+userClick);
+		
+		configurePage('document',false,true);
+		//console.log("configured page");
 		
 		//set the subTitle
-		let subTitle = document.getElementById("SubTitle");
-		subTitle.innerHTML = docTitle;
+		document.getElementById("SubTitle").innerHTML = docTitle;
 		
-		//set up submenu with document navigation controls
-		let subMenu = document.getElementById("SubMenu");
-		subMenu.style.display = "block";
-		docNavBar.style.display = "block";
-		schoolNavBar.style.display = "none"
-		
-		//hide the iFrame content
-		let contentTitleBar = document.getElementById("ContentTitle");
-		contentTitleBar.className = "titleBar3Empty";
-		let iFrameHldr = document.getElementById("iFrameHolder");
-		iFrameHldr.style.display = "none";
-		
-		//show the document content
-		let documentContentHolder = document.getElementById("documentContentHolder");
-		documentContentHolder.style.display = "block";
-
 		//clean out old info
 		document.getElementById("docAnnotation").innerHTML="";
 		document.getElementById("figCaption").innerHTML="";
@@ -1283,9 +1271,19 @@
 		
 		//reset current page number within document
 		docPgNum=0;
-		
+
 		//load the first page
 		loadDocPageNum(0);
+		
+		// if there is a site search in place and no document specific search in place,
+		// then	search for the site request
+		//console.log("siteSearchTermInput="+siteSearchTermInput+", docSearchTerm="+docSearchTerm);
+		if (siteSearchTermInput != "" && docSearchTerm ===""){
+			//console.log("searching document");
+			document.getElementById("docPageSearchInput").value=siteSearchTermInput;
+			searchDocument(siteSearchPrecision);
+		}
+
 
 		//add to the web page stack if user navigated here
 		if (userClick){
@@ -1759,7 +1757,7 @@
 			for (let i=0;i<=siteSearchResults.length-1;i++){
 
 				if (siteSearchResults[i]['page']['path'] === pgPath){
-					console.log('found matching path');
+					//console.log('found matching path');
 					for (let j=0;j<=siteSearchResults[i]['matches'].length-1;j++){
 
 						let re=RegExp(siteSearchResults[i]['matches'][j]['text'],"ig");
@@ -1965,7 +1963,7 @@
 			//---------------------------	
 			case 'SourceMatl':
 			//---------------------------	
-				configurePage('document', false, false);			  
+				configurePage('subPage', false, false);			  
 				subTitle.innerHTML = "Source Materials";	
 				contentHolder.src="SourceMatls/SourceMatls.html";		
 				
@@ -2287,7 +2285,9 @@
 		pageParam;
 		siteSrchTrmInpt;
 		siteSearchRslts;
+		sitePrecision;
 		docPagesRSrchd;
 		docSrchTrm;
+		docPrecision;
 		docSrchRsltPgs; //array of page numbers containing the searched for text
 	};	
