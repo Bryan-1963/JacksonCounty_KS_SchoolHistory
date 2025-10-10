@@ -118,6 +118,9 @@
 	//-----------------------------------------
 	var myIframe = document.getElementById('ContentHolder');
 	myIframe.addEventListener("load", function() {
+		console.log("--------------------------------------------------------------------------");
+		console.log("iFrame loaded");
+		console.log("--------------------------------------------------------------------------");
 		
 		//in case iFrame loaded before startup was complete, initialize webStack
 		if (webStack.length===0){ 
@@ -1666,6 +1669,9 @@
 	// showSchool
 	//==========================================================================================
 	function showSchool(params, subMenuSelection="", userClick=true) {
+		console.log("--------------------------------------------------------------------------");
+		console.log("showSchool");
+		console.log("--------------------------------------------------------------------------");
 		console.log("params=" + JSON.stringify(params));
 		console.log("subMenuSelection=" + subMenuSelection);
 		let contentTitleBar = document.getElementById("ContentTitle");
@@ -1698,6 +1704,7 @@
 		schoolNavBar.innerHTML = navHTML;
 		
 		//add to the web page stack if user navigated here
+		console.log("adding to stack if userclick is true, userClick="+userClick);
 		if (userClick){	
 			//make a new object since we may have modified the filePath above
 			let thisPage = JSON.parse(JSON.stringify(params));
@@ -1706,6 +1713,7 @@
 		}
 				
 		//load the requested page
+		console.log("changing iframe source now....");
 		contentHolder.src = filePath;
 		console.log("contentHolder.src=" + contentHolder.src);
 	}
@@ -1736,10 +1744,14 @@
 	// highlightSearchResultsInSubPage
 	//==========================================================================================
 	function highlightSearchResultsInSubPage(){
+		console.log("--------------------------------------------------------------------------");
+		console.log("highlightSearchResultsInSubPage");
+		console.log("--------------------------------------------------------------------------");
 		//get current page data from stack
 		let thisPage = webStack[webStackIndex];
 		let pgPath = thisPage['pageParam']['path'];
-
+		console.log("pgPath="+pgPath);
+		
 		//if there was a search, highlight Matches
 		if (siteSearchTermInput !="" && siteSearchResults.length>0){
 			
