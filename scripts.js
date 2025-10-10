@@ -1674,6 +1674,7 @@
 		console.log("--------------------------------------------------------------------------");
 		console.log("params=" + JSON.stringify(params));
 		console.log("subMenuSelection=" + subMenuSelection);
+		console.log("params['path']="+params['path']);
 		let contentTitleBar = document.getElementById("ContentTitle");
 		let subTitle = document.getElementById("SubTitle");
 		let contentHolder = document.getElementById("ContentHolder");
@@ -1681,12 +1682,18 @@
 		
 		//subMenuSelection is only specified when user changes subMenu for a school (e.g. Overview, Location, People, Event) 
 		if (subMenuSelection!=""){
+			console.log("Replacing");
 			filePath = params['path'].replace('Overview',subMenuSelection);
-			filePath = params['path'].replace('Events',subMenuSelection);
-			filePath = params['path'].replace('Locations',subMenuSelection);
-			filePath = params['path'].replace('People',subMenuSelection);
+			console.log("filePath = |" + filePath + "|");
+			filePath = filePath.replace('Events',subMenuSelection);
+			console.log("filePath = |" + filePath + "|");
+			filePath = filePath.replace('Locations',subMenuSelection);
+			console.log("filePath = |" + filePath + "|");
+			filePath = filePath.replace('People',subMenuSelection);
+			console.log("filePath = |" + filePath + "|");
 		}
 		else {
+			console.log("using as is");
 			filePath = params['path']
 		}
 		console.log("filePath = |" + filePath + "|");
