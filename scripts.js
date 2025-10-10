@@ -119,7 +119,10 @@
 	var myIframe = document.getElementById('ContentHolder');
 	myIframe.addEventListener("load", function() {
 	  console.log("iFrame loaded");
+
+	  
 	  highlightSearchResultsInSubPage(); //highlight any search results on the page that was loaded
+	  
 	});
 	
 	
@@ -152,8 +155,8 @@
 		thisStackEl.docSrchRsltPgs=[];
 		console.log(JSON.stringify(thisStackEl));
 		console.log(JSON.stringify(thisStackEl['pageParam']));
-		addToWebStack(thisStackEl);
-		
+		addToWebStack(thisStackEl);  
+		console.log("startup complete");
 	};
 	
 	//==========================================================================================
@@ -1709,10 +1712,10 @@
 	//==========================================================================================
 	function highlightSearchResultsInSubPage(){
 		//get current page data from stack
-		thisPage = webStack[webStackIndex];
+		let thisPage = webStack[webStackIndex];
 		console.log("thisPage=" + JSON.stringify(thisPage));
 		console.log("thisPage['pageParam']=" + JSON.stringify(thisPage['pageParam']));
-		pgPath = thisPage['pageParam']['path'];
+		let pgPath = thisPage['pageParam']['path'];
 
 		console.log("|" + siteSearchTermInput + "|", siteSearchResults.length);
 		//if there was a search, highlight Matches
