@@ -118,9 +118,9 @@
 	//-----------------------------------------
 	var myIframe = document.getElementById('ContentHolder');
 	myIframe.addEventListener("load", function() {
-		console.log("iFrame loaded");
-
-		if (webStack.length===0){
+		
+		//in case iFrame loaded before startup was complete, initialize webStack
+		if (webStack.length===0){ 
 			//initialize the web page stack
 			let thisPage = new PageObject();
 			thisPage.number="";
@@ -156,6 +156,7 @@
 		initVars(); //load global variables
 		sizeBars(); //size and place the menu bars
 	
+		//in case startup completed before iFrame loaded, initialize webStack
 		if (webStack.length===0){
 			//initialize the web page stack
 			let thisPage = new PageObject();
@@ -173,7 +174,6 @@
 			addToWebStack(thisStackEl);  
 		}	
 
-		console.log("startup complete");
 	};
 	
 	//==========================================================================================
@@ -716,7 +716,6 @@
 				//console.log(j, JSON.stringify(siteSearchResults[i]['matches'][j]));
 				matchingTexts = matchingTexts + siteSearchResults[i]['phrases'][j];
 			}
-			console.log(siteSearchResults[i]);
 			
 			//build link with correct type of function call based on category of the page that was found
 			let thisFnCall="";
@@ -1405,25 +1404,32 @@
 	// removeTagsFromString
 	//==========================================================================================		
 	function removeTagsFromString(myText){
-			let clnStr = "";
-			let inTag = false;
-			//console.log("rcd myText=" + myText);
+		//console.log("rcd myText=" + myText);
 
-			for (let j=0;j<=myText.length-1;j++){
-				
-				if (myText[j]==="<"){
-					inTag=true;
-				}
-				else if (myText[j]===">"){
-					inTag=false;
-				}
-				else if (!inTag){
-					clnStr = clnStr + myText[j];
-				}
-				//console.log(j, myText[j],inTag, clnStr);
+		//remove all text prior to the <BODY> tag
+		if (myText.indexOf('<BODY>')>=0){
+			myText = myText.substring(myText.indexOf('<BODY>')+7)
+		}
+		
+		//remove all text inside tags (between '<' and '>'	
+		let inTag = false;
+		let clnStr = "";
+
+		for (let j=0;j<=myText.length-1;j++){
+			
+			if (myText[j]==="<"){
+				inTag=true;
 			}
+			else if (myText[j]===">"){
+				inTag=false;
+			}
+			else if (!inTag){
+				clnStr = clnStr + myText[j];
+			}
+			//console.log(j, myText[j],inTag, clnStr);
+		}
 
-			return clnStr;
+		return clnStr;
 	}
 	
 	//==========================================================================================
