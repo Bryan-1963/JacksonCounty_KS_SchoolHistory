@@ -118,10 +118,29 @@
 	//-----------------------------------------
 	var myIframe = document.getElementById('ContentHolder');
 	myIframe.addEventListener("load", function() {
-	  console.log("iFrame loaded");
+		console.log("iFrame loaded");
 
+		if (webStack.length===0){
+			//initialize the web page stack
+			let thisPage = new PageObject();
+			thisPage.number="";
+			thisPage.title="Welcome";
+			thisPage.path="Welcome/Welcome.html";
+			thisPage.category="Welcome";
+			let thisStackEl = new PageStack();
+			thisStackEl.pageParam = JSON.parse(JSON.stringify(thisPage));
+			thisStackEl.siteSrchTrmInpt="";
+			thisStackEl.siteSearchRslts=[];
+			thisStackEl.docPagesRSrchd=false;
+			thisStackEl.docSrchTrm="";
+			thisStackEl.docSrchRsltPgs=[];
+			console.log(JSON.stringify(thisStackEl));
+			console.log(JSON.stringify(thisStackEl['pageParam']));
+			addToWebStack(thisStackEl);  
+			console.log("webStack.length="+webStack.length);
+		}
 	  
-	  highlightSearchResultsInSubPage(); //highlight any search results on the page that was loaded
+		highlightSearchResultsInSubPage(); //highlight any search results on the page that was loaded
 	  
 	});
 	
@@ -139,23 +158,27 @@
 		usdSchools.length=0;
 		initVars(); //load global variables
 		sizeBars(); //size and place the menu bars
-		
-		//initialize the web page stack
-		let thisPage = new PageObject();
-		thisPage.number="";
-		thisPage.title="Welcome";
-		thisPage.path="Welcome/Welcome.html";
-		thisPage.category="Welcome";
-		let thisStackEl = new PageStack();
-		thisStackEl.pageParam = JSON.parse(JSON.stringify(thisPage));
-		thisStackEl.siteSrchTrmInpt="";
-		thisStackEl.siteSearchRslts=[];
-		thisStackEl.docPagesRSrchd=false;
-		thisStackEl.docSrchTrm="";
-		thisStackEl.docSrchRsltPgs=[];
-		console.log(JSON.stringify(thisStackEl));
-		console.log(JSON.stringify(thisStackEl['pageParam']));
-		addToWebStack(thisStackEl);  
+	
+		if (webStack.length===0){
+			//initialize the web page stack
+			let thisPage = new PageObject();
+			thisPage.number="";
+			thisPage.title="Welcome";
+			thisPage.path="Welcome/Welcome.html";
+			thisPage.category="Welcome";
+			let thisStackEl = new PageStack();
+			thisStackEl.pageParam = JSON.parse(JSON.stringify(thisPage));
+			thisStackEl.siteSrchTrmInpt="";
+			thisStackEl.siteSearchRslts=[];
+			thisStackEl.docPagesRSrchd=false;
+			thisStackEl.docSrchTrm="";
+			thisStackEl.docSrchRsltPgs=[];
+			console.log(JSON.stringify(thisStackEl));
+			console.log(JSON.stringify(thisStackEl['pageParam']));
+			addToWebStack(thisStackEl);  
+			console.log("webStack.length="+webStack.length);
+		}	
+
 		console.log("startup complete");
 	};
 	
