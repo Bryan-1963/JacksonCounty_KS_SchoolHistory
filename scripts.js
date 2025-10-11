@@ -40,6 +40,8 @@
 	var docSearchTerm = "";
 	var docDisplayMode='display'; //'display'=show from file, 'edit'=edit enabled
 	var docPgNum = 0;
+	var documentTitle = "";
+	var docPgPath = "";
 	var docPageNumInput = document.getElementById("docPageNumInput");
 	var docPageSearchInput = document.getElementById("docPageSearchInput");
 
@@ -459,13 +461,13 @@
 			// Source Material
 			//......................			
 			case 'SourceMatl':
-				console.log("navigating to a SourceMatl page with path=|" + webStack[webStackIndex].pageParam.path + "|");
+				console.log("navigating to a SourceMatl page with path=|" + webStack[webStackIndex].docPagePath + "|");
 				//main menu click to the source material link list
-				if (webStack[webStackIndex].pageParam.path ===""){
+				if (webStack[webStackIndex].docPagePath ===""){
 					menuClick({"category":"SourceMatl","subCat":""}, false );
 				}
 				else {
-					await loadDocPages(webStack[webStackIndex].pageParam.path,webStack[webStackIndex].pageParam.title,false);
+					await loadDocPages(webStack[webStackIndex].docPagePath,webStack[webStackIndex].docTitle,false);
 					console.log("loaded doc pages, now moving to page number="+docPgNum);
 					loadDocPageNum(docPgNum);
 				}
@@ -498,6 +500,8 @@
 		pageStckEl.siteSrchTrmInpt =siteSearchTermInput;
 		pageStckEl.sitePrecision = siteSearchPrecision;
 		pageStckEl.siteSearchRslts = siteSearchResults;
+		pageStckEl.docPagePath = docPgPath;
+		pageStckEl.docTitle = documentTitle; 
 		pageStckEl.docPagesRSrchd=docPagesAreSearched;
 		pageStckEl.docSrchTrm = docSearchTerm;
 		pageStckEl.docPrecision=docSearchPrecision;
@@ -1254,6 +1258,9 @@
 	async function loadDocPages(filePath, docTitle, userClick=true){
 		//console.log("in loadDocPages");
 		//console.log("rcd filePath="+filePath+", docTitle="+docTitle+", userClick="+userClick);
+		
+		docPgPath = filePath; //load global variable
+		documentTitle = docTitle; //load global variable
 		
 		configurePage('document',false,true);
 		//console.log("configured page");
@@ -2305,6 +2312,8 @@
 		siteSrchTrmInpt;
 		siteSearchRslts;
 		sitePrecision;
+		docPagePath;
+		docTitle;
 		docPagesRSrchd;
 		docSrchTrm;
 		docPrecision;
