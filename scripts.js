@@ -1406,8 +1406,8 @@
 		if (userClick){
 			let thisPage = new PageObject();
 			thisPage.number="";
-			thisPage.title=docTitle;
-			thisPage.path=filePath;
+			thisPage.title=""; 
+			thisPage.path="";
 			thisPage.category="SourceMatl";
 			let stackEl = new PageStack();
 			addToWebStack(thisPage);
