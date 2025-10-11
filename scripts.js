@@ -127,7 +127,7 @@
 			thisPage.title="Welcome";
 			thisPage.path="Welcome/Welcome.html";
 			thisPage.category="Welcome";
-			addToWebStack(thisStackEl);  
+			addToWebStack(thisPage);  
 		}
 	  
 		highlightSearchResultsInSubPage(); //highlight any search results on the page that was loaded
@@ -490,15 +490,15 @@
 		let pageStckEl = new PageStack();
 		pageStckEl.pageParam = pgIn;
 		pageStckEl.siteSrchTrmInpt =siteSearchTermInput;
-		stackEl.sitePrecision = siteSearchPrecision;
+		pageStckEl.sitePrecision = siteSearchPrecision;
 		pageStckEl.siteSearchRslts = siteSearchResults;
 		pageStckEl.docPagesRSrchd=docPagesAreSearched;
 		pageStckEl.docSrchTrm = docSearchTerm;
-		stackEl.docPrecision=docSearchPrecision;
+		pageStckEl.docPrecision=docSearchPrecision;
 		pageStckEl.docSrchRsltPgs =docSearchResultPages;
 		
 		//make sure nothing is stored in the stack "by Reference"
-		pageStckEl = JSON.parse(JSON.stringify(stackEl));
+		pageStckEl = JSON.parse(JSON.stringify(pageStckEl));
 		
 		//get strings to compare current to previous page on the stack
 		let prevElStr = JSON.stringify(webStack[webStack.length-1]);
