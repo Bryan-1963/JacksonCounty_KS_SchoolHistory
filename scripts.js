@@ -104,6 +104,7 @@
 	// Site search input listener 
 	//-----------------------------------------
 	siteSearchInput.addEventListener("keydown", function (e) {
+		console.log("detected keydown in siteSearchInput");
 		if (e.code === "Enter" || e.code === "NumpadEnter") //checks whether the pressed key is "Enter"
 		{  
 			let searchTerm = siteSearchInput.value;
@@ -133,8 +134,7 @@
 		highlightSearchResultsInSubPage(); //highlight any search results on the page that was loaded
 	  
 	});
-	
-	
+		
 	//=======================================================================================================================================================
 	// FUNCTIONS
 	//=======================================================================================================================================================
@@ -338,6 +338,7 @@
 		if (webStackIndex<0){
 			webStackIndex = 0;
 		}
+		
 		console.log("rcd dir="+dir+", now webStackIndex="+webStackIndex);
 		
 		//......................................
@@ -351,7 +352,7 @@
 			siteSearchInput="";
 		}
 		document.getElementById("siteSearchInput").value=siteSearchInput;
-		
+		console.log("made it here");
 		docPagesAreSearched = webStack[webStackIndex].docPagesRSrchd;
 		docSearchTerm = (' ' + webStack[webStackIndex].docSrchTrm).slice(1);
 		document.getElementById("docPageSearchInput").value=docSearchTerm;
@@ -362,6 +363,8 @@
 		docPageSearchInput.value = docSearchTerm;
 		docSearchResultPages = JSON.parse(JSON.stringify(webStack[webStackIndex].docSrchRsltPgs));
 		
+		console.log("navigating to webStack[webStackIndex].pageParam.category="+webStack[webStackIndex].pageParam.category);
+
 		//......................................
 		//navigate to page at webStackIndex
 		//......................................
@@ -370,6 +373,7 @@
 			// Home
 			//......................
 			case 'Home':
+			case 'Welcome':
 				menuClick({"category":"Home","subCat":""}, false);
 			break;
 			
@@ -479,7 +483,6 @@
 		}
 		
 	}
-
 
 	//==========================================================================================
 	// addToWebStack
@@ -811,12 +814,15 @@
 		
 		//update webStack by copying the current location and adding search results
 		if (userClick){
+			console.log("adding search results to webStack, webStack.length=" + webStack.length);
 			thisPage = new PageObject();
 			thisPage.number="";
 			thisPage.title="Site Search";
 			thisPage.path="";
 			thisPage.category="SiteSearch";
-			addToWebStack(thisPage)
+			addToWebStack(thisPage);
+			console.log("...now webStack.length=" + webStack.length);
+			console.log("..." + JSON.stringify(webStack));
 		}
 		
 		// ADJUST LOCATIONS OF BARS
@@ -1967,7 +1973,7 @@
 					thisPage = new PageObject();
 					thisPage.number="";
 					thisPage.title="SourceMatl";
-					thisPage.path="SourceMatls/SourceMatls.html";
+					thisPage.path="";
 					thisPage.category="SourceMatl";
 					addToWebStack(thisPage);
 				}
