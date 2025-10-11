@@ -502,7 +502,7 @@
 		pageStckEl.docSrchTrm = docSearchTerm;
 		pageStckEl.docPrecision=docSearchPrecision;
 		pageStckEl.docSrchRsltPgs =docSearchResultPages;
-		pageStckEl.docCurrPg = docSearchResultCurrPg;
+		pageStckEl.docCurrPg = docPgNum;
 		
 		//make sure nothing is stored in the stack "by Reference"
 		pageStckEl = JSON.parse(JSON.stringify(pageStckEl));
