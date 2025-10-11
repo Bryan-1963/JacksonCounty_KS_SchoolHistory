@@ -319,7 +319,7 @@
 	//==========================================================================================
 	// navStack
 	//==========================================================================================	
-	function navStack(dir){
+	async function navStack(dir){
 		var subTitle = document.getElementById("SubTitle");
 		var contentHolder = document.getElementById("ContentHolder");
 		
@@ -361,7 +361,7 @@
 		}
 		console.log("setting docPageSearchInput value to|" + docSearchTerm +"|");
 		document.getElementById("docPageSearchInput").value=docSearchTerm;
-		
+		docPgNum = webStack[webStackIndex].docCurrPg*1;
 		docPageSearchInput.value = docSearchTerm;
 		docSearchResultPages = JSON.parse(JSON.stringify(webStack[webStackIndex].docSrchRsltPgs));
 		
@@ -465,7 +465,8 @@
 					menuClick({"category":"SourceMatl","subCat":""}, false );
 				}
 				else {
-					loadDocPages(webStack[webStackIndex].pageParam.path,webStack[webStackIndex].pageParam.title,false);
+					await loadDocPages(webStack[webStackIndex].pageParam.path,webStack[webStackIndex].pageParam.title,false);
+					loadDocPageNum(docPgNum);
 				}
 			break;	
 			
@@ -500,6 +501,7 @@
 		pageStckEl.docSrchTrm = docSearchTerm;
 		pageStckEl.docPrecision=docSearchPrecision;
 		pageStckEl.docSrchRsltPgs =docSearchResultPages;
+		pageStckEl.docCurrPg = docSearchResultCurrPg;
 		
 		//make sure nothing is stored in the stack "by Reference"
 		pageStckEl = JSON.parse(JSON.stringify(pageStckEl));
@@ -1303,9 +1305,9 @@
 	//==========================================================================================
 	// loadDocPageNum
 	//==========================================================================================	
-	function loadDocPageNum(pgNum){
-		docPgNum = pgNum;
-		
+	function loadDocPageNum(pgNum, userClick=true){
+		docPgNum = pgNum;  //global variable load
+
 		// update image source path
 		let docImg = document.getElementById('docPageImg');
 		docImg.src = webRootLocation + docPages[pgNum]['photoFilePath'].toString();
@@ -1398,6 +1400,17 @@
 				}
 				
 			}
+		}
+		
+		//add to the web page stack if user navigated here
+		if (userClick){
+			let thisPage = new PageObject();
+			thisPage.number="";
+			thisPage.title=docTitle;
+			thisPage.path=filePath;
+			thisPage.category="SourceMatl";
+			let stackEl = new PageStack();
+			addToWebStack(thisPage);
 		}
 	};
 	
@@ -2294,4 +2307,5 @@
 		docSrchTrm;
 		docPrecision;
 		docSrchRsltPgs; //array of page numbers containing the searched for text
+		docCurrPg;
 	};	
