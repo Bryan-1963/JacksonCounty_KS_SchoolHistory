@@ -1292,7 +1292,7 @@
 		docPgNum=0;
 
 		//load the first page
-		loadDocPageNum(0);
+		loadDocPageNum(0, userClick);
 		
 		// if there is a site search in place and no document specific search in place,
 		// then	search for the site request
