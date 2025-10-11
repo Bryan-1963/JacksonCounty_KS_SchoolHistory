@@ -1303,18 +1303,6 @@
 			searchDocument(siteSearchPrecision);
 		}
 
-
-		//add to the web page stack if user navigated here
-		if (userClick){
-			let thisPage = new PageObject();
-			thisPage.number="";
-			thisPage.title=docTitle;
-			thisPage.path=filePath;
-			thisPage.category="SourceMatl";
-			let stackEl = new PageStack();
-			addToWebStack(thisPage);
-		}
-
 	};
 
 	//==========================================================================================
