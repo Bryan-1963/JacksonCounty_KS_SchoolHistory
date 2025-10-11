@@ -118,7 +118,7 @@
 	//-----------------------------------------
 	var myIframe = document.getElementById('ContentHolder');
 	myIframe.addEventListener("load", function() {
-		
+		console.log("subPage loaded");
 		//in case iFrame loaded before startup was complete, initialize webStack
 		if (webStack.length===0){ 
 			//initialize the web page stack
@@ -479,7 +479,6 @@
 		}
 		
 	}
-
 
 
 	//==========================================================================================
@@ -1741,7 +1740,7 @@
 	// highlightSearchResultsInSubPage
 	//==========================================================================================
 	function highlightSearchResultsInSubPage(){
-
+		//console.log("in highlightSearchResultsInSubPage with siteSearchTermInput=|" + siteSearchTermInput + ", and siteSearchResults.length=" + siteSearchResults.length);
 		//get current page data from stack
 		let thisPage = webStack[webStackIndex];
 		let pgPath = thisPage['pageParam']['path'];
@@ -1751,7 +1750,7 @@
 			
 			//find the search match for this page
 			for (let i=0;i<=siteSearchResults.length-1;i++){
-
+				//console.log(i,siteSearchResults[i]['page']['path'],pgPath);
 				if (siteSearchResults[i]['page']['path'] === pgPath){
 					//console.log('found matching path');
 					for (let j=0;j<=siteSearchResults[i]['matches'].length-1;j++){
@@ -1910,7 +1909,7 @@
 					thisPage = new PageObject();
 					thisPage.number="";
 					thisPage.title="Pre-Org";
-					thisPage.path="";
+					thisPage.path="Pre-Org/Territorial.html";
 					thisPage.category="Pre-Org";
 					addToWebStack(thisPage);
 				}
@@ -1949,7 +1948,7 @@
 					thisPage = new PageObject();
 					thisPage.number="";
 					thisPage.title="References";
-					thisPage.path="";
+					thisPage.path="References/References.html";
 					thisPage.category="References";
 					addToWebStack(thisPage);
 				}
@@ -1968,7 +1967,7 @@
 					thisPage = new PageObject();
 					thisPage.number="";
 					thisPage.title="SourceMatl";
-					thisPage.path="";
+					thisPage.path="SourceMatls/SourceMatls.html";
 					thisPage.category="SourceMatl";
 					addToWebStack(thisPage);
 				}
@@ -1981,12 +1980,13 @@
 				configurePage('subPage', false, false);	
 				subTitle.innerHTML = "Contact";	
 				contentHolder.src="Contact/Contact.html";
+				
 				//add to the web page stack if user navigated here
 				if (userClick){
 					thisPage = new PageObject();
 					thisPage.number="";
 					thisPage.title="Contact";
-					thisPage.path="";
+					thisPage.path="Contact/Contact.html";
 					thisPage.category="Contact";
 					addToWebStack(thisPage);;
 				}
