@@ -1404,7 +1404,7 @@
 		}
 		
 		//add to the web page stack if user navigated here
-		console.log("userClick="userClick);
+		console.log("userClick="+userClick);
 		if (userClick){
 			let thisPage = new PageObject();
 			thisPage.number="";
