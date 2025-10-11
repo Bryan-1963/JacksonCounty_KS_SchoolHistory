@@ -471,6 +471,7 @@
 				}
 				else {
 					await loadDocPages(webStack[webStackIndex].docPagePath,webStack[webStackIndex].docTitle,false);
+					docPgNum = webStack[webStackIndex].docCurrPg*1; //have to set again here since loadDocPages put it at 0
 					console.log("loaded doc pages, now moving to page number="+docPgNum);
 					loadDocPageNum(docPgNum);
 				}
