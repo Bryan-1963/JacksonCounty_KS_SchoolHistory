@@ -83,7 +83,7 @@
 			
 			//update the page number input box to account for limiting
 			docPageNumInput.setAttribute("value",Number(docPgNum)+1);
-
+			console.log("docPgNum="+docPgNum);
 			//load the requested page
 			loadDocPageNum(docPgNum);
 		}
@@ -364,6 +364,7 @@
 		console.log("setting docPageSearchInput value to|" + docSearchTerm +"|");
 		document.getElementById("docPageSearchInput").value=docSearchTerm;
 		docPgNum = webStack[webStackIndex].docCurrPg*1;
+		console.log("webStack[webStackIndex].docCurrPg="+webStack[webStackIndex].docCurrPg+", docPgNum="+docPgNum);
 		docPageSearchInput.value = docSearchTerm;
 		docSearchResultPages = JSON.parse(JSON.stringify(webStack[webStackIndex].docSrchRsltPgs));
 		
@@ -507,6 +508,7 @@
 		pageStckEl.docPrecision=docSearchPrecision;
 		pageStckEl.docSrchRsltPgs =docSearchResultPages;
 		pageStckEl.docCurrPg = docPgNum;
+		console.log("webStack[webStackIndex].docCurrPg="+webStack[webStackIndex].docCurrPg+", docPgNum="+docPgNum);
 		
 		//make sure nothing is stored in the stack "by Reference"
 		pageStckEl = JSON.parse(JSON.stringify(pageStckEl));
