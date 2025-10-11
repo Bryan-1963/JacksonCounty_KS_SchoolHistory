@@ -83,7 +83,9 @@
 			
 			//update the page number input box to account for limiting
 			docPageNumInput.setAttribute("value",Number(docPgNum)+1);
+			
 			console.log("docPgNum="+docPgNum);
+			
 			//load the requested page
 			loadDocPageNum(docPgNum);
 		}
@@ -508,7 +510,8 @@
 		pageStckEl.docPrecision=docSearchPrecision;
 		pageStckEl.docSrchRsltPgs =docSearchResultPages;
 		pageStckEl.docCurrPg = docPgNum;
-		console.log("pageStckEl.docCurrPg="+pageStckEl.docCurrPg+", docPgNum="+docPgNum);
+
+		console.log("in addToWebStack. pageStckEl.docCurrPg="+pageStckEl.docCurrPg+", docPgNum="+docPgNum);
 		
 		//make sure nothing is stored in the stack "by Reference"
 		pageStckEl = JSON.parse(JSON.stringify(pageStckEl));
@@ -1317,7 +1320,8 @@
 	//==========================================================================================	
 	function loadDocPageNum(pgNum, userClick=true){
 		docPgNum = pgNum;  //global variable load
-
+		console.log("in loadDocPageNumm now docPgNum="+docPgNum);
+		
 		// update image source path
 		let docImg = document.getElementById('docPageImg');
 		docImg.src = webRootLocation + docPages[pgNum]['photoFilePath'].toString();
@@ -1421,6 +1425,7 @@
 			thisPage.path="";
 			thisPage.category="SourceMatl";
 			let stackEl = new PageStack();
+			console.log("adding to webStack, docPgNum="+docPgNum);
 			addToWebStack(thisPage);
 		}
 	};
