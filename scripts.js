@@ -1319,8 +1319,9 @@
 	// loadDocPageNum
 	//==========================================================================================	
 	function loadDocPageNum(pgNum, userClick=true){
-		docPgNum = pgNum;  //global variable load
-		console.log("in loadDocPageNumm now docPgNum="+docPgNum);
+		console.log("in loadDocPageNum recd pgNum="+pgNum);
+		docPgNum = pgNum*1;  //global variable load
+		console.log("in loadDocPageNum now docPgNum="+docPgNum);
 		
 		// update image source path
 		let docImg = document.getElementById('docPageImg');
