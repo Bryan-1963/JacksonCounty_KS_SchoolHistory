@@ -113,6 +113,7 @@
 		{  
 			let searchTerm = siteSearchInput.value;
 			if (searchTerm != null && searchTerm!=""){
+				console.log("calling searchSite");
 				searchSite(1.00);
 			}
 		}
@@ -123,7 +124,7 @@
 	//-----------------------------------------
 	var myIframe = document.getElementById('ContentHolder');
 	myIframe.addEventListener("load", function() {
-		console.log("subPage loaded");
+		
 		//in case iFrame loaded before startup was complete, initialize webStack
 		if (webStack.length===0){ 
 			//initialize the web page stack
@@ -512,8 +513,6 @@
 		pageStckEl.docPrecision=docSearchPrecision;
 		pageStckEl.docSrchRsltPgs =docSearchResultPages;
 		pageStckEl.docCurrPg = docPgNum;
-
-		console.log("in addToWebStack. pageStckEl.docCurrPg="+pageStckEl.docCurrPg+", docPgNum="+docPgNum);
 		
 		//make sure nothing is stored in the stack "by Reference"
 		pageStckEl = JSON.parse(JSON.stringify(pageStckEl));
@@ -850,7 +849,7 @@
 	//==========================================================================================
 	async function searchSite(precisionRqd=1.00, userClick=true){  
 		//0.82 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
-	
+		console.log("in searchSite with precisionRqd="+precisionRqd+", userClick="+userClick);
 		// stop user input
 		document.getElementById("pauseUserInputContent").innerHTML="Please wait. Searching entire site....0/" + (searchFiles.length-1);
 		document.getElementById("pauseUserInput").style.display="block";
@@ -1309,9 +1308,7 @@
 	// loadDocPageNum
 	//==========================================================================================	
 	function loadDocPageNum(pgNum, userClick=true){
-		console.log("in loadDocPageNum recd pgNum="+pgNum);
 		docPgNum = pgNum*1;  //global variable load
-		console.log("in loadDocPageNum now docPgNum="+docPgNum);
 		
 		// update image source path
 		let docImg = document.getElementById('docPageImg');
@@ -1408,7 +1405,6 @@
 		}
 		
 		//add to the web page stack if user navigated here
-		console.log("userClick="+userClick);
 		if (userClick){
 			let thisPage = new PageObject();
 			thisPage.number="";
@@ -1416,7 +1412,6 @@
 			thisPage.path="";
 			thisPage.category="SourceMatl";
 			let stackEl = new PageStack();
-			console.log("adding to webStack, docPgNum="+docPgNum);
 			addToWebStack(thisPage);
 		}
 	};
