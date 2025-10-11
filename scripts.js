@@ -127,13 +127,6 @@
 			thisPage.title="Welcome";
 			thisPage.path="Welcome/Welcome.html";
 			thisPage.category="Welcome";
-			let thisStackEl = new PageStack();
-			thisStackEl.pageParam = JSON.parse(JSON.stringify(thisPage));
-			thisStackEl.siteSrchTrmInpt="";
-			thisStackEl.siteSearchRslts=[];
-			thisStackEl.docPagesRSrchd=false;
-			thisStackEl.docSrchTrm="";
-			thisStackEl.docSrchRsltPgs=[];
 			addToWebStack(thisStackEl);  
 		}
 	  
@@ -164,14 +157,7 @@
 			thisPage.title="Welcome";
 			thisPage.path="Welcome/Welcome.html";
 			thisPage.category="Welcome";
-			let thisStackEl = new PageStack();
-			thisStackEl.pageParam = JSON.parse(JSON.stringify(thisPage));
-			thisStackEl.siteSrchTrmInpt="";
-			thisStackEl.siteSearchRslts=[];
-			thisStackEl.docPagesRSrchd=false;
-			thisStackEl.docSrchTrm="";
-			thisStackEl.docSrchRsltPgs=[];
-			addToWebStack(thisStackEl);  
+			addToWebStack(thisPage);  
 		}	
 
 	};
@@ -352,11 +338,14 @@
 		if (webStackIndex<0){
 			webStackIndex = 0;
 		}
+		console.log("rcd dir="+dir+", now webStackIndex="+webStackIndex);
 		
 		//......................................
-		// set search variables
+		// set search variables and elements
 		//......................................
 		siteSearchInput = (' ' + webStack[webStackIndex].siteSrchTrmInpt).slice(1);
+		document.getElementById('docPageSearchInput').value = siteSearchInput;
+		siteSearchPrecision = webStack[webStackIndex].sitePrecision*1;
 		siteSearchResults = JSON.parse(JSON.stringify(webStack[webStackIndex].siteSearchRslts));
 		if(siteSearchInput===undefined || siteSearchInput==='undefined'){
 			siteSearchInput="";
@@ -365,6 +354,8 @@
 		
 		docPagesAreSearched = webStack[webStackIndex].docPagesRSrchd;
 		docSearchTerm = (' ' + webStack[webStackIndex].docSrchTrm).slice(1);
+		document.getElementById("docPageSearchInput").value=docSearchTerm;
+		docSearchPrecision=webStack[webStackIndex].docPrecision*1;
 		if(docSearchTerm===undefined || docSearchTerm==='undefined'){
 			docSearchTerm="";
 		}
@@ -462,6 +453,7 @@
 			// Source Material
 			//......................			
 			case 'SourceMatl':
+				console.log("navigating to a SourceMatl page with path=|" + webStack[webStackIndex].pageParam.path + "|");
 				//main menu click to the source material link list
 				if (webStack[webStackIndex].pageParam.path ===""){
 					menuClick({"category":"SourceMatl","subCat":""}, false );
@@ -488,23 +480,25 @@
 		
 	}
 
+
+
 	//==========================================================================================
 	// addToWebStack
 	//==========================================================================================	
 	function addToWebStack(pgIn){
-		//make sure nothing is stored in the stack "by Reference"
+		//load up new stack element with state of the web page
 		let pageStckEl = new PageStack();
-		pageStckEl.pageParam = JSON.parse(JSON.stringify(pgIn));
-		pageStckEl.siteSrchTrmInpt =(' ' + siteSearchTermInput).slice(1);
-		pageStckEl.siteSearchRslts = JSON.parse(JSON.stringify(siteSearchResults));
-		if (docPagesAreSearched) {
-			pageStckEl.docPagesRSrchd=true;
-		}
-		else {
-			pageStckEl.docPagesRSrchd=false;
-		}
-		pageStckEl.docSrchTrm = (' ' + docSearchTerm).slice(1);
-		pageStckEl.docSrchRsltPgs =JSON.parse(JSON.stringify(docSearchResultPages));
+		pageStckEl.pageParam = pgIn;
+		pageStckEl.siteSrchTrmInpt =siteSearchTermInput;
+		stackEl.sitePrecision = siteSearchPrecision;
+		pageStckEl.siteSearchRslts = siteSearchResults;
+		pageStckEl.docPagesRSrchd=docPagesAreSearched;
+		pageStckEl.docSrchTrm = docSearchTerm;
+		stackEl.docPrecision=docSearchPrecision;
+		pageStckEl.docSrchRsltPgs =docSearchResultPages;
+		
+		//make sure nothing is stored in the stack "by Reference"
+		pageStckEl = JSON.parse(JSON.stringify(stackEl));
 		
 		//get strings to compare current to previous page on the stack
 		let prevElStr = JSON.stringify(webStack[webStack.length-1]);
@@ -518,6 +512,7 @@
 		}
 		
 		//console.log(webStackIndex,JSON.stringify(webStack[webStackIndex]));
+
 	}
 		
 	//==========================================================================================
@@ -1287,11 +1282,12 @@
 
 		//add to the web page stack if user navigated here
 		if (userClick){
-			thisPage = new PageObject();
+			let thisPage = new PageObject();
 			thisPage.number="";
 			thisPage.title=docTitle;
 			thisPage.path=filePath;
 			thisPage.category="SourceMatl";
+			let stackEl = new PageStack();
 			addToWebStack(thisPage);
 		}
 
