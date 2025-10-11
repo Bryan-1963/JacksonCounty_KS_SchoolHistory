@@ -352,14 +352,16 @@
 			siteSearchInput="";
 		}
 		document.getElementById("siteSearchInput").value=siteSearchInput;
-		console.log("made it here");
+		
 		docPagesAreSearched = webStack[webStackIndex].docPagesRSrchd;
 		docSearchTerm = (' ' + webStack[webStackIndex].docSrchTrm).slice(1);
-		document.getElementById("docPageSearchInput").value=docSearchTerm;
 		docSearchPrecision=webStack[webStackIndex].docPrecision*1;
 		if(docSearchTerm===undefined || docSearchTerm==='undefined'){
 			docSearchTerm="";
 		}
+		console.log("setting docPageSearchInput value to|" + docSearchTerm +"|");
+		document.getElementById("docPageSearchInput").value=docSearchTerm;
+		
 		docPageSearchInput.value = docSearchTerm;
 		docSearchResultPages = JSON.parse(JSON.stringify(webStack[webStackIndex].docSrchRsltPgs));
 		
@@ -843,7 +845,7 @@
 		let foundSomeMatches = false;
 		siteSearchResults.length=0;
 		siteSearchPrecision = precisionRqd; //save to global variable
-		siteSearchTermInput = document.getElementById("siteSearchInput").value;
+		siteSearchTerm = document.getElementById("siteSearchInput").value;
 		
 		let startStr = "<colgroup><col style='width:25%'><col style='width:75%'></colgroup>";
 		startStr = startStr + "<tr><th>Page</th><th>Matches</th></tr>";
@@ -887,7 +889,7 @@
 				alert("No matches found.");
 			}
 			
-		} //end of if (docSearchTermInput != null && docSearchTermInput!="")
+		} //end of if (docSearchTerm != null && docSearchTerm!="")
 	
 		// renew user input
 		document.getElementById("pauseUserInputContent").innerHTML="Calculating....";
@@ -1072,7 +1074,7 @@
 	//==========================================================================================
 	// getDocSearchPatterns
 	//==========================================================================================	
-	function getDocSearchPatterns(docSearchTermInput){
+	function getDocSearchPatterns(docSearchTerm){
 		//.................................................
 		// load docSearchPatterns
 		//.................................................
@@ -1080,8 +1082,8 @@
 		let startQuote = false;
 		let word = "";
 		docSearchPatterns.length = 0;
-		for (let i=0;i<=docSearchTermInput.length-1;i++){
-			let char = docSearchTermInput[i];
+		for (let i=0;i<=docSearchTerm.length-1;i++){
+			let char = docSearchTerm[i];
 			let charIsQuote = /^[“"']/.test(char);
 			
 			if (charIsQuote && !startQuote) {
@@ -1102,7 +1104,7 @@
 				}
 				word = "";
 			}
-			else if (i===docSearchTermInput.length-1){
+			else if (i===docSearchTerm.length-1){
 				//reached end of input String
 				if (!charIsQuote){
 					word = word + char;
@@ -1141,11 +1143,11 @@
 		//clear out any existing search 
 		clearDocumentSearch();
 		docSearchPatterns.length = 0;	
-		docSearchTermInput = docPageSearchInput.value.toString().trim().toLowerCase();
+		docSearchTerm = docPageSearchInput.value.toString().trim().toLowerCase();
 		
-		if (docSearchTermInput != null && docSearchTermInput!=""){
+		if (docSearchTerm != null && docSearchTerm!=""){
 			
-			getDocSearchPatterns(docSearchTermInput)
+			getDocSearchPatterns(docSearchTerm)
 
 			//.................................................
 			// search document text fields for matches
@@ -1204,7 +1206,7 @@
 				addToWebStack(webStack[webStackIndex].pageParam)
 			}		
 			
-		} // end if (docSearchTermInput != null && docSearchTermInput!="")
+		} // end if (docSearchTerm != null && docSearchTerm!="")
 			
 	//==========================================================================================		
 	} //END OF FUNCTION searchDocument
