@@ -470,7 +470,8 @@
 					menuClick({"category":"SourceMatl","subCat":""}, false );
 				}
 				else {
-					await loadDocPages(webStack[webStackIndex].docPagePath,webStack[webStackIndex].docTitle,false);
+					console.log("calling loadDocPages. sending path="+webStack[webStackIndex].docPagePath+", title="+webStack[webStackIndex].docTitle+", userClick=false");
+					await loadDocPages(webStack[webStackIndex].docPagePath, webStack[webStackIndex].docTitle ,false);
 					docPgNum = webStack[webStackIndex].docCurrPg*1; //have to set again here since loadDocPages put it at 0
 					console.log("loaded doc pages, now moving to page number="+docPgNum);
 					loadDocPageNum(docPgNum);
@@ -1262,7 +1263,7 @@
 	// loadDocPages
 	//==========================================================================================
 	async function loadDocPages(filePath, docTitle, userClick=true){
-		//console.log("in loadDocPages");
+		//console.log("in loadDocPages, recd filePath="+filePath+", docTitle="+docTitle+", userClick="+userClick);
 		//console.log("rcd filePath="+filePath+", docTitle="+docTitle+", userClick="+userClick);
 		
 		docPgPath = filePath; //load global variable
