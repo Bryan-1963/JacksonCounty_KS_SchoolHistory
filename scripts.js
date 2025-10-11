@@ -466,6 +466,7 @@
 				}
 				else {
 					await loadDocPages(webStack[webStackIndex].pageParam.path,webStack[webStackIndex].pageParam.title,false);
+					console.log("loaded doc pages, now moving to page number="+docPgNum);
 					loadDocPageNum(docPgNum);
 				}
 			break;	
@@ -1403,6 +1404,7 @@
 		}
 		
 		//add to the web page stack if user navigated here
+		console.log("userClick="userClick);
 		if (userClick){
 			let thisPage = new PageObject();
 			thisPage.number="";
