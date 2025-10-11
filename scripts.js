@@ -108,12 +108,12 @@
 	// Site search input listener 
 	//-----------------------------------------
 	siteSearchInput.addEventListener("keydown", function (e) {
-		console.log("detected keydown in siteSearchInput");
+
 		if (e.code === "Enter" || e.code === "NumpadEnter") //checks whether the pressed key is "Enter"
 		{  
-			let searchTerm = siteSearchInput.value;
-			if (searchTerm != null && searchTerm!=""){
-				console.log("calling searchSite");
+			siteSearchTermInput = siteSearchInput.value;
+			if (siteSearchTermInput != null && siteSearchTermInput!=""){
+				document.getElementById("TitleBar").focus(); //get cursor out of the input box
 				searchSite(1.00);
 			}
 		}
@@ -829,15 +829,12 @@
 		
 		//update webStack by copying the current location and adding search results
 		if (userClick){
-			console.log("adding search results to webStack, webStack.length=" + webStack.length);
 			thisPage = new PageObject();
 			thisPage.number="";
 			thisPage.title="Site Search";
 			thisPage.path="";
 			thisPage.category="SiteSearch";
 			addToWebStack(thisPage);
-			console.log("...now webStack.length=" + webStack.length);
-			console.log("..." + JSON.stringify(webStack));
 		}
 		
 		// ADJUST LOCATIONS OF BARS
@@ -849,11 +846,11 @@
 	//==========================================================================================
 	async function searchSite(precisionRqd=1.00, userClick=true){  
 		//0.82 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
-		console.log("in searchSite with precisionRqd="+precisionRqd+", userClick="+userClick);
+
 		// stop user input
 		document.getElementById("pauseUserInputContent").innerHTML="Please wait. Searching entire site....0/" + (searchFiles.length-1);
 		document.getElementById("pauseUserInput").style.display="block";
-		
+
 		//initialize variables
 		let foundSomeMatches = false;
 		siteSearchResults.length=0;
