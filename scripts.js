@@ -508,7 +508,7 @@
 		pageStckEl.docPrecision=docSearchPrecision;
 		pageStckEl.docSrchRsltPgs =docSearchResultPages;
 		pageStckEl.docCurrPg = docPgNum;
-		console.log("webStack[webStackIndex].docCurrPg="+webStack[webStackIndex].docCurrPg+", docPgNum="+docPgNum);
+		console.log("pageStckEl.docCurrPg="+pageStckEl.docCurrPg+", docPgNum="+docPgNum);
 		
 		//make sure nothing is stored in the stack "by Reference"
 		pageStckEl = JSON.parse(JSON.stringify(pageStckEl));
