@@ -130,6 +130,8 @@
 		
 		//in case iFrame loaded before startup was complete, initialize webStack
 		if (webStack.length===0){ 
+			//console.log("-------------------------------------------------------------------------------");
+			//console.log("initializing webStack from iFrame listener");
 			//initialize the web page stack
 			let thisPage = new PageObject();
 			thisPage.number="";
@@ -159,6 +161,8 @@
 	
 		//in case startup completed before iFrame loaded, initialize webStack
 		if (webStack.length===0){
+			//console.log("-------------------------------------------------------------------------------");
+			//console.log("initializing webStack from startup");
 			//initialize the web page stack
 			let thisPage = new PageObject();
 			thisPage.number="";
@@ -331,6 +335,17 @@
 		var subTitle = document.getElementById("SubTitle");
 		var contentHolder = document.getElementById("ContentHolder");
 		
+		// START DEBUG ONLY
+		/*
+		console.log("====================================================");
+		console.log("NAVSTACK: rcd dir="+dir+", current webStackIndex="+webStackIndex);
+		console.log("====================================================");
+		for (let i=0;i<=webStack.length-1;i++){
+			console.log(i, webStack[i].pageParam.category, webStack[i].pageParam.title);
+		}
+		*/
+		//END DEBUG ONLY
+		
 		//...........................
 		//adjust webStackIndex
 		//...........................
@@ -502,6 +517,17 @@
 	// addToWebStack
 	//==========================================================================================	
 	function addToWebStack(pgIn){
+		// START DEBUG ONLY
+		/*
+		console.log("====================================================");
+		console.log("ADDING TO WEBSTACK: current webStackIndex="+webStackIndex);
+		console.log("====================================================");
+		for (let i=0;i<=webStack.length-1;i++){
+			console.log(i, webStack[i].pageParam.category, webStack[i].pageParam.title);
+		}
+		*/
+		//END DEBUG ONLY
+		
 		//load up new stack element with state of the web page
 		let pageStckEl = new PageStack();
 		pageStckEl.pageParam = pgIn;
@@ -525,13 +551,26 @@
 		
 		//if its new, add it to the stack
 		if (newElStr != prevElStr){
+			//console.log("new entry");
 			webStack.splice(webStackIndex+1); //truncate any following pages compared to where we are now
 			webStack.push(pageStckEl);
 			webStackIndex = webStack.length-1;			
 		}
 		
 		//console.log(webStackIndex,JSON.stringify(webStack[webStackIndex]));
-
+		
+		// START DEBUG ONLY
+		/*
+		console.log("====================================================");
+		console.log("ADDED TO WEBSTACK:");
+		console.log("current webStackIndex="+webStackIndex);
+		console.log("webStack.length="+webStack.length);
+		console.log("====================================================");
+		for (let i=0;i<=webStack.length-1;i++){
+			console.log(i, webStack[i].pageParam.category, webStack[i].pageParam.title);
+		}
+		*/
+		//END DEBUG ONLY
 	}
 		
 	//==========================================================================================
@@ -559,6 +598,8 @@
 			clearDocumentSearch();
 			
 			//update webStack by copying the current location and adding results
+			//console.log("-------------------------------------------------------------------------------");
+			//console.log("calling addToWebStack from clearSearchInput");
 			addToWebStack(webStack[webStackIndex].pageParam)
 		}
 	};
@@ -579,9 +620,7 @@
 		
 		//remove highlights from current page by reloading it without highlights
 		loadDocPageNum(docPgNum);
-		
-		//update the webStack
-		addToWebStack(webStack[webStackIndex].pageParam)
+
 	};
 
 	//==========================================================================================
@@ -831,6 +870,8 @@
 		
 		//update webStack by copying the current location and adding search results
 		if (userClick){
+			console.log("-------------------------------------------------------------------------------");
+			console.log("adding to stack in showSiteSearchResults");
 			thisPage = new PageObject();
 			thisPage.number="";
 			thisPage.title="Site Search";
@@ -911,7 +952,7 @@
 			
 		} //end of if (docSearchTerm != null && docSearchTerm!="")
 	
-		// renew user input
+		// re-allow user input
 		document.getElementById("pauseUserInputContent").innerHTML="Calculating....";
 		document.getElementById("pauseUserInput").style.display="none";
 	}
@@ -1225,8 +1266,10 @@
 			
 			//update webStack by copying the current location and adding results
 			if (userClick){
+				//console.log("-------------------------------------------------------------------------------");
+				//console.log("calling addToWebStack from searchDocument");
 				addToWebStack(webStack[webStackIndex].pageParam)
-			}		
+			}
 			
 		} // end if (docSearchTerm != null && docSearchTerm!="")
 			
@@ -1308,9 +1351,20 @@
 		if (siteSearchTermInput != "" && docSearchTerm ===""){
 			//console.log("searching document");
 			document.getElementById("docPageSearchInput").value=siteSearchTermInput;
-			searchDocument(siteSearchPrecision);
+			searchDocument(siteSearchPrecision,false);
 		}
-
+			
+		//update webStack 
+		if (userClick){
+			//console.log("-------------------------------------------------------------------------------");
+			//console.log("calling addToWebStack from loadDocPages");
+			thisPage = new PageObject();
+			thisPage.number="";
+			thisPage.title=docTitle;
+			thisPage.path=filePath;
+			thisPage.category="SourceMatl";
+			addToWebStack(thisPage)
+		}	
 	};
 
 	//==========================================================================================
@@ -1414,7 +1468,9 @@
 		}
 		
 		//add to the web page stack if user navigated here
+		/*
 		if (userClick){
+			console.log("calling addToWebStack from loadDocPageNum");
 			let thisPage = new PageObject();
 			thisPage.number="";
 			thisPage.title=""; 
@@ -1423,6 +1479,7 @@
 			let stackEl = new PageStack();
 			addToWebStack(thisPage);
 		}
+		*/
 	};
 	
 	//==========================================================================================
@@ -2006,6 +2063,8 @@
 				
 				//add to the web page stack if user navigated here
 				if (userClick){
+					//console.log("-------------------------------------------------------------------------------");
+					//console.log("calling addToWebStack from menuClick");
 					thisPage = new PageObject();
 					thisPage.number="";
 					thisPage.title="SourceMatl";
