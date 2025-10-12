@@ -1182,21 +1182,21 @@
 		for (let i=0;i<=countySchoolDistricts.length-1;i++){
 			var thisFile = new PageObject();
 			thisFile.number = countySchoolDistricts[i]['number'];
-			thisFile.title = countySchoolDistricts[i]['number'] + "_Locations";
+			thisFile.title = countySchoolDistricts[i]['title'] + " Locations";
 			thisFile.path = "CountyDistricts/" + thisFile.number + "/" + thisFile.number + "_Locations.html";
 			thisFile.category = countySchoolDistricts[i]['category'];
 			searchFiles.push(thisFile);
 
 			var thisFile = new PageObject();
 			thisFile.number=countySchoolDistricts[i]['number'];
-			thisFile.title=countySchoolDistricts[i]['number'] + " Events";
+			thisFile.title=countySchoolDistricts[i]['title'] + " Events";
 			thisFile.path="CountyDistricts/"+thisFile.number+"/"+thisFile.number+"_Events.html";
 			thisFile.category=countySchoolDistricts[i]['category'];
 			searchFiles.push(thisFile);
 
 			var thisFile = new PageObject();
 			thisFile.number=countySchoolDistricts[i]['number'];
-			thisFile.title=countySchoolDistricts[i]['number'] + " People";
+			thisFile.title=countySchoolDistricts[i]['title'] + " People";
 			thisFile.path="CountyDistricts/"+thisFile.number+"/"+thisFile.number+"_People.html";
 			thisFile.category=countySchoolDistricts[i]['category'];
 			searchFiles.push(thisFile);
@@ -1204,21 +1204,21 @@
 		for (let i=0;i<=countyHighSchools.length-1;i++){
 			var thisFile = new PageObject();
 			thisFile.number=countyHighSchools[i]['number'];
-			thisFile.title=countyHighSchools[i]['number'] + " Locations";
+			thisFile.title=countyHighSchools[i]['title'] + " Locations";
 			thisFile.path="CountyHighSchools/"+thisFile.number+"/"+thisFile.number+"_Locations.html";
 			thisFile.category=countyHighSchools[i]['category'];
 			searchFiles.push(thisFile);
 
 			var thisFile = new PageObject();
 			thisFile.number=countyHighSchools[i]['number'];
-			thisFile.title=countyHighSchools[i]['number'] + " Events";
+			thisFile.title=countyHighSchools[i]['title'] + " Events";
 			thisFile.path="CountyHighSchools/"+thisFile.number+"/"+thisFile.number+"_Events.html";
 			thisFile.category=countyHighSchools[i]['category'];
 			searchFiles.push(thisFile);
 
 			var thisFile = new PageObject();
 			thisFile.number=countyHighSchools[i]['number'];
-			thisFile.title=countyHighSchools[i]['number'] + " People";
+			thisFile.title=countyHighSchools[i]['title'] + " People";
 			thisFile.path="CountyHighSchools/"+thisFile.number+"/"+thisFile.number+"_People.html";
 			thisFile.category=countyHighSchools[i]['category'];
 			searchFiles.push(thisFile);
@@ -1226,21 +1226,21 @@
 		for (let i=0;i<=usdSchools.length-1;i++){
 			var thisFile = new PageObject();
 			thisFile.number=usdSchools[i]['number'];
-			thisFile.title=usdSchools[i]['number'] + " Locations";
+			thisFile.title=usdSchools[i]['title'] + " Locations";
 			thisFile.path="UnifiedSchoolDistricts/"+thisFile.number+"/"+thisFile.number+"_Locations.html";
 			thisFile.category=usdSchools[i]['category'];
 			searchFiles.push(thisFile);
 
 			var thisFile = new PageObject();
 			thisFile.number=usdSchools[i]['number'];
-			thisFile.title=usdSchools[i]['number'] + " Events";
+			thisFile.title=usdSchools[i]['title'] + " Events";
 			thisFile.path="UnifiedSchoolDistricts/"+thisFile.number+"/"+thisFile.number+"_Events.html";
 			thisFile.category=usdSchools[i]['category'];
 			searchFiles.push(thisFile);
 
 			var thisFile = new PageObject();
 			thisFile.number=usdSchools[i]['number'];
-			thisFile.title=usdSchools[i]['number'] + " People";
+			thisFile.title=usdSchools[i]['title'] + " People";
 			thisFile.path="UnifiedSchoolDistricts/"+thisFile.number+"/"+thisFile.number+"_People.html";
 			thisFile.category=usdSchools[i]['category'];
 			searchFiles.push(thisFile);
@@ -1248,21 +1248,21 @@
 		for (let i=0;i<=colleges.length-1;i++){
 			var thisFile = new PageObject();
 			thisFile.number=colleges[i]['number'];
-			thisFile.title=colleges[i]['number'] + " Locations";
+			thisFile.title=colleges[i]['title'] + " Locations";
 			thisFile.path="Colleges/"+thisFile.number+"/"+thisFile.number+"_Locations.html";
 			thisFile.category=colleges[i]['category'];
 			searchFiles.push(thisFile);
 
 			var thisFile = new PageObject();
 			thisFile.number=colleges[i]['number'];
-			thisFile.title=colleges[i]['number'] + " Events";
+			thisFile.title=colleges[i]['title'] + " Events";
 			thisFile.path="Colleges/"+thisFile.number+"/"+thisFile.number+"_Events.html";
 			thisFile.category=colleges[i]['category'];
 			searchFiles.push(thisFile);
 
 			var thisFile = new PageObject();
 			thisFile.number=colleges[i]['number'];
-			thisFile.title=colleges[i]['number'] + " People";
+			thisFile.title=colleges[i]['title'] + " People";
 			thisFile.path="Colleges/"+thisFile.number+"/"+thisFile.number+"_People.html";
 			thisFile.category=colleges[i]['category'];
 			searchFiles.push(thisFile);

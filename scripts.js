@@ -847,24 +847,30 @@
 	async function searchSite(precisionRqd=1.00, userClick=true){  
 		//0.82 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
 		console.log("in searchSite. recd precisionRqd="+precisionRqd+", userClick="+userClick);
+		
 		// stop user input
 		document.getElementById("pauseUserInputContent").innerHTML="Please wait. Searching entire site....0/" + (searchFiles.length-1);
 		document.getElementById("pauseUserInput").style.display="block";
-
+		console.log("made it here");
+		
 		//initialize variables
 		let foundSomeMatches = false;
 		siteSearchResults.length=0;
 		siteSearchPrecision = precisionRqd; //save to global variable
 		siteSearchTerm = document.getElementById("siteSearchInput").value;
-		console.log("siteSearchTerm="+siteSearchTerm);
+		console.log("made it here, siteSearchTerm=|"+siteSearchTerm+"|");
+		
 		let startStr = "<colgroup><col style='width:25%'><col style='width:75%'></colgroup>";
 		startStr = startStr + "<tr><th>Page</th><th>Matches</th></tr>";
 		document.getElementById("siteSearchResultsList").innerHTML =startStr;
+		console.log("made it here, startStr="+startStr);
 		
 		if (siteSearchTermInput != null && siteSearchTermInput!=""){
 			
 			getDocSearchPatterns(siteSearchTermInput);  //this loads the array docSearchPatterns	
-					
+			console.log("made it here, docSearchPatterns="+JSON.stringify(docSearchPatterns));
+			console.log("made it here, searchFiles.length="+searchFiles.length);
+			
 			//search through all the files with data for a match 
 			for (let i=0;i<searchFiles.length-1;i++){
 				//loop throught the elements of docSearchPatterns
@@ -886,7 +892,7 @@
 						
 						//find matching phrases in the original text
 						let matchPhrases = getMatchPhrases(matchSubStrings,myText);
-						siteSearchResults.push({title:searchFiles[i]['title'], matches: matchSubStrings, phrases: matchPhrases, page:searchFiles[i], page:searchFiles[i]});
+						siteSearchResults.push({title:searchFiles[i]['title'], matches: matchSubStrings, phrases: matchPhrases, page:searchFiles[i]});
 					}
 				}
 				document.getElementById("pauseUserInputContent").innerHTML="Please wait. Searching entire site...." + i + "/" + (searchFiles.length-1);
@@ -1688,13 +1694,14 @@
 	// showSchool
 	//==========================================================================================
 	function showSchool(params, subMenuSelection="", userClick=true) {
-
+		
 		let contentTitleBar = document.getElementById("ContentTitle");
 		let subTitle = document.getElementById("SubTitle");
 		let contentHolder = document.getElementById("ContentHolder");
 		let filePath = "";
 		
-		//subMenuSelection is only specified when user changes subMenu for a school (e.g. Overview, Location, People, Event) 
+		//subMenuSelection is only specified when user changes subMenu for a school (e.g. Overview, Location, People, Event)
+		// stack moves and search results need sorted here
 		if (subMenuSelection!=""){
 			filePath = params['path'].replace('Overview',subMenuSelection);
 			filePath = filePath.replace('Events',subMenuSelection);
@@ -1702,13 +1709,22 @@
 			filePath = filePath.replace('People',subMenuSelection);
 		}
 		else {
-			filePath = params['path']
+			filePath = params['path'];
+			if (filePath.indexOf('Overview')>=0){subMenuSelection='Overview'}
+			else if (filePath.indexOf('Events')>=0){subMenuSelection='Events'}
+			else if (filePath.indexOf('Locations')>=0){subMenuSelection='Locations'}
+			else if (filePath.indexOf('People')>=0){subMenuSelection='People'}
 		}
 		
 		
 		//show the correct configuration and update titles
-		configurePage('subPage', true, true);		  
-		subTitle.innerHTML = "School: " + params['title'];
+		configurePage('subPage', true, true);
+		let thisTitle = params['title']		;
+		thisTitle=thisTitle.replace(' Locations',''); //search results can send title with this in it
+		thisTitle=thisTitle.replace(' Events',''); //search results can send title with this in it
+		thisTitle=thisTitle.replace(' People',''); //search results can send title with this in it
+
+		subTitle.innerHTML = "School: " + thisTitle;
 		contentTitleBar.innerHTML = subMenuSelection;
 
 		//build and fill the school-specific navbar
