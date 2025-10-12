@@ -24,7 +24,7 @@
 	var overviews = [];
 	
 	//siteSearch variables
-	var siteSearchInput = document.getElementById("siteSearchInput");
+	var siteSearchInputBox = document.getElementById("siteSearchInputBox");
 	var siteSearchPrecision = 1.00;
 	var searchFiles = []; //array of PageObjects for searching the site
 	var siteSearchResults = []; //matches
@@ -107,13 +107,13 @@
 	//-----------------------------------------
 	// Site search input listener 
 	//-----------------------------------------
-	siteSearchInput.addEventListener("keydown", function (e) {
+	siteSearchInputBox.addEventListener("keydown", function (e) {
 
 		if (e.code === "Enter" || e.code === "NumpadEnter") //checks whether the pressed key is "Enter"
 		{  
-			siteSearchInput = document.getElementById("siteSearchInput");
-			console.log("siteSearchInput.addEventListener");
-			siteSearchTermInput = siteSearchInput.value;
+			//siteSearchInputBox = document.getElementById("siteSearchInputBox");
+			console.log("siteSearchInputBox.addEventListener");
+			siteSearchTermInput = siteSearchInputBox.value;
 			console.log("siteSearchTermInput=|"+siteSearchTermInput+"|");
 			if (siteSearchTermInput != null && siteSearchTermInput!=""){
 				document.getElementById("TitleBar").focus(); //get cursor out of the input box
@@ -352,25 +352,24 @@
 		//......................................
 		// set search variables and elements
 		//......................................
-		siteSearchInput = (' ' + webStack[webStackIndex].siteSrchTrmInpt).slice(1);
-		document.getElementById('docPageSearchInput').value = siteSearchInput;
+		// site search 
+		siteSearchTermInput = (' ' + webStack[webStackIndex].siteSrchTrmInpt).slice(1);
+		if(siteSearchTermInput===undefined || siteSearchTermInput==='undefined'){
+			siteSearchTermInput="";
+		}
+		siteSearchInputBox.value=siteSearchTermInput;
 		siteSearchPrecision = webStack[webStackIndex].sitePrecision*1;
 		siteSearchResults = JSON.parse(JSON.stringify(webStack[webStackIndex].siteSearchRslts));
-		if(siteSearchInput===undefined || siteSearchInput==='undefined'){
-			siteSearchInput="";
-		}
-		document.getElementById("siteSearchInput").value=siteSearchInput;
 		
+		//document search
 		docPagesAreSearched = webStack[webStackIndex].docPagesRSrchd;
 		docSearchTerm = (' ' + webStack[webStackIndex].docSrchTrm).slice(1);
-		docSearchPrecision=webStack[webStackIndex].docPrecision*1;
 		if(docSearchTerm===undefined || docSearchTerm==='undefined'){
 			docSearchTerm="";
 		}
-		//console.log("setting docPageSearchInput value to|" + docSearchTerm +"|");
 		document.getElementById("docPageSearchInput").value=docSearchTerm;
+		docSearchPrecision=webStack[webStackIndex].docPrecision*1;
 		docPgNum = webStack[webStackIndex].docCurrPg*1;
-		//console.log("webStack[webStackIndex].docCurrPg="+webStack[webStackIndex].docCurrPg+", docPgNum="+docPgNum);
 		docPageSearchInput.value = docSearchTerm;
 		docSearchResultPages = JSON.parse(JSON.stringify(webStack[webStackIndex].docSrchRsltPgs));
 		
@@ -861,8 +860,8 @@
 		let foundSomeMatches = false;
 		siteSearchResults.length=0;
 		siteSearchPrecision = precisionRqd; //save to global variable
-		siteSearchInput = document.getElementById("siteSearchInput");
-		siteSearchTerm = siteSearchInput.value;
+		//siteSearchInputBox = document.getElementById("siteSearchInputBox");
+		siteSearchTerm = siteSearchInputBox.value;
 		console.log("made it here, siteSearchTerm=|"+siteSearchTerm+"|");
 		if (siteSearchTerm === null 
 			|| siteSearchTerm === undefined 
@@ -877,7 +876,7 @@
 		startStr = startStr + "<tr><th>Page</th><th>Matches</th></tr>";
 		document.getElementById("siteSearchResultsList").innerHTML =startStr;
 
-		console.log("made it here, siteSearchTerm=|"+siteSearchTerm+"| and document.getElementById('siteSearchInput').value=|"+document.getElementById("siteSearchInput").value+"|");
+		console.log("made it here, siteSearchTerm=|"+siteSearchTerm+"| and document.getElementById('siteSearchInputBox').value=|"+document.getElementById("siteSearchInputBox").value+"|");
 		console.log(siteSearchTermInput != null, siteSearchTermInput!="", siteSearchTerm!=undefined, (siteSearchTermInput != null && siteSearchTermInput!=""))
 		if (siteSearchTermInput!=""){
 			console.log("made it here, siteSearchTermInput="+siteSearchTermInput);
