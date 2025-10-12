@@ -866,7 +866,7 @@
 		console.log("made it here, startStr="+startStr);
 		
 		if (siteSearchTermInput != null && siteSearchTermInput!=""){
-			
+			console.log("made it here, siteSearchTermInput="+siteSearchTermInput);
 			getDocSearchPatterns(siteSearchTermInput);  //this loads the array docSearchPatterns	
 			console.log("made it here, docSearchPatterns="+JSON.stringify(docSearchPatterns));
 			console.log("made it here, searchFiles.length="+searchFiles.length);
@@ -1091,6 +1091,7 @@
 	// getDocSearchPatterns
 	//==========================================================================================	
 	function getDocSearchPatterns(docSearchTerm){
+		console.log("in getDocSearchPatterns, rcd docSearchTerm=|" + docSearchTerm + "|");
 		//.................................................
 		// load docSearchPatterns
 		//.................................................
@@ -1132,8 +1133,9 @@
 			else if (!charIsQuote){
 				word = word + char;
 			}
+			console.log("..." + i + ") " + word);
 		}
-		
+		console.log("finished loading docSearchPatterns");
 	}
 	
 	//==========================================================================================
