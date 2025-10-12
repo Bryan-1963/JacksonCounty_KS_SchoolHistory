@@ -344,7 +344,7 @@
 			webStackIndex = 0;
 		}
 		
-		console.log("rcd dir="+dir+", now webStackIndex="+webStackIndex);
+		//console.log("rcd dir="+dir+", now webStackIndex="+webStackIndex);
 		
 		//......................................
 		// set search variables and elements
@@ -364,14 +364,14 @@
 		if(docSearchTerm===undefined || docSearchTerm==='undefined'){
 			docSearchTerm="";
 		}
-		console.log("setting docPageSearchInput value to|" + docSearchTerm +"|");
+		//console.log("setting docPageSearchInput value to|" + docSearchTerm +"|");
 		document.getElementById("docPageSearchInput").value=docSearchTerm;
 		docPgNum = webStack[webStackIndex].docCurrPg*1;
-		console.log("webStack[webStackIndex].docCurrPg="+webStack[webStackIndex].docCurrPg+", docPgNum="+docPgNum);
+		//console.log("webStack[webStackIndex].docCurrPg="+webStack[webStackIndex].docCurrPg+", docPgNum="+docPgNum);
 		docPageSearchInput.value = docSearchTerm;
 		docSearchResultPages = JSON.parse(JSON.stringify(webStack[webStackIndex].docSrchRsltPgs));
 		
-		console.log("navigating to webStack[webStackIndex].pageParam.category="+webStack[webStackIndex].pageParam.category);
+		//console.log("navigating to webStack[webStackIndex].pageParam.category="+webStack[webStackIndex].pageParam.category);
 
 		//......................................
 		//navigate to page at webStackIndex
@@ -465,16 +465,16 @@
 			// Source Material
 			//......................			
 			case 'SourceMatl':
-				console.log("navigating to a SourceMatl page with path=|" + webStack[webStackIndex].docPagePath + "|");
+				//console.log("navigating to a SourceMatl page with path=|" + webStack[webStackIndex].docPagePath + "|");
 				//main menu click to the source material link list
 				if (webStack[webStackIndex].docPagePath ===""){
 					menuClick({"category":"SourceMatl","subCat":""}, false );
 				}
 				else {
-					console.log("calling loadDocPages. sending path="+webStack[webStackIndex].docPagePath+", title="+webStack[webStackIndex].docTitle+", userClick=false");
+					//console.log("calling loadDocPages. sending path="+webStack[webStackIndex].docPagePath+", title="+webStack[webStackIndex].docTitle+", userClick=false");
 					await loadDocPages(webStack[webStackIndex].docPagePath, webStack[webStackIndex].docTitle ,false);
 					docPgNum = webStack[webStackIndex].docCurrPg*1; //have to set again here since loadDocPages put it at 0
-					console.log("loaded doc pages, now moving to page number="+docPgNum);
+					//console.log("loaded doc pages, now moving to page number="+docPgNum);
 					loadDocPageNum(docPgNum, false);
 				}
 			break;	
@@ -846,7 +846,7 @@
 	//==========================================================================================
 	async function searchSite(precisionRqd=1.00, userClick=true){  
 		//0.82 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
-
+		console.log("in searchSite. recd precisionRqd="+precisionRqd+", userClick="+userClick);
 		// stop user input
 		document.getElementById("pauseUserInputContent").innerHTML="Please wait. Searching entire site....0/" + (searchFiles.length-1);
 		document.getElementById("pauseUserInput").style.display="block";
@@ -856,7 +856,7 @@
 		siteSearchResults.length=0;
 		siteSearchPrecision = precisionRqd; //save to global variable
 		siteSearchTerm = document.getElementById("siteSearchInput").value;
-		
+		console.log("siteSearchTerm="+siteSearchTerm);
 		let startStr = "<colgroup><col style='width:25%'><col style='width:75%'></colgroup>";
 		startStr = startStr + "<tr><th>Page</th><th>Matches</th></tr>";
 		document.getElementById("siteSearchResultsList").innerHTML =startStr;
