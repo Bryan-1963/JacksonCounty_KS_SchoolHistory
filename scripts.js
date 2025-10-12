@@ -111,15 +111,15 @@
 
 		if (e.code === "Enter" || e.code === "NumpadEnter") //checks whether the pressed key is "Enter"
 		{  
-			//siteSearchInputBox = document.getElementById("siteSearchInputBox");
-			console.log("siteSearchInputBox.addEventListener");
+
 			siteSearchTermInput = siteSearchInputBox.value;
-			console.log("siteSearchTermInput=|"+siteSearchTermInput+"|");
+
 			if (siteSearchTermInput != null && siteSearchTermInput!=""){
 				document.getElementById("TitleBar").focus(); //get cursor out of the input box
 				searchSite(1.00);
 			}
 		}
+		
 	});	
 	
 	//-----------------------------------------
@@ -848,13 +848,10 @@
 	//==========================================================================================
 	async function searchSite(precisionRqd=1.00, userClick=true){  
 		//0.82 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
-		console.log("in searchSite. recd precisionRqd="+precisionRqd+", userClick="+userClick);
-		
-		
+
 		// stop user input
 		document.getElementById("pauseUserInputContent").innerHTML="Please wait. Searching entire site....0/" + (searchFiles.length-1);
 		document.getElementById("pauseUserInput").style.display="block";
-		console.log("made it here");
 		
 		//initialize variables
 		let foundSomeMatches = false;
@@ -862,28 +859,22 @@
 		siteSearchPrecision = precisionRqd; //save to global variable
 		//siteSearchInputBox = document.getElementById("siteSearchInputBox");
 		siteSearchTerm = siteSearchInputBox.value;
-		console.log("made it here, siteSearchTerm=|"+siteSearchTerm+"|");
+
 		if (siteSearchTerm === null 
 			|| siteSearchTerm === undefined 
 			|| siteSearchTerm === 'undefined')
 			{
-				console.log("setting siteSearchTerm=''");
 				siteSearchTerm=""
 			};
-		console.log("made it here, siteSearchTerm=|"+siteSearchTerm+"|");
 		
 		let startStr = "<colgroup><col style='width:25%'><col style='width:75%'></colgroup>";
 		startStr = startStr + "<tr><th>Page</th><th>Matches</th></tr>";
 		document.getElementById("siteSearchResultsList").innerHTML =startStr;
 
-		console.log("made it here, siteSearchTerm=|"+siteSearchTerm+"| and document.getElementById('siteSearchInputBox').value=|"+document.getElementById("siteSearchInputBox").value+"|");
-		console.log(siteSearchTermInput != null, siteSearchTermInput!="", siteSearchTerm!=undefined, (siteSearchTermInput != null && siteSearchTermInput!=""))
 		if (siteSearchTermInput!=""){
-			console.log("made it here, siteSearchTermInput="+siteSearchTermInput);
-			getDocSearchPatterns(siteSearchTermInput);  //this loads the array docSearchPatterns	
-			console.log("made it here, docSearchPatterns="+JSON.stringify(docSearchPatterns));
-			console.log("made it here, searchFiles.length="+searchFiles.length);
 			
+			getDocSearchPatterns(siteSearchTermInput);  //this loads the array docSearchPatterns	
+		
 			//search through all the files with data for a match 
 			for (let i=0;i<searchFiles.length-1;i++){
 				//loop throught the elements of docSearchPatterns
@@ -1104,7 +1095,7 @@
 	// getDocSearchPatterns
 	//==========================================================================================	
 	function getDocSearchPatterns(docSearchTerm){
-		console.log("in getDocSearchPatterns, rcd docSearchTerm=|" + docSearchTerm + "|");
+
 		//.................................................
 		// load docSearchPatterns
 		//.................................................
@@ -1146,9 +1137,9 @@
 			else if (!charIsQuote){
 				word = word + char;
 			}
-			console.log("..." + i + ") " + word);
+
 		}
-		console.log("finished loading docSearchPatterns");
+
 	}
 	
 	//==========================================================================================

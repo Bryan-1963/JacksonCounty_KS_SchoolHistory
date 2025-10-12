@@ -71,9 +71,9 @@
 		maps.push(thisMap);	
 		
 		thisMap = new PageObject();
-		thisMap.number = "1899 Pottawatamie Co.";
-		thisMap.title = "1899 Pottawatamie Co.";
-		thisMap.path = "Maps/1899_PottawatamieCo.html";
+		thisMap.number = "1899 Pottawatomie Co.";
+		thisMap.title = "1899 Pottawatomie Co.";
+		thisMap.path = "Maps/1899_PottawatomieCo.html";
 		thisMap.category = "Maps"
 		maps.push(thisMap);
 		
@@ -1171,12 +1171,12 @@
 		// load array of files with data to search
 		//------------------------------------------	
 		// first, append all the other arrays
-		searchFiles.concat(maps);
-		searchFiles.concat(countySchoolDistricts);
-		searchFiles.concat(countyHighSchools);
-		searchFiles.concat(usdSchools);
-		searchFiles.concat(colleges);
-		searchFiles.concat(overviews);
+		searchFiles=searchFiles.concat(maps);
+		searchFiles=searchFiles.concat(countySchoolDistricts);
+		searchFiles=searchFiles.concat(countyHighSchools);
+		searchFiles=searchFiles.concat(usdSchools);
+		searchFiles=searchFiles.concat(colleges);
+		searchFiles=searchFiles.concat(overviews);
 		
 		//add People, Events, Locations for the schools
 		for (let i=0;i<=countySchoolDistricts.length-1;i++){
@@ -1276,8 +1276,6 @@
 		thisFile.category="Welcome";
 		searchFiles.push(thisFile);
 
-
-		
 		//Territorial
 		var thisFile = new PageObject();
 		thisFile.number="";
