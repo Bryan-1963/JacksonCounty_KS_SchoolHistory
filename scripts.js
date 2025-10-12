@@ -864,7 +864,8 @@
 		startStr = startStr + "<tr><th>Page</th><th>Matches</th></tr>";
 		document.getElementById("siteSearchResultsList").innerHTML =startStr;
 		console.log("made it here, startStr="+startStr);
-		
+		console.log("made it here, siteSearchTerm=|"+siteSearchTerm+"|");
+		console.log(siteSearchTermInput != null, siteSearchTermInput!="", (siteSearchTermInput != null && siteSearchTermInput!=""))
 		if (siteSearchTermInput != null && siteSearchTermInput!=""){
 			console.log("made it here, siteSearchTermInput="+siteSearchTermInput);
 			getDocSearchPatterns(siteSearchTermInput);  //this loads the array docSearchPatterns	
