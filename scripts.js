@@ -111,7 +111,10 @@
 
 		if (e.code === "Enter" || e.code === "NumpadEnter") //checks whether the pressed key is "Enter"
 		{  
+			siteSearchInput = document.getElementById("siteSearchInput");
+			console.log("siteSearchInput.addEventListener");
 			siteSearchTermInput = siteSearchInput.value;
+			console.log("siteSearchTermInput=|"+siteSearchTermInput+"|");
 			if (siteSearchTermInput != null && siteSearchTermInput!=""){
 				document.getElementById("TitleBar").focus(); //get cursor out of the input box
 				searchSite(1.00);
@@ -848,6 +851,7 @@
 		//0.82 (very fuzzy) < precisionRqd <= 1.00 (perfect matches only)
 		console.log("in searchSite. recd precisionRqd="+precisionRqd+", userClick="+userClick);
 		
+		
 		// stop user input
 		document.getElementById("pauseUserInputContent").innerHTML="Please wait. Searching entire site....0/" + (searchFiles.length-1);
 		document.getElementById("pauseUserInput").style.display="block";
@@ -857,16 +861,25 @@
 		let foundSomeMatches = false;
 		siteSearchResults.length=0;
 		siteSearchPrecision = precisionRqd; //save to global variable
-		siteSearchTerm = document.getElementById("siteSearchInput").value;
+		siteSearchInput = document.getElementById("siteSearchInput");
+		siteSearchTerm = siteSearchInput.value;
+		console.log("made it here, siteSearchTerm=|"+siteSearchTerm+"|");
+		if (siteSearchTerm === null 
+			|| siteSearchTerm === undefined 
+			|| siteSearchTerm === 'undefined')
+			{
+				console.log("setting siteSearchTerm=''");
+				siteSearchTerm=""
+			};
 		console.log("made it here, siteSearchTerm=|"+siteSearchTerm+"|");
 		
 		let startStr = "<colgroup><col style='width:25%'><col style='width:75%'></colgroup>";
 		startStr = startStr + "<tr><th>Page</th><th>Matches</th></tr>";
 		document.getElementById("siteSearchResultsList").innerHTML =startStr;
-		console.log("made it here, startStr="+startStr);
-		console.log("made it here, siteSearchTerm=|"+siteSearchTerm+"|");
-		console.log(siteSearchTermInput != null, siteSearchTermInput!="", (siteSearchTermInput != null && siteSearchTermInput!=""))
-		if (siteSearchTermInput != null && siteSearchTermInput!=""){
+
+		console.log("made it here, siteSearchTerm=|"+siteSearchTerm+"| and document.getElementById('siteSearchInput').value=|"+document.getElementById("siteSearchInput").value+"|");
+		console.log(siteSearchTermInput != null, siteSearchTermInput!="", siteSearchTerm!=undefined, (siteSearchTermInput != null && siteSearchTermInput!=""))
+		if (siteSearchTermInput!=""){
 			console.log("made it here, siteSearchTermInput="+siteSearchTermInput);
 			getDocSearchPatterns(siteSearchTermInput);  //this loads the array docSearchPatterns	
 			console.log("made it here, docSearchPatterns="+JSON.stringify(docSearchPatterns));
