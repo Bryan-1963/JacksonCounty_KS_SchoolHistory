@@ -159,6 +159,13 @@
 		// load overviews array
 		//-----------------------------	
 		var thisFile = new PageObject();
+		thisFile.number="";
+		thisFile.title="Territorial History/Maps";
+		thisFile.path="Overview/Territorial.html";
+		thisFile.category="Overview"
+		overviews.push(thisFile);
+		
+		var thisFile = new PageObject();
 		thisFile.number="CommonSchoolGraduateReports";
 		thisFile.title="Common School Graduate Reports";
 		thisFile.path="Overview/CommonSchoolGraduateReports.html";
@@ -192,6 +199,7 @@
 		thisFile.path="Overview/TeachersInstitute.html";
 		thisFile.category="Overview"
 		overviews.push(thisFile);
+
 		
 		//-----------------------------
 		// load countySchoolDistricts array
@@ -205,7 +213,7 @@
 		
 		thisDist = new PageObject()
 		thisDist.number = "002"
-		thisDist.title = "2 Holton"
+		thisDist.title = "2 Holton Elementary"
 		thisDist.path = "CountyDistricts/002/002_Overview.html"
 		thisDist.category = "JacksonCounty"
 		countySchoolDistricts.push(thisDist);
@@ -1027,7 +1035,7 @@
 		//-----------------------------
 		var thisDist = new PageObject();
 		thisDist.number = "002";
-		thisDist.title = "002 Holton";
+		thisDist.title = "002 Holton HS";
 		thisDist.path = "CountyHighSchools/002/002_Overview.html";
 		thisDist.category = "JacksonCounty"
 		countyHighSchools.push(thisDist);
@@ -1276,13 +1284,6 @@
 		thisFile.category="Welcome";
 		searchFiles.push(thisFile);
 
-		//Territorial
-		var thisFile = new PageObject();
-		thisFile.number="";
-		thisFile.title="Territorial";
-		thisFile.path="Pre-Org/Territorial.html";
-		thisFile.category="Territorial"
-		searchFiles.push(thisFile)
 		
 		//Pottawatomie Mission
 		var thisFile = new PageObject();

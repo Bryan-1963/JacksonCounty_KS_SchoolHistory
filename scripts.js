@@ -429,13 +429,6 @@
 					showMap(webStack[webStackIndex].pageParam,false);
 				}
 			break;	
-
-			//......................
-			// Territorial
-			//......................			
-			case 'Pre-Org':
-				menuClick({"category":"Pre-Org","subCat":""}, false );
-			break;	
 			
 			//......................
 			// Schools
@@ -497,10 +490,10 @@
 			break;	
 			
 			//......................
-			// Contact
+			// About
 			//......................
-			case 'Contact':
-				menuClick({"category":"Contact","subCat":""}, false );
+			case 'About':
+				menuClick({"category":"About","subCat":""}, false );
 			break;
 			
 			//......................
@@ -811,13 +804,6 @@
 					param = param.replace(/"/g,"'");
 					thisFnCall="showMap(" + param + ",true)";
 				break;	
-
-				//......................
-				// Territorial
-				//......................			
-				case 'Territorial':
-					thisFnCall="menuClick({'category':'Pre-Org','subCat':''}, true )";
-				break;	
 				
 				//......................
 				// Schools
@@ -853,10 +839,10 @@
 				break;	
 				
 				//......................
-				// Contact
+				// About
 				//......................
-				case 'Contact':
-					thisFnCall="menuClick({'category':'Contact','subCat':''}, true )";
+				case 'About':
+					thisFnCall="menuClick({'category':'About','subCat':''}, true )";
 				break;				
 			}
 			//console.log("thisFnCall=|"+thisFnCall+"|");
@@ -870,8 +856,8 @@
 		
 		//update webStack by copying the current location and adding search results
 		if (userClick){
-			console.log("-------------------------------------------------------------------------------");
-			console.log("adding to stack in showSiteSearchResults");
+			//console.log("-------------------------------------------------------------------------------");
+			//console.log("adding to stack in showSiteSearchResults");
 			thisPage = new PageObject();
 			thisPage.number="";
 			thisPage.title="Site Search";
@@ -1136,7 +1122,21 @@
 	// getDocSearchPatterns
 	//==========================================================================================	
 	function getDocSearchPatterns(docSearchTerm){
-
+		//escape special characters docSearchTerm
+		docSearchTerm = docSearchTerm.replace(/\\/g, "");
+		docSearchTerm = docSearchTerm.replace(/\./g, "\\.");
+		docSearchTerm = docSearchTerm.replace(/\^/g, "\\^");
+		docSearchTerm = docSearchTerm.replace(/\$/g, "\\$");
+		docSearchTerm = docSearchTerm.replace(/\*/g, "\\*");
+		docSearchTerm = docSearchTerm.replace(/\+/g, "\\+");
+		docSearchTerm = docSearchTerm.replace(/\?/g, "\\?");
+		docSearchTerm = docSearchTerm.replace(/\)/g, "\\)");
+		docSearchTerm = docSearchTerm.replace(/\(/g, "\\(");
+		docSearchTerm = docSearchTerm.replace(/\^/g, "\\^");
+		docSearchTerm = docSearchTerm.replace(/\[/g, "\\[");
+		docSearchTerm = docSearchTerm.replace(/\{/g, "\\{");
+		docSearchTerm = docSearchTerm.replace(/\|/g, "\\|");
+			
 		//.................................................
 		// load docSearchPatterns
 		//.................................................
@@ -1180,7 +1180,7 @@
 			}
 
 		}
-
+		
 	}
 	
 	//==========================================================================================
@@ -1996,25 +1996,6 @@
 
 			break;
 
-			//---------------------------		  
-			case 'Pre-Org':
-			//---------------------------	
-				configurePage('subPage', false, false);		  
-				subTitle.innerHTML = "Territorial Kansas";
-				contentHolder.src =	"Pre-Org/Territorial.html";
-									
-				//add to the web page stack if user navigated here
-				if (userClick){
-					thisPage = new PageObject();
-					thisPage.number="";
-					thisPage.title="Pre-Org";
-					thisPage.path="Pre-Org/Territorial.html";
-					thisPage.category="Pre-Org";
-					addToWebStack(thisPage);
-				}
-	
-			break;
-
 			//---------------------------		
 			case 'Schools':
 			//---------------------------
@@ -2076,19 +2057,19 @@
 			break;
 
 			//---------------------------	
-			case 'Contact':
+			case 'About':
 			//---------------------------	
 				configurePage('subPage', false, false);	
-				subTitle.innerHTML = "Contact";	
-				contentHolder.src="Contact/Contact.html";
+				subTitle.innerHTML = "About";	
+				contentHolder.src="About/About.html";
 				
 				//add to the web page stack if user navigated here
 				if (userClick){
 					thisPage = new PageObject();
 					thisPage.number="";
-					thisPage.title="Contact";
-					thisPage.path="Contact/Contact.html";
-					thisPage.category="Contact";
+					thisPage.title="About";
+					thisPage.path="About/About.html";
+					thisPage.category="About";
 					addToWebStack(thisPage);;
 				}
 
@@ -2229,6 +2210,7 @@
 			let thisTerm = docSearchPatterns[termNum];
 			
 			if (docSearchPrecision>=1){
+				
 				let re=new RegExp(thisTerm,"gi");
 				let result = textIn.match(re);  //returns array of all matching subtexts
 
