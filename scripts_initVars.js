@@ -1438,6 +1438,13 @@
 		thisFile.category="Document"
 		searchFiles.push(thisFile)	
 		
+		var thisFile = new PageObject();
+		thisFile.number="";
+		thisFile.title="1918 Washington Township HS Yearbook";
+		thisFile.path="SourceMatls/WashingtonTownshipRHSYearbooks/1918/000PageData.json";
+		thisFile.category="Document"
+		searchFiles.push(thisFile)	
+		
 		//DEBUG ONLY
 		/*
 		for (let i=0;i<searchFiles.length-1;i++){
