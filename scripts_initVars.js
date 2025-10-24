@@ -166,13 +166,6 @@
 		overviews.push(thisFile);
 		
 		var thisFile = new PageObject();
-		thisFile.number="CommonSchoolGraduateReports";
-		thisFile.title="Common School Graduate Reports";
-		thisFile.path="Overview/CommonSchoolGraduateReports.html";
-		thisFile.category="Overview";
-		overviews.push(thisFile);
-		
-		var thisFile = new PageObject();
 		thisFile.number="CountyDistrictsSummary";
 		thisFile.title="County Districts Summary";
 		thisFile.path="Overview/CountyDistrictsSummary.html";
@@ -188,11 +181,32 @@
 
 		var thisFile = new PageObject();
 		thisFile.number="CountyOverview";
-		thisFile.title="County Overview";
+		thisFile.title="County Overview & History";
 		thisFile.path="Overview/CountyOverview.html";
 		thisFile.category="Overview"
 		overviews.push(thisFile);
-
+		
+		var thisFile = new PageObject();
+		thisFile.number="CommonSchoolGraduateReports";
+		thisFile.title="Common School Graduate Reports";
+		thisFile.path="Overview/CommonSchoolGraduateReports.html";
+		thisFile.category="Overview";
+		overviews.push(thisFile);
+		
+		var thisFile = new PageObject();
+		thisFile.number="TeachersReports";
+		thisFile.title="Teachers Reports";
+		thisFile.path="Overview/TeachersReports.html";
+		thisFile.category="Overview";
+		overviews.push(thisFile);
+		
+		var thisFile = new PageObject();
+		thisFile.number="DistrictOfficerReports";
+		thisFile.title="District Officer Reports";
+		thisFile.path="Overview/DistrictOfficerReports.html";
+		thisFile.category="Overview";
+		overviews.push(thisFile);
+		
 		var thisFile = new PageObject();
 		thisFile.number="TeachersInstitute";
 		thisFile.title="Teachers Institute";
